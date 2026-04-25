@@ -13,11 +13,18 @@ export const upsertPreferences = protectedProcedure
 	})
 	.input(
 		z.object({
+			marriageTimeline: z.string().optional(),
+			willingToRelocate: z.boolean().optional(),
+			requiresCitizenship: z.boolean().optional(),
+			valuesLooks: z.number().int().min(1).max(10).optional(),
+			valuesPersonality: z.number().int().min(1).max(10).optional(),
+			valuesFinancial: z.number().int().min(1).max(10).optional(),
+			quizComplete: z.boolean().optional(),
 			ageMin: z.number().int().optional(),
 			ageMax: z.number().int().optional(),
 			heightMin: z.number().int().optional(),
 			heightMax: z.number().int().optional(),
-			religions: z.string().optional(), // JSON array string
+			religions: z.string().optional(),
 			communities: z.string().optional(),
 			educationLevels: z.string().optional(),
 			professions: z.string().optional(),

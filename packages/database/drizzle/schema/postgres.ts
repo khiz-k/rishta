@@ -443,8 +443,15 @@ export const partnerPreference = pgTable(
 			.notNull()
 			.unique()
 			.references(() => user.id, { onDelete: "cascade" }),
-		ageMin: integer("ageMin"),
-		ageMax: integer("ageMax"),
+	marriageTimeline: text("marriageTimeline"), // "3_months", "6_months", "1_year", "2_years_plus"
+	willingToRelocate: boolean("willingToRelocate"),
+	requiresCitizenship: boolean("requiresCitizenship"),
+	valuesLooks: integer("valuesLooks"), // 1-10
+	valuesPersonality: integer("valuesPersonality"), // 1-10
+	valuesFinancial: integer("valuesFinancial"), // 1-10
+	quizComplete: boolean("quizComplete").default(false),
+	ageMin: integer("ageMin"),
+	ageMax: integer("ageMax"),
 		heightMin: integer("heightMin"),
 		heightMax: integer("heightMax"),
 		religions: text("religions"), // JSON array string
