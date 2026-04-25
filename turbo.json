@@ -14,7 +14,8 @@
 			"cache": false
 		},
 		"generate": {
-			"cache": false
+			"cache": false,
+			"passThroughEnv": ["DATABASE_URL", "DIRECT_URL"]
 		},
 		"dev": {
 			"cache": false,
