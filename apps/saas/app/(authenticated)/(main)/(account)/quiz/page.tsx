@@ -11,9 +11,9 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 const STEPS = [
-	{ id: "timeline", title: "When are you looking to get married?", subtitle: "Be honest — it helps us match you with people on the same timeline." },
+	{ id: "timeline", title: "The non-negotiables", subtitle: "Be honest — it helps us match you with people on the same timeline." },
 	{ id: "location", title: "Location & Residency", subtitle: "Where you live matters for making this work." },
-	{ id: "preferences", title: "Who are you looking for?", subtitle: "Basic preferences to narrow down your matches." },
+	{ id: "background", title: "Background & Family", subtitle: "Language, community, and family preferences." },
 	{ id: "dealbreakers", title: "Dealbreakers", subtitle: "Things you absolutely cannot compromise on." },
 	{ id: "values", title: "What matters most to you?", subtitle: "This helps us understand your priorities in a partner." },
 ];
@@ -30,6 +30,8 @@ export default function QuizPage() {
 		ageMin: "",
 		ageMax: "",
 		locations: "",
+		communities: "",
+		educationLevels: "",
 		religions: "",
 		diet: "",
 		valuesLooks: 5,
@@ -57,7 +59,6 @@ export default function QuizPage() {
 		if (step < STEPS.length - 1) {
 			setStep(step + 1);
 		} else {
-			// Submit all answers
 			mutation.mutate({
 				marriageTimeline: answers.marriageTimeline,
 				willingToRelocate: answers.willingToRelocate ?? undefined,
@@ -65,6 +66,8 @@ export default function QuizPage() {
 				ageMin: answers.ageMin ? Number.parseInt(answers.ageMin) : undefined,
 				ageMax: answers.ageMax ? Number.parseInt(answers.ageMax) : undefined,
 				locations: answers.locations || undefined,
+				communities: answers.communities || undefined,
+				educationLevels: answers.educationLevels || undefined,
 				religions: answers.religions || undefined,
 				diet: answers.diet || undefined,
 				valuesLooks: answers.valuesLooks,
@@ -188,7 +191,7 @@ export default function QuizPage() {
 								</div>
 							)}
 
-							{/* Step 3: Preferences */}
+							{/* Step 3: Background & Family */}
 							{step === 2 && (
 								<div className="space-y-4">
 									<div className="grid grid-cols-2 gap-3">
@@ -200,6 +203,15 @@ export default function QuizPage() {
 											<Label className="text-sm">Max age</Label>
 											<Input type="number" placeholder="35" value={answers.ageMax} onChange={(e) => set("ageMax", e.target.value)} />
 										</div>
+									</div>
+									<div>
+										<Label className="text-sm">Community / Ethnicity</Label>
+										<Input placeholder="e.g. Punjabi, Korean, Italian, any" value={answers.communities} onChange={(e) => set("communities", e.target.value)} className="mt-1" />
+										<p className="text-xs text-muted-foreground mt-1">Leave empty if open to all backgrounds</p>
+									</div>
+									<div>
+										<Label className="text-sm">Education level preferred</Label>
+										<Input placeholder="e.g. Bachelors, Masters, PhD, any" value={answers.educationLevels} onChange={(e) => set("educationLevels", e.target.value)} className="mt-1" />
 									</div>
 								</div>
 							)}
