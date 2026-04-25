@@ -36,6 +36,7 @@ import {
 	SlidersHorizontalIcon,
 	SparklesIcon,
 	HomeIcon,
+	MessageCircleIcon,
 	MenuIcon,
 	PanelLeftCloseIcon,
 	PanelLeftOpenIcon,
@@ -359,7 +360,13 @@ export function NavBar() {
 				label: "Matches",
 				href: "/matches",
 				icon: SparklesIcon,
-				isActive: pathname.startsWith("/matches"),
+				isActive: pathname === "/matches",
+			},
+			{
+				label: "Messages",
+				href: "/messages",
+				icon: MessageCircleIcon,
+				isActive: pathname.startsWith("/messages") || (pathname.startsWith("/matches/") && pathname !== "/matches"),
 			},
 			{
 				label: "Shortlist",
@@ -376,7 +383,7 @@ export function NavBar() {
 			{
 				label: "Activity",
 				href: "/activity",
-				icon: HomeIcon,
+				icon: MessageCircleIcon,
 				isActive: pathname.startsWith("/activity"),
 			},
 			{

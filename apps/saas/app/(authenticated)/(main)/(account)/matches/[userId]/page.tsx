@@ -25,8 +25,16 @@ export default function ChatPage() {
 
 	const { data: messages = [], isLoading } = useQuery({
 		...orpc.messages.list.queryOptions({ input: { withUserId: params.userId } }),
-		refetchInterval: 3000, // Poll every 3s for new messages
+		refetchInterval: 3000,
 	});
+
+	// Mark messages as read when conversation opens
+	const markReadMutation = useMutation(orpc.messages.markRead.mutationOptions());
+	useEffect(() => {
+		if (messages.length > 0) {
+			markReadMutation.mutate({ fromUserId: params.userId });
+		}
+	}, [messages.length, params.userId]);
 
 	const sendMutation = useMutation({
 		...orpc.messages.send.mutationOptions(),
@@ -95,9 +103,16 @@ export default function ChatPage() {
 										: "bg-muted text-foreground rounded-bl-md"
 								}`}>
 									<p>{m.content}</p>
-									<p className={`text-[10px] mt-1 ${isMe ? "text-primary-foreground/60" : "text-muted-foreground/60"}`}>
+								<div className={`flex items-center gap-1 mt-1 ${isMe ? "justify-end" : ""}`}>
+									<p className={`text-[10px] ${isMe ? "text-primary-foreground/60" : "text-muted-foreground/60"}`}>
 										{new Date(m.createdAt).toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })}
 									</p>
+									{isMe && (
+										<span className={`text-[10px] ${m.read ? "text-primary-foreground/80" : "text-primary-foreground/40"}`}>
+											{m.read ? "✓✓" : "✓"}
+										</span>
+									)}
+								</div>
 								</div>
 							</motion.div>
 						);
