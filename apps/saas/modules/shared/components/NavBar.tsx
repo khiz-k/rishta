@@ -344,16 +344,10 @@ export function NavBar() {
 
 		return [
 			{
-				label: t("app.menu.start"),
+				label: "Discover",
 				href: "/",
-				icon: HomeIcon,
-				isActive: pathname === "/",
-			},
-			{
-				label: "Browse",
-				href: "/browse",
 				icon: SearchIcon,
-				isActive: pathname.startsWith("/browse"),
+				isActive: pathname === "/",
 			},
 			{
 				label: "Interests",
@@ -378,6 +372,12 @@ export function NavBar() {
 				href: "/profile",
 				icon: UserCogIcon,
 				isActive: pathname.startsWith("/profile"),
+			},
+			{
+				label: "Activity",
+				href: "/activity",
+				icon: HomeIcon,
+				isActive: pathname.startsWith("/activity"),
 			},
 			{
 				label: "Preferences",
