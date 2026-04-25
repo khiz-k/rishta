@@ -136,18 +136,33 @@ export default function DiscoverPage() {
 
 	return (
 		<div className="flex flex-col items-center">
-			{/* Counter */}
-			<div className="w-full max-w-lg flex items-center justify-between mb-4">
-				<p className="text-sm text-muted-foreground">
-					<span className="font-display">Discover</span> · <span className="text-foreground font-semibold">{currentIndex + 1}</span> of {profiles.length}
-				</p>
-				<div className="flex items-center gap-1">
-					<button onClick={goPrev} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
-						<ChevronLeftIcon className="size-4 text-muted-foreground" />
-					</button>
-					<button onClick={goNext} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
-						<ChevronRightIcon className="size-4 text-muted-foreground" />
-					</button>
+			{/* Progress bar + navigation */}
+			<div className="w-full max-w-lg mb-5">
+				{/* Dot indicators */}
+				<div className="flex items-center justify-center gap-1.5 mb-3">
+					{profiles.map((_, i) => (
+						<button
+							key={i}
+							type="button"
+							onClick={() => setCurrentIndex(i)}
+							className={`h-1 rounded-full transition-all duration-300 ${
+								i === currentIndex ? "w-6 bg-primary" : "w-1.5 bg-muted-foreground/20 hover:bg-muted-foreground/40"
+							}`}
+						/>
+					))}
+				</div>
+				<div className="flex items-center justify-between">
+					<p className="text-xs text-muted-foreground tracking-wide uppercase">
+						<span className="font-display">Discover</span> · {currentIndex + 1}/{profiles.length}
+					</p>
+					<div className="flex items-center gap-1">
+						<button onClick={goPrev} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
+							<ChevronLeftIcon className="size-4 text-muted-foreground" />
+						</button>
+						<button onClick={goNext} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
+							<ChevronRightIcon className="size-4 text-muted-foreground" />
+						</button>
+					</div>
 				</div>
 			</div>
 
@@ -163,11 +178,25 @@ export default function DiscoverPage() {
 			>
 			<Card className="w-full overflow-hidden relative">
 				{/* Action feedback overlay */}
+				<AnimatePresence>
 				{actionFeedback && (
-					<div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
-						<p className="font-display text-2xl font-bold">{actionFeedback}</p>
-					</div>
+					<motion.div
+						initial={{ opacity: 0 }}
+						animate={{ opacity: 1 }}
+						exit={{ opacity: 0 }}
+						className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm"
+					>
+						<motion.p
+							initial={{ scale: 0.5 }}
+							animate={{ scale: 1 }}
+							transition={{ type: "spring", stiffness: 400, damping: 15 }}
+							className="font-display text-2xl font-bold"
+						>
+							{actionFeedback}
+						</motion.p>
+					</motion.div>
 				)}
+				</AnimatePresence>
 
 				{/* Gradient Banner */}
 				<div className={`relative h-36 bg-gradient-to-br ${grad}`}>
@@ -245,31 +274,40 @@ export default function DiscoverPage() {
 				<CardContent className="pt-2 pb-6">
 					<div className="flex items-center justify-center gap-4">
 						{/* Pass */}
-						<button
+						<motion.button
 							type="button"
 							onClick={handlePass}
-							className="size-14 rounded-full border-2 border-muted-foreground/20 flex items-center justify-center hover:border-rose-500 hover:bg-rose-500/10 transition-all"
+							whileTap={{ scale: 0.85 }}
+							whileHover={{ scale: 1.08 }}
+							transition={{ type: "spring", stiffness: 500, damping: 15 }}
+							className="size-14 rounded-full border-2 border-muted-foreground/20 flex items-center justify-center hover:border-rose-500 hover:bg-rose-500/10"
 						>
 							<XIcon className="size-6 text-muted-foreground" />
-						</button>
+						</motion.button>
 
 						{/* Shortlist */}
-						<button
+						<motion.button
 							type="button"
 							onClick={() => shortlistMutation.mutate({ profileUserId: p.userId })}
-							className="size-12 rounded-full border-2 border-amber-500/30 flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10 transition-all"
+							whileTap={{ scale: 0.85 }}
+							whileHover={{ scale: 1.1 }}
+							transition={{ type: "spring", stiffness: 500, damping: 15 }}
+							className="size-12 rounded-full border-2 border-amber-500/30 flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10"
 						>
 							<BookmarkIcon className="size-5 text-amber-500" />
-						</button>
+						</motion.button>
 
 						{/* Send Interest */}
-						<button
+						<motion.button
 							type="button"
 							onClick={() => interestMutation.mutate({ toUserId: p.userId })}
-							className="size-16 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
+							whileTap={{ scale: 0.8 }}
+							whileHover={{ scale: 1.1 }}
+							transition={{ type: "spring", stiffness: 400, damping: 12 }}
+							className="size-16 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/25"
 						>
 							<HeartIcon className="size-7 text-primary-foreground" />
-						</button>
+						</motion.button>
 					</div>
 
 					<p className="text-center text-xs text-muted-foreground mt-3">
