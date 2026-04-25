@@ -2,21 +2,25 @@
 
 import { Badge } from "@repo/ui/components/badge";
 import { Button } from "@repo/ui/components/button";
-import { Card, CardContent } from "@repo/ui/components/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/components/card";
 import { PageHeader } from "@shared/components/PageHeader";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+	ArrowLeftIcon,
+	ArrowRightIcon,
 	BookmarkIcon,
 	BriefcaseIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
 	GraduationCapIcon,
 	HeartIcon,
-	LockIcon,
 	MapPinIcon,
 	RulerIcon,
-	SparklesIcon,
+	UsersIcon,
+	XIcon,
 } from "lucide-react";
-import Link from "next/link";
+import { useCallback, useEffect, useState } from "react";
 
 function calcAge(dob: string): number {
 	const birth = new Date(dob);
@@ -40,23 +44,10 @@ function avatarGradient(name: string): string {
 	return gradients[name.charCodeAt(0) % gradients.length]!;
 }
 
-function ProfileCardSkeleton() {
-	return (
-		<Card>
-			<CardContent className="pt-0 p-0">
-				<div className="h-28 bg-muted animate-pulse rounded-t-lg" />
-				<div className="p-5 space-y-3">
-					<div className="h-5 w-32 bg-muted rounded animate-pulse" />
-					<div className="h-4 w-48 bg-muted rounded animate-pulse" />
-					<div className="h-12 w-full bg-muted rounded animate-pulse" />
-				</div>
-			</CardContent>
-		</Card>
-	);
-}
-
-export default function HomePage() {
+export default function DiscoverPage() {
 	const queryClient = useQueryClient();
+	const [currentIndex, setCurrentIndex] = useState(0);
+	const [actionFeedback, setActionFeedback] = useState<string | null>(null);
 
 	const { data: profiles = [], isLoading } = useQuery(
 		orpc.profiles.browse.queryOptions({ input: {} }),
@@ -64,114 +55,218 @@ export default function HomePage() {
 
 	const interestMutation = useMutation({
 		...orpc.interests.send.mutationOptions(),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: orpc.interests.list.queryKey({ input: { type: "sent" } }) }),
+		onSuccess: () => {
+			queryClient.invalidateQueries({ queryKey: orpc.interests.list.queryKey({ input: { type: "sent" } }) });
+			showFeedback("💕 Interest sent!");
+			goNext();
+		},
 	});
 
 	const shortlistMutation = useMutation({
 		...orpc.shortlists.toggle.mutationOptions(),
-		onSuccess: () => queryClient.invalidateQueries({ queryKey: orpc.shortlists.list.queryKey({}) }),
+		onSuccess: (data: any) => {
+			queryClient.invalidateQueries({ queryKey: orpc.shortlists.list.queryKey({}) });
+			showFeedback(data.shortlisted ? "⭐ Shortlisted!" : "Removed from shortlist");
+		},
 	});
+
+	const showFeedback = (msg: string) => {
+		setActionFeedback(msg);
+		setTimeout(() => setActionFeedback(null), 1500);
+	};
+
+	const goNext = useCallback(() => {
+		if (profiles.length > 0) {
+			setCurrentIndex((prev) => (prev + 1) % profiles.length);
+		}
+	}, [profiles.length]);
+
+	const goPrev = useCallback(() => {
+		if (profiles.length > 0) {
+			setCurrentIndex((prev) => (prev - 1 + profiles.length) % profiles.length);
+		}
+	}, [profiles.length]);
+
+	const handlePass = () => {
+		showFeedback("Passed");
+		goNext();
+	};
+
+	// Keyboard navigation
+	useEffect(() => {
+		const handler = (e: KeyboardEvent) => {
+			if (e.key === "ArrowRight") goNext();
+			if (e.key === "ArrowLeft") goPrev();
+		};
+		window.addEventListener("keydown", handler);
+		return () => window.removeEventListener("keydown", handler);
+	}, [goNext, goPrev]);
 
 	if (isLoading) {
 		return (
-			<div className="space-y-6">
-				<PageHeader title="Discover" subtitle="Finding your perfect match..." />
-				<div className="grid gap-5 sm:grid-cols-2">
-					{[...Array(4)].map((_, i) => <ProfileCardSkeleton key={i} />)}
+			<div className="flex flex-col items-center justify-center min-h-[60vh]">
+				<div className="w-full max-w-lg space-y-4">
+					<div className="h-40 bg-muted rounded-t-xl animate-pulse" />
+					<div className="space-y-3 px-6">
+						<div className="h-6 w-48 bg-muted rounded animate-pulse" />
+						<div className="h-4 w-64 bg-muted rounded animate-pulse" />
+						<div className="h-20 bg-muted rounded animate-pulse" />
+					</div>
 				</div>
 			</div>
 		);
 	}
 
-	return (
-		<div className="space-y-6">
-			<PageHeader title="Discover" subtitle={`${profiles.length} profiles available · Rishta Aaya Hai ✨`} />
-
-			{profiles.length > 0 ? (
-				<div className="grid gap-5 sm:grid-cols-2">
-					{profiles.map((p) => {
-						const age = calcAge(p.dateOfBirth);
-						const grad = avatarGradient(p.displayName);
-
-						return (
-							<Card key={p.id} className="overflow-hidden group transition-all duration-300 hover:shadow-lg hover:border-primary/20">
-								<div className={`relative h-28 bg-gradient-to-br ${grad}`}>
-									<div className="absolute -bottom-8 left-5">
-										<div className="size-16 rounded-full bg-background border-4 border-background flex items-center justify-center">
-											<span className="font-display text-2xl font-bold text-primary">{p.displayName.charAt(0)}</span>
-										</div>
-									</div>
-									<div className="absolute top-3 right-3 flex gap-1.5">
-										<button
-											type="button"
-											onClick={(e) => { e.preventDefault(); shortlistMutation.mutate({ profileUserId: p.userId }); }}
-											className="size-8 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:bg-white/40 transition-colors"
-										>
-											<BookmarkIcon className="size-4 text-white" />
-										</button>
-									</div>
-									{p.isVerified && (
-										<Badge className="absolute top-3 left-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">✓ Verified</Badge>
-									)}
-								</div>
-
-								<CardContent className="pt-10 pb-4">
-									<Link href={`/browse/${p.userId}`} className="block">
-										<div className="flex items-start justify-between">
-											<div>
-												<h3 className="font-display text-lg font-semibold group-hover:text-primary transition-colors">{p.displayName}</h3>
-												<p className="text-sm text-muted-foreground">{age} yrs · {p.religion} · {p.community || ""}</p>
-											</div>
-											{p.createdBy !== "self" && (
-												<Badge className="bg-amber-500/10 text-amber-500 text-xs shrink-0">👨‍👩‍👧 Family</Badge>
-											)}
-										</div>
-
-										<div className="mt-3 grid grid-cols-2 gap-2 text-sm text-muted-foreground">
-											{p.location && <span className="flex items-center gap-1.5"><MapPinIcon className="size-3.5 text-primary/60" />{p.location}</span>}
-											{p.profession && <span className="flex items-center gap-1.5"><BriefcaseIcon className="size-3.5 text-primary/60" />{p.profession}</span>}
-											{p.education && <span className="flex items-center gap-1.5"><GraduationCapIcon className="size-3.5 text-primary/60" />{p.education}</span>}
-											{p.height && <span className="flex items-center gap-1.5"><RulerIcon className="size-3.5 text-primary/60" />{p.height} cm</span>}
-										</div>
-
-										{p.aboutMe && (
-											<p className="mt-3 text-sm text-muted-foreground line-clamp-2 italic">"{p.aboutMe}"</p>
-										)}
-
-										<div className="flex flex-wrap gap-1.5 mt-3">
-											{p.diet && <Badge className="bg-muted text-muted-foreground text-xs">{p.diet.replace(/_/g, " ")}</Badge>}
-											{p.motherTongue && <Badge className="bg-muted text-muted-foreground text-xs">{p.motherTongue}</Badge>}
-										</div>
-									</Link>
-
-									<div className="flex gap-2 mt-4 pt-3 border-t border-border/50">
-										<Button size="sm" className="flex-1" onClick={() => interestMutation.mutate({ toUserId: p.userId })} loading={interestMutation.isPending}>
-											<HeartIcon className="size-3.5 mr-1" /> Send Interest
-										</Button>
-										<Link href={`/browse/${p.userId}`} className="flex-1">
-											<Button size="sm" variant="outline" className="w-full">View Biodata</Button>
-										</Link>
-									</div>
-
-									<p className="flex items-center gap-1 text-xs text-muted-foreground mt-2">
-										<LockIcon className="size-2.5" /> Contact revealed on mutual match
-									</p>
-								</CardContent>
-							</Card>
-						);
-					})}
+	if (profiles.length === 0) {
+		return (
+			<div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
+				<div className="size-20 rounded-full bg-gradient-to-br from-rose-500/20 to-pink-500/20 flex items-center justify-center mb-6">
+					<HeartIcon className="size-9 text-primary" />
 				</div>
-			) : (
-				<Card className="border-dashed border-primary/30">
-					<CardContent className="flex flex-col items-center justify-center py-16 text-center">
-						<div className="size-16 rounded-full bg-gradient-to-br from-rose-500/20 to-pink-500/20 flex items-center justify-center mb-4">
-							<SparklesIcon className="size-7 text-primary" />
+				<p className="font-display text-2xl font-bold">No profiles yet</p>
+				<p className="text-muted-foreground mt-2 max-w-sm">Be one of the first to create a biodata and start discovering matches</p>
+			</div>
+		);
+	}
+
+	const p = profiles[currentIndex]!;
+	const age = calcAge(p.dateOfBirth);
+	const grad = avatarGradient(p.displayName);
+
+	return (
+		<div className="flex flex-col items-center">
+			{/* Counter */}
+			<div className="w-full max-w-lg flex items-center justify-between mb-4">
+				<p className="text-sm text-muted-foreground font-display">
+					Discover · <span className="text-foreground font-semibold">{currentIndex + 1}</span> of {profiles.length}
+				</p>
+				<div className="flex items-center gap-1">
+					<button onClick={goPrev} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
+						<ChevronLeftIcon className="size-4 text-muted-foreground" />
+					</button>
+					<button onClick={goNext} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
+						<ChevronRightIcon className="size-4 text-muted-foreground" />
+					</button>
+				</div>
+			</div>
+
+			{/* Profile Card */}
+			<Card className="w-full max-w-lg overflow-hidden relative">
+				{/* Action feedback overlay */}
+				{actionFeedback && (
+					<div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
+						<p className="font-display text-2xl font-bold">{actionFeedback}</p>
+					</div>
+				)}
+
+				{/* Gradient Banner */}
+				<div className={`relative h-36 bg-gradient-to-br ${grad}`}>
+					<div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
+						<div className="size-20 rounded-full bg-background border-4 border-background flex items-center justify-center shadow-lg">
+							<span className="font-display text-3xl font-bold text-primary">{p.displayName.charAt(0)}</span>
 						</div>
-						<p className="font-display font-semibold text-lg">No profiles yet</p>
-						<p className="text-sm text-muted-foreground mt-1 max-w-xs">Be one of the first to create a biodata and start discovering matches</p>
+					</div>
+					{p.isVerified && (
+						<Badge className="absolute top-3 left-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">✓ Verified</Badge>
+					)}
+					{p.createdBy !== "self" && (
+						<Badge className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">👨‍👩‍👧 By {p.createdBy}</Badge>
+					)}
+				</div>
+
+				{/* Name + basics */}
+				<CardContent className="pt-12 text-center">
+					<h2 className="font-display text-2xl font-bold">{p.displayName}</h2>
+					<p className="text-muted-foreground mt-1">{age} years · {p.religion}{p.community ? ` · ${p.community}` : ""}</p>
+
+					{/* Key details row */}
+					<div className="flex flex-wrap items-center justify-center gap-3 mt-4 text-sm text-muted-foreground">
+						{p.location && <span className="flex items-center gap-1"><MapPinIcon className="size-3.5 text-primary/70" />{p.location}</span>}
+						{p.height && <span className="flex items-center gap-1"><RulerIcon className="size-3.5 text-primary/70" />{p.height} cm</span>}
+					</div>
+				</CardContent>
+
+				{/* About */}
+				{p.aboutMe && (
+					<CardContent className="pt-0">
+						<div className="rounded-xl bg-accent/50 p-4">
+							<p className="text-sm italic text-foreground/80">"{p.aboutMe}"</p>
+						</div>
 					</CardContent>
-				</Card>
-			)}
+				)}
+
+				{/* Looking for */}
+				{p.lookingFor && (
+					<CardContent className="pt-0">
+						<p className="text-xs text-muted-foreground font-medium uppercase mb-1">Looking for</p>
+						<p className="text-sm text-muted-foreground">{p.lookingFor}</p>
+					</CardContent>
+				)}
+
+				{/* Details grid */}
+				<CardContent className="pt-0">
+					<div className="grid grid-cols-2 gap-4">
+						<div className="space-y-3">
+							<div className="flex items-center gap-2 text-xs text-muted-foreground font-medium uppercase"><BriefcaseIcon className="size-3 text-primary/60" /> Career</div>
+							{p.profession && <p className="text-sm">{p.profession}</p>}
+							{p.employer && <p className="text-xs text-muted-foreground">at {p.employer}</p>}
+							{p.education && <p className="text-sm flex items-center gap-1.5"><GraduationCapIcon className="size-3.5 text-primary/60" />{p.education}</p>}
+						</div>
+						<div className="space-y-3">
+							<div className="flex items-center gap-2 text-xs text-muted-foreground font-medium uppercase"><UsersIcon className="size-3 text-primary/60" /> Family</div>
+							{p.familyType && <p className="text-sm">{p.familyType} family</p>}
+							{p.siblings && <p className="text-xs text-muted-foreground">{p.siblings}</p>}
+						</div>
+					</div>
+				</CardContent>
+
+				{/* Tags */}
+				<CardContent className="pt-0">
+					<div className="flex flex-wrap gap-1.5">
+						{p.diet && <Badge className="bg-muted text-muted-foreground text-xs">{p.diet.replace(/_/g, " ")}</Badge>}
+						{p.motherTongue && <Badge className="bg-muted text-muted-foreground text-xs">{p.motherTongue}</Badge>}
+						{p.smoking !== "never" && <Badge className="bg-muted text-muted-foreground text-xs">Smokes: {p.smoking}</Badge>}
+						{p.drinking !== "never" && <Badge className="bg-muted text-muted-foreground text-xs">Drinks: {p.drinking}</Badge>}
+						{p.maritalStatus !== "never_married" && <Badge className="bg-amber-500/10 text-amber-500 text-xs">{p.maritalStatus.replace(/_/g, " ")}</Badge>}
+					</div>
+				</CardContent>
+
+				{/* Action Buttons */}
+				<CardContent className="pt-2 pb-6">
+					<div className="flex items-center justify-center gap-4">
+						{/* Pass */}
+						<button
+							type="button"
+							onClick={handlePass}
+							className="size-14 rounded-full border-2 border-muted-foreground/20 flex items-center justify-center hover:border-rose-500 hover:bg-rose-500/10 transition-all"
+						>
+							<XIcon className="size-6 text-muted-foreground" />
+						</button>
+
+						{/* Shortlist */}
+						<button
+							type="button"
+							onClick={() => shortlistMutation.mutate({ profileUserId: p.userId })}
+							className="size-12 rounded-full border-2 border-amber-500/30 flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10 transition-all"
+						>
+							<BookmarkIcon className="size-5 text-amber-500" />
+						</button>
+
+						{/* Send Interest */}
+						<button
+							type="button"
+							onClick={() => interestMutation.mutate({ toUserId: p.userId })}
+							className="size-16 rounded-full bg-primary flex items-center justify-center hover:bg-primary/90 transition-all shadow-lg shadow-primary/25"
+						>
+							<HeartIcon className="size-7 text-primary-foreground" />
+						</button>
+					</div>
+
+					<p className="text-center text-xs text-muted-foreground mt-3">
+						← → arrow keys to browse · ❤️ to connect
+					</p>
+				</CardContent>
+			</Card>
 		</div>
 	);
 }
