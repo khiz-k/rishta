@@ -6,11 +6,14 @@ import { Input } from "@repo/ui/components/input";
 import { Label } from "@repo/ui/components/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@repo/ui/components/select";
 import { Textarea } from "@repo/ui/components/textarea";
+import { useSession } from "@auth/hooks/use-session";
 import { PageHeader } from "@shared/components/PageHeader";
 import { orpc } from "@shared/lib/orpc-query-utils";
+import { uploadProfilePhoto } from "@shared/lib/supabase";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { CameraIcon } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const RELIGIONS = ["hindu", "muslim", "sikh", "christian", "jain", "buddhist", "other"];
 const MARITAL = ["never_married", "divorced", "widowed", "annulled"];
@@ -23,6 +26,7 @@ const CREATED_BY = ["self", "parent", "sibling", "relative"];
 export default function EditProfilePage() {
 	const router = useRouter();
 	const queryClient = useQueryClient();
+	const { user } = useSession();
 	const { data: existing } = useQuery(orpc.profiles.me.queryOptions({}));
 
 	const [form, setForm] = useState({
@@ -31,7 +35,7 @@ export default function EditProfilePage() {
 		education: "", university: "", profession: "", employer: "", incomeRange: "",
 		familyType: "", fatherOccupation: "", motherOccupation: "", siblings: "",
 		diet: "non_veg", smoking: "never", drinking: "never",
-		aboutMe: "", lookingFor: "", createdBy: "self", location: "",
+		aboutMe: "", lookingFor: "", createdBy: "self", location: "", profilePhoto: "",
 	});
 
 	useEffect(() => {
@@ -61,6 +65,7 @@ export default function EditProfilePage() {
 				lookingFor: existing.lookingFor || "",
 				createdBy: existing.createdBy || "self",
 				location: existing.location || "",
+				profilePhoto: existing.profilePhoto || "",
 			});
 		}
 	}, [existing]);
@@ -77,8 +82,10 @@ export default function EditProfilePage() {
 
 	const handleSubmit = () => {
 		if (!form.displayName || !form.dateOfBirth || !form.religion) return;
+		const { profilePhoto, ...rest } = form;
 		mutation.mutate({
-			...form,
+			...rest,
+			profilePhoto: profilePhoto || undefined,
 			height: form.height ? Number.parseInt(form.height) : undefined,
 			maritalStatus: form.maritalStatus as any,
 			diet: form.diet as any,
@@ -89,9 +96,51 @@ export default function EditProfilePage() {
 		});
 	};
 
+	const [uploading, setUploading] = useState(false);
+	const fileRef = useRef<HTMLInputElement>(null);
+
+	const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+		const file = e.target.files?.[0];
+		if (!file) return;
+		setUploading(true);
+		try {
+			const url = await uploadProfilePhoto(user?.id || "unknown", file);
+			set("profilePhoto", url);
+		} catch (err) {
+			console.error("Upload failed:", err);
+		} finally {
+			setUploading(false);
+		}
+	};
+
 	return (
 		<div className="space-y-6 max-w-2xl">
 			<PageHeader title={existing ? "Edit Biodata" : "Create Biodata"} subtitle="Fill in your details" />
+
+			{/* Photo Upload */}
+			<Card>
+				<CardContent className="pt-6 flex flex-col items-center">
+					<input ref={fileRef} type="file" accept="image/jpeg,image/png,image/webp" className="hidden" onChange={handlePhotoUpload} />
+					<button
+						type="button"
+						onClick={() => fileRef.current?.click()}
+						className="relative group"
+						disabled={uploading}
+					>
+						{form.profilePhoto ? (
+							<img src={form.profilePhoto} alt="Profile" className="size-28 rounded-full object-cover border-4 border-border" />
+						) : (
+							<div className="size-28 rounded-full bg-muted flex items-center justify-center border-4 border-border">
+								<CameraIcon className="size-8 text-muted-foreground" />
+							</div>
+						)}
+						<div className="absolute inset-0 rounded-full bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+							<CameraIcon className="size-6 text-white" />
+						</div>
+					</button>
+					<p className="text-xs text-muted-foreground mt-2">{uploading ? "Uploading..." : "Click to upload photo"}</p>
+				</CardContent>
+			</Card>
 
 			<Card>
 				<CardHeader><CardTitle>Basic Information</CardTitle></CardHeader>

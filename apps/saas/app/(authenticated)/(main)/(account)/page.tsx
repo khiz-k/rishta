@@ -397,9 +397,13 @@ export default function DiscoverPage() {
 										initial={{ scale: 0.8 }}
 										animate={{ scale: 1 }}
 										transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
-										className="size-20 rounded-full bg-background border-4 border-background flex items-center justify-center shadow-lg"
+										className="size-20 rounded-full bg-background border-4 border-background flex items-center justify-center shadow-lg overflow-hidden"
 									>
-										<span className="font-display text-3xl font-bold text-primary">{p.displayName.charAt(0)}</span>
+										{p.profilePhoto ? (
+											<img src={p.profilePhoto} alt={p.displayName} className="size-full object-cover" />
+										) : (
+											<span className="font-display text-3xl font-bold text-primary">{p.displayName.charAt(0)}</span>
+										)}
 									</motion.div>
 								</div>
 								{p.isVerified && (
