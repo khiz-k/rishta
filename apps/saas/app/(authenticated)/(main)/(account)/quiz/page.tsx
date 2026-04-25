@@ -34,10 +34,14 @@ export default function QuizPage() {
 		educationLevels: "",
 		religions: "",
 		diet: "",
-		valuesLooks: 5,
-		valuesPersonality: 5,
-		valuesFinancial: 5,
+		valuesLooks: 4,
+		valuesPersonality: 4,
+		valuesFinancial: 4,
 	});
+
+	const TOTAL_POINTS = 12;
+	const pointsUsed = answers.valuesLooks + answers.valuesPersonality + answers.valuesFinancial;
+	const pointsLeft = TOTAL_POINTS - pointsUsed;
 
 	const mutation = useMutation({
 		...orpc.preferences.upsert.mutationOptions(),
@@ -231,12 +235,25 @@ export default function QuizPage() {
 								</div>
 							)}
 
-							{/* Step 5: Values */}
+							{/* Step 5: Values — Point Allocation */}
 							{step === 4 && (
 								<div className="space-y-6">
-									<SliderInput label="How important are looks?" value={answers.valuesLooks} onChange={(v) => set("valuesLooks", v)} />
-									<SliderInput label="How important is personality?" value={answers.valuesPersonality} onChange={(v) => set("valuesPersonality", v)} />
-									<SliderInput label="How important is financial stability?" value={answers.valuesFinancial} onChange={(v) => set("valuesFinancial", v)} />
+									<div className={`text-center rounded-xl p-3 ${pointsLeft === 0 ? "bg-emerald-500/10 text-emerald-500" : pointsLeft < 0 ? "bg-destructive/10 text-destructive" : "bg-accent"}`}>
+										<p className="font-display font-bold text-lg">{pointsLeft} points left</p>
+										<p className="text-xs opacity-70">Distribute {TOTAL_POINTS} points across what matters most. You can't max everything — make tradeoffs.</p>
+									</div>
+									<SliderInput label="Physical attraction" value={answers.valuesLooks} onChange={(v) => {
+										const newTotal = v + answers.valuesPersonality + answers.valuesFinancial;
+										if (newTotal <= TOTAL_POINTS) set("valuesLooks", v);
+									}} />
+									<SliderInput label="Personality & character" value={answers.valuesPersonality} onChange={(v) => {
+										const newTotal = answers.valuesLooks + v + answers.valuesFinancial;
+										if (newTotal <= TOTAL_POINTS) set("valuesPersonality", v);
+									}} />
+									<SliderInput label="Financial stability" value={answers.valuesFinancial} onChange={(v) => {
+										const newTotal = answers.valuesLooks + answers.valuesPersonality + v;
+										if (newTotal <= TOTAL_POINTS) set("valuesFinancial", v);
+									}} />
 								</div>
 							)}
 						</CardContent>
