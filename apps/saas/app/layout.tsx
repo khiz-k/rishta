@@ -6,14 +6,14 @@ import type { Metadata } from "next";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ThemeProvider } from "next-themes";
-import { Outfit, Inter } from "next/font/google";
+import { Outfit, DM_Sans } from "next/font/google";
 
 import "./globals.css";
 import "cropperjs/dist/cropper.css";
 import { NuqsAdapter } from "nuqs/adapters/next/app";
 import type { PropsWithChildren } from "react";
 
-const sansFont = Inter({
+const sansFont = DM_Sans({
 	weight: ["300", "400", "500", "600", "700"],
 	subsets: ["latin"],
 	variable: "--font-sans",

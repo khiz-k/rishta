@@ -20,6 +20,7 @@ import {
 	UsersIcon,
 	XIcon,
 } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useCallback, useEffect, useState } from "react";
 
 function calcAge(dob: string): number {
@@ -137,8 +138,8 @@ export default function DiscoverPage() {
 		<div className="flex flex-col items-center">
 			{/* Counter */}
 			<div className="w-full max-w-lg flex items-center justify-between mb-4">
-				<p className="text-sm text-muted-foreground font-display">
-					Discover · <span className="text-foreground font-semibold">{currentIndex + 1}</span> of {profiles.length}
+				<p className="text-sm text-muted-foreground">
+					<span className="font-display">Discover</span> · <span className="text-foreground font-semibold">{currentIndex + 1}</span> of {profiles.length}
 				</p>
 				<div className="flex items-center gap-1">
 					<button onClick={goPrev} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
@@ -151,7 +152,16 @@ export default function DiscoverPage() {
 			</div>
 
 			{/* Profile Card */}
-			<Card className="w-full max-w-lg overflow-hidden relative">
+			<AnimatePresence mode="wait">
+			<motion.div
+				key={currentIndex}
+				initial={{ opacity: 0, x: 40, scale: 0.98 }}
+				animate={{ opacity: 1, x: 0, scale: 1 }}
+				exit={{ opacity: 0, x: -40, scale: 0.98 }}
+				transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
+				className="w-full max-w-lg"
+			>
+			<Card className="w-full overflow-hidden relative">
 				{/* Action feedback overlay */}
 				{actionFeedback && (
 					<div className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm">
@@ -263,10 +273,12 @@ export default function DiscoverPage() {
 					</div>
 
 					<p className="text-center text-xs text-muted-foreground mt-3">
-						← → arrow keys to browse · ❤️ to connect
+						← → to browse · tap ❤️ to connect
 					</p>
 				</CardContent>
 			</Card>
+			</motion.div>
+			</AnimatePresence>
 		</div>
 	);
 }
