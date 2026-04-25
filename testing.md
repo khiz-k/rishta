@@ -1,9 +1,10 @@
 # Vow — Manual Testing Checklist
 
 ## Prerequisites
-- App deployed at `https://vow-saas.vercel.app`
+- App deployed at `https://rishta-saas.vercel.app`
 - Supabase database with schema pushed
-- 8 sample profiles seeded in the database
+- Supabase Storage `avatars` bucket with SELECT + INSERT policies
+- 8 sample profiles seeded
 
 ---
 
@@ -12,292 +13,238 @@
 ### Signup
 - [ ] Go to `/signup`
 - [ ] Create account with email + password
-- [ ] Check rose glow behind auth card (dark mode)
-- [ ] Check Outfit display font on "Create an account" heading
-- [ ] Heart logo visible in top-left
-
-### Email Verification
-- [ ] After signup, you'll see "verify your email" (email won't arrive without Resend)
-- [ ] Ask admin to verify email in database, or login directly
+- [ ] Rose glow behind auth card (dark mode)
+- [ ] Outfit display font on heading
+- [ ] Interlocking rings logo in top-left
+- [ ] "Vow" text next to logo
 
 ### Login
 - [ ] Go to `/login`
 - [ ] Log in with verified account
-- [ ] Verify redirect to dashboard (`/`)
-- [ ] Heart favicon visible in browser tab
+- [ ] Redirected to `/quiz` (if quiz not completed)
+- [ ] Ring favicon in browser tab
 
 ---
 
-## 2. Homepage / Discover (`/`) — Single-Card View
+## 2. Onboarding Quiz (`/quiz`)
 
-### Card Layout (One profile at a time, like Hinge/Tinder)
-- [ ] Counter at top: "Discover · **1** of 8"
-- [ ] Arrow buttons (← →) at top-right to navigate
-- [ ] **Keyboard shortcuts**: ← → arrow keys work
-- [ ] Single centered card, max-width ~500px
-- [ ] Gradient banner (unique color per person) with floating avatar initial
-- [ ] Verified badge + "Created by family" badge on banner
-- [ ] Name, age, religion, community centered below avatar
-- [ ] Location + height row
-- [ ] About me in tinted quote card
-- [ ] "Looking for" section
-- [ ] Career + Family side-by-side details
-- [ ] Diet/language/lifestyle tags
+### Step 1: The Non-Negotiables
+- [ ] "When are you looking to get married?" — 4 options (3mo/6mo/1yr/2yr+)
+- [ ] Animated option buttons with spring tap
+- [ ] Cannot advance without selecting timeline
+- [ ] Progress bar shows 1/5
 
-### Action Buttons (Bottom of card)
-- [ ] **✗ Pass** — outline circle, moves to next profile
-- [ ] **⭐ Shortlist** — amber circle, saves profile
-- [ ] **❤️ Send Interest** — large filled primary circle with shadow
-- [ ] **Feedback overlay** — "💕 Interest sent!" / "⭐ Shortlisted!" / "Passed" flashes briefly
-- [ ] After sending interest → auto-advances to next profile
-- [ ] Hint text: "← → arrow keys to browse · ❤️ to connect"
+### Step 2: Location & Residency
+- [ ] "Willing to relocate?" — Yes/No option buttons
+- [ ] "Require citizenship/PR?" — Yes/No option buttons
+- [ ] Preferred locations text input
+- [ ] Cannot advance without both yes/no answered
 
-### Loading & Empty States
-- [ ] Skeleton loading state (gradient placeholder + text placeholders)
-- [ ] Empty state: large heart icon + "No profiles yet"
+### Step 3: Background & Family
+- [ ] Min/Max age inputs
+- [ ] Community/Ethnicity text input
+- [ ] Education level preferred input
 
-### Sidebar
-- [ ] **Collapsed by default** (icons only — maximizes card viewing area)
-- [ ] Click expand button to see labels
-- [ ] Nav order: Discover → Interests → Matches → Shortlist → My Biodata → Activity → Preferences
-- [ ] Heart logo (not rocket) in top-left
-- [ ] No organization selector (orgs disabled)
-- [ ] No template items (Cases, Price List, Chatbot)
+### Step 4: Dealbreakers
+- [ ] Religion input (comma-separated)
+- [ ] Diet preference input
 
-## 2b. Activity (`/activity`)
+### Step 5: Values
+- [ ] Looks slider (1-10) with live value display
+- [ ] Personality slider (1-10)
+- [ ] Financial stability slider (1-10)
+- [ ] "Not important" / "Essential" labels
 
-### Overview
-- [ ] Profile completeness card with progress bar + contextual messages
-- [ ] 4 stat cards: Pending Interests, Interests Sent, Matches, Privacy
-- [ ] "Your vow is waiting" CTA if no profile exists
+### Flow
+- [ ] Animated step transitions (slide left/right)
+- [ ] Back button on steps 2-5
+- [ ] "Build my profile" button on step 5 → saves preferences + redirects to `/profile/edit`
+- [ ] Quiz data persists in `partner_preference` table
 
 ---
 
 ## 3. Profile Creation (`/profile/edit`)
 
-### Form Sections
-- [ ] **Basic Info**: Display Name*, Gender*, Date of Birth*, Height, Religion*, Community, Mother Tongue, Marital Status, Location, Created By
-- [ ] **Education & Career**: Education, University, Profession, Employer, Income Range
-- [ ] **Family**: Family Type, Siblings, Father's Occupation, Mother's Occupation
-- [ ] **Lifestyle**: Diet, Smoking, Drinking (all dropdowns)
-- [ ] **About**: About Me (textarea), Looking For (textarea)
-
-### Validation
-- [ ] Cannot submit without Display Name, Date of Birth, Religion (required fields)
-- [ ] Form shows existing data when editing
-- [ ] After save → redirects to `/profile`
-
-### Test Data
-Create a profile with:
-- Name: "Test User"
-- Gender: Male
-- DOB: 1996-06-15
-- Height: 175
-- Religion: Hindu
-- Community: Punjabi
-- Education: Masters
-- Profession: Engineer
-- Location: Dallas, TX
-
----
-
-## 4. My Profile (`/profile`)
-
-- [ ] Header card with initial avatar, name, age, gender, religion, location
-- [ ] "Created by [parent/self]" badge if applicable
-- [ ] "Verified" badge (green) if profile is verified
-- [ ] About Me and Looking For sections (if filled)
-- [ ] Basic Info section: Age, Height, Religion, Community, Mother Tongue, Marital Status, Diet
-- [ ] Education & Career section: Education, University, Profession, Employer, Income
-- [ ] Family section: Family Type, Father's Occupation, Mother's Occupation, Siblings
-- [ ] "Edit" button navigates to `/profile/edit`
-- [ ] Empty state if no profile: "No profile yet" with "Create Biodata" button
-
----
-
-## 5. Browse / Discover (`/browse`)
-
-### Profile Cards
-- [ ] 8 sample profiles visible in 2-column grid
-- [ ] Each card has a **unique gradient header** (rose, violet, amber, emerald, etc.)
-- [ ] Large **initial avatar** floating over the gradient
-- [ ] **Bookmark button** (🔖) overlaid on gradient header
-- [ ] **Verified badge** on verified profiles
-- [ ] Name, age, religion, community visible
-- [ ] **2-column detail grid**: location, profession, education, height (with icons)
-- [ ] **About me preview** in italic (2-line clamp)
-- [ ] **Tags**: diet, language, marital status
-- [ ] **"Send Interest"** button on each card
-- [ ] **"View Biodata"** button on each card
-- [ ] **🔒 "Contact revealed on mutual match"** note on every card
-
-### Interactions
-- [ ] Click "Send Interest" → success (or "already sent")
-- [ ] Click bookmark → shortlists the profile
-- [ ] Click card body or "View Biodata" → navigates to `/browse/[userId]`
-
-### Empty State
-- [ ] If somehow no profiles: sparkle icon + "No profiles yet"
-
----
-
-## 6. Profile Detail (`/browse/[userId]`)
-
-- [ ] "Back to browse" link at top
-- [ ] Gradient header with name, age, gender, religion, location
-- [ ] Community badge + "Created by family" badge if applicable
-- [ ] **Send Interest** + **Shortlist** buttons
-- [ ] "✅ Interest sent!" confirmation after sending
-- [ ] About section: About Me + Looking For
-- [ ] Basic Info card: Height, Marital Status, Mother Tongue, Diet, Smoking, Drinking
-- [ ] Education & Career card: Education, University, Profession, Employer, Income
-- [ ] Family card: Family Type, Siblings, Father's & Mother's Occupation
-
----
-
-## 7. Interests (`/interests`)
-
-### Tabs
-- [ ] Two tabs: **Received** and **Sent**
-- [ ] Default tab is "Received"
-
-### Received Interests
-- [ ] Shows profiles that sent you an interest
-- [ ] Each row: avatar initial, name, age, religion, location
-- [ ] Status badge: "pending" (amber), "accepted" (green), "declined" (red)
-- [ ] **Accept** (✓) and **Decline** (✗) buttons on pending interests
-- [ ] Accept → status changes to "accepted"
-- [ ] Decline → status changes to "declined"
-
-### Sent Interests
-- [ ] Shows profiles you sent interest to
-- [ ] Status badges visible (no action buttons — you wait)
-
-### Empty State
-- [ ] "No received interests yet — When someone shows interest, it'll appear here"
-- [ ] "No sent interests yet — Browse profiles and send interests"
-
----
-
-## 8. Matches (`/matches`)
-
-### When Matched
-- [ ] A match occurs when BOTH users accept each other's interest
-- [ ] Match card shows gradient header (violet → pink)
-- [ ] Name, age, religion, location visible
-- [ ] **"Matched" badge** with sparkle icon
-- [ ] **Contact Details revealed**: email address shown
-- [ ] Contact name shown
-
-### Empty State
-- [ ] "No matches yet — When you and someone both accept each other's interest, you'll see them here with their contact info"
-
-### Test Flow for Matching
-1. Log in as User A → send interest to User B
-2. Log in as User B → go to Interests → accept User A's interest
-3. Log in as User B → send interest to User A
-4. Log in as User A → go to Interests → accept User B's interest
-5. Both users should now see each other in `/matches` with contact details
-
----
-
-## 9. Shortlist (`/shortlist`)
-
-- [ ] Shows grid of bookmarked profiles
-- [ ] Each card: avatar initial, name, age, religion, location
-- [ ] Click card → navigates to profile detail
-- [ ] Empty state: "No saved profiles — Bookmark profiles while browsing to save them here"
-
----
-
-## 10. Preferences (`/preferences`)
+### Photo Upload
+- [ ] Camera icon circle at top of form
+- [ ] Click to open file picker
+- [ ] Upload to Supabase Storage `avatars` bucket
+- [ ] Preview shows uploaded photo
+- [ ] Hover overlay with camera icon
+- [ ] "Uploading..." indicator
 
 ### Form
-- [ ] **Age & Height**: Min/Max age, Min/Max height (cm)
-- [ ] **Background**: Religions, Communities, Education Levels, Professions (comma-separated text)
-- [ ] **Lifestyle & Location**: Locations, Diet, Marital Status
-- [ ] Save button → "✅ Saved!" confirmation
+- [ ] Basic Info: Name*, Gender*, DOB*, Height, Religion*, Community, Mother Tongue, Marital Status, Location, Created By
+- [ ] Education & Career: Education, University, Profession, Employer, Income Range
+- [ ] Family: Family Type, Siblings, Father/Mother Occupation
+- [ ] Lifestyle: Diet, Smoking, Drinking
+- [ ] About: About Me + Looking For textareas
+- [ ] "Create Profile" button → saves → redirects to `/` (discover)
 
-### Persistence
-- [ ] After saving, refresh page → values persist
-- [ ] Edit values → save again → updates correctly
+### Gating
+- [ ] Cannot access any page without completing quiz first
+- [ ] Cannot access discover without creating profile
+- [ ] Settings page always accessible
 
 ---
 
-## 11. UI/UX Checks
+## 4. Discover (`/`) — Single Card View
 
-### Theme
-- [ ] Dark mode is default
-- [ ] Rose/burgundy accent throughout (buttons, links, gradients)
-- [ ] Toggle to light mode → verify rose theme works
+### Card Layout
+- [ ] Progress dots (Instagram-style, clickable)
+- [ ] Counter: "Discover · 1/8"
+- [ ] Arrow buttons (← →) + keyboard shortcuts
+- [ ] Gradient banner (unique color per person)
+- [ ] Avatar with photo (or initial letter fallback)
+- [ ] Avatar spring-in animation
+- [ ] Verified badge + "Created by" badge on banner
+- [ ] **Compatibility % badge** (green ≥75%, amber ≥50%) if quiz completed
+- [ ] Name, age, religion, community centered
+- [ ] Location + height row
+- [ ] About me in tinted quote card
+- [ ] "Looking for" section
+- [ ] Career + Family side-by-side details
+- [ ] Diet/language/lifestyle tags
+- [ ] Staggered content fade-in
 
-### Typography
-- [ ] Page headings: Outfit display font
-- [ ] Body text: Inter
-- [ ] Auth form headings: display font
-- [ ] Stats/numbers: display font
+### Actions
+- [ ] **✗ Pass** — spring button, whoosh sound, advances
+- [ ] **⭐ Shortlist** — spring button, pop sound
+- [ ] **❤️ Interest** — large spring button, ding sound, confetti, auto-advance
+- [ ] **Swipe left** = pass (card tilts, red ✗ overlay)
+- [ ] **Swipe right** = interest (card tilts, pink ❤️ overlay)
+- [ ] Haptic feedback on mobile
+- [ ] Feedback overlay springs in ("Interest sent" / "Shortlisted" / "Passed")
+- [ ] Ambient glow behind card
 
-### Icons & Branding
-- [ ] Heart logo in sidebar (not rocket)
-- [ ] Rose heart favicon in browser tab
-- [ ] Sidebar nav items have relevant icons (Search, Heart, Sparkles, Bookmark, etc.)
+### Gender Filter
+- [ ] Males see female profiles, females see male profiles (automatic)
+
+### Preference Sorting
+- [ ] Profiles sorted by match score (religion 5pts, location 4pts, age 3pts, diet 2pts)
+
+---
+
+## 5. Interests (`/interests`)
+
+- [ ] Received tab: profiles with pending/accepted/declined badges
+- [ ] Accept (✓) and Decline (✗) buttons on pending
+- [ ] Sent tab: profiles with status badges
+- [ ] Empty state per tab
+
+---
+
+## 6. Matches (`/matches`)
+
+- [ ] Gradient header per match
+- [ ] Name, age, religion, location
+- [ ] "Matched" sparkle badge
+- [ ] Contact email revealed
+- [ ] **"Chat" button** → navigates to `/matches/[userId]`
+
+---
+
+## 7. Messages (`/messages`)
+
+- [ ] Conversation list showing all matches
+- [ ] Profile photo (or initial) + name per conversation
+- [ ] "Tap to start chatting" subtitle
+- [ ] Empty state: "No conversations yet"
+
+---
+
+## 8. Chat (`/matches/[userId]`)
+
+- [ ] Header with avatar + name + "Matched"
+- [ ] Back button → `/matches`
+- [ ] iMessage-style bubbles (primary = sent, muted = received)
+- [ ] **Read receipts**: ✓ (sent, faded) / ✓✓ (read, brighter) on own messages
+- [ ] Timestamps on each message
+- [ ] Enter to send
+- [ ] Auto-scroll to bottom
+- [ ] 3-second polling for new messages
+- [ ] **Auto mark-as-read** when opening conversation
+- [ ] Empty state: "Say hello to start the conversation"
+
+---
+
+## 9. My Profile (`/profile`)
+
+- [ ] Header with photo/initial, name, age, gender, religion, location
+- [ ] Verified + "Created by" badges
+- [ ] About Me + Looking For
+- [ ] Basic Info / Education / Family sections
+- [ ] Edit button → `/profile/edit`
+
+---
+
+## 10. Activity (`/activity`)
+
+- [ ] Profile completeness progress bar
+- [ ] Pending interests, sent interests, matches, privacy cards
+- [ ] "Your person is out there" CTA if no profile
+
+---
+
+## 11. Shortlist (`/shortlist`)
+
+- [ ] Grid of bookmarked profiles
+- [ ] Click → profile detail
+
+---
+
+## 12. Preferences (`/preferences`)
+
+- [ ] All quiz fields editable
+- [ ] Save persists
+
+---
+
+## 13. UI/UX Checks
+
+### Theme & Typography
+- [ ] Dark mode default, rose/burgundy accent
+- [ ] DM Sans body + Outfit display headings
+- [ ] Interlocking rings logo + "Vow" label
+
+### Nav
+- [ ] Collapsed by default (icons only)
+- [ ] Order: Discover → Interests → Matches → Messages → Shortlist → My Biodata → Activity → Preferences
 - [ ] No template items (Cases, Price List, Chatbot)
 
-### Browse Page Design
-- [ ] Gradient card headers (not flat/boring)
-- [ ] Avatars with border ring floating over gradient
-- [ ] Privacy lock note on every card
-- [ ] Inline action buttons (Send Interest + View Biodata)
-
-### Loading States
-- [ ] Dashboard shows skeleton cards while loading
-- [ ] Browse shows skeleton cards while loading
-- [ ] Profile shows skeleton while loading
-- [ ] No "$0" or "0%" flash before data loads
-
-### Responsive
-- [ ] Dashboard stacks on mobile
-- [ ] Browse cards go single-column on mobile
-- [ ] Profile edit form is usable on mobile
-- [ ] Sidebar collapses to hamburger on mobile
-
----
-
-## 12. Edge Cases
-
-- [ ] Try sending interest to same person twice (should not duplicate)
-- [ ] Try shortlisting same person twice (should toggle off)
-- [ ] Access `/browse/nonexistent-id` → "Profile not found"
-- [ ] Access pages without logging in → redirect to `/login`
-- [ ] Create profile → edit it → verify changes persist
+### Animations
+- [ ] Card slide on profile navigate
+- [ ] Spring buttons on all actions
+- [ ] Confetti on interest sent
+- [ ] Sound effects (whoosh/ding/pop)
+- [ ] Staggered content reveal
+- [ ] Auth glow behind login card
 
 ---
 
 ## Quick Test Flow (5 minutes)
 
-1. Sign up → complete onboarding (name/avatar)
-2. Homepage = **Discover** → single profile card centered, sidebar collapsed
-3. Use ← → arrows or buttons to browse through 8 profiles
-4. Hit ❤️ on 2 profiles → see "💕 Interest sent!" feedback + auto-advance
-5. Hit ⭐ on 1 profile → see "⭐ Shortlisted!" feedback
-6. Hit ✗ on 1 profile → "Passed" + advances
-7. Create biodata (`/profile/edit`) → fill basic fields → save
-8. Go to Activity (`/activity`) → see completeness bar + 2 sent interests
-9. Check Interests → Sent tab → see 2 pending
-10. Check Shortlist → see 1 saved profile
-11. ✅ Done — Hinge-style discovery flow works end to end
+1. Sign up → onboarding
+2. **Quiz**: timeline → location → background → dealbreakers → values
+3. **Profile**: upload photo, fill name/gender/DOB/religion → save
+4. **Discover**: swipe through profiles, see compatibility badges
+5. Hit ❤️ on 2 profiles, ⭐ shortlist 1, ✗ pass 1
+6. Check Interests → Sent tab
+7. Check Shortlist
+8. Check Activity → see stats
+9. ✅ Done — full flow works
 
 ---
 
-## Sample Profiles in Database
+## Sample Profiles
 
 | Name | Gender | Religion | Community | Profession | Location |
 |------|--------|----------|-----------|------------|----------|
-| Priya Sharma | Female | Hindu | Punjabi | Software Engineer @ Google | San Francisco, CA |
-| Rahul Patel | Male | Hindu | Gujarati | Product Manager @ Microsoft | Seattle, WA |
-| Aisha Khan | Female | Muslim | Hyderabadi | UX Designer @ Meta | Austin, TX |
-| Arjun Reddy | Male | Hindu | Tamil | Data Scientist @ Amazon | New York, NY |
-| Simran Kaur | Female | Sikh | Punjabi | Doctor @ Johns Hopkins | Toronto, ON |
-| Vikram Mehta | Male | Jain | Gujarati | Investment Banker @ Goldman Sachs | Chicago, IL |
-| Nadia Ahmed | Female | Muslim | Bengali | Marketing Manager @ Spotify | Brooklyn, NY |
-| Rohan Gupta | Male | Hindu | Bengali | Engineer @ Tesla | Palo Alto, CA |
+| Priya Sharma | Female | Hindu | Punjabi | SWE @ Google | San Francisco |
+| Rahul Patel | Male | Hindu | Gujarati | PM @ Microsoft | Seattle |
+| Aisha Khan | Female | Muslim | Hyderabadi | UX @ Meta | Austin |
+| Arjun Reddy | Male | Hindu | Tamil | DS @ Amazon | New York |
+| Simran Kaur | Female | Sikh | Punjabi | Doctor @ JHU | Toronto |
+| Vikram Mehta | Male | Jain | Gujarati | IB @ Goldman | Chicago |
+| Nadia Ahmed | Female | Muslim | Bengali | Marketing @ Spotify | Brooklyn |
+| Rohan Gupta | Male | Hindu | Bengali | Engineer @ Tesla | Palo Alto |

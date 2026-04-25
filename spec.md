@@ -2,7 +2,7 @@
 
 ## What it is
 
-Vow is a modern matrimonial platform for the South Asian diaspora. It combines the traditional biodata format families trust with a sleek, privacy-first digital experience. Families and individuals can create profiles, set preferences, express interest, and connect — all without the cringe of dating apps.
+Vow is a modern, universal marriage matchmaker. It combines the traditional biodata format with a Hinge-style swipe discover experience, privacy-first design, and intentional matching through a 5-step onboarding quiz. For anyone serious about marriage — any culture, any background.
 
 Tagline: **"Vow Aaya Hai"**
 
@@ -141,9 +141,9 @@ shortlist
 ### Acceptance Criteria
 
 - [x] User can create/edit biodata profile
-- [ ] User can upload profile photo (Phase 1.1 — needs S3/storage)
-- [x] User can set partner preferences
-- [ ] Browse page shows preference-filtered profiles (Phase 1.1 — currently shows all)
+- [x] User can upload profile photo (Supabase Storage)
+- [x] User can set partner preferences (5-step quiz)
+- [x] Browse page shows preference-sorted profiles (match scoring)
 - [x] User can express interest (buttons + swipe gestures)
 - [x] User can accept/decline interests
 - [x] Matched users can see each other's contact info
@@ -151,10 +151,14 @@ shortlist
 - [x] "Created by Family" badge on family-created profiles
 - [x] Profile completeness indicator (progress bar on Activity page)
 - [x] Dark mode (default)
-- [ ] Gender-based browsing — males see females, vice versa (Phase 1.1)
+- [x] Gender-based browsing — auto-filters opposite gender
+- [x] 5-step onboarding quiz gates the app
+- [x] Forced profile creation before discover
+- [x] Messaging between matches with read receipts
+- [x] Compatibility % badge on discover cards
 
-### Beyond-Spec Features (Implemented)
-- [x] Tinder-style swipe gestures (drag left=pass, right=interest, with tilt)
+### Premium UX Features
+- [x] Hinge-style swipe gestures (drag left=pass, right=interest, with tilt)
 - [x] Ghost overlays during swipe (✗ red / ❤️ pink)
 - [x] Sound design (whoosh, ding, pop via Web Audio API)
 - [x] Confetti burst on interest sent
@@ -165,6 +169,9 @@ shortlist
 - [x] Ambient glow behind card
 - [x] Card-shaped skeleton loading
 - [x] DM Sans body font (upgraded from Inter per design review)
+- [x] Read receipts (✓ sent / ✓✓ read)
+- [x] Auto mark-as-read on chat open
+- [x] iMessage-style chat bubbles with polling
 
 ### Architecture Decisions
 
