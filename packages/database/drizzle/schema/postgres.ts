@@ -294,6 +294,8 @@ export const userRelations = relations(user, ({ one, many }) => ({
 	sentInterests: many(interest, { relationName: "sentInterests" }),
 	receivedInterests: many(interest, { relationName: "receivedInterests" }),
 	shortlists: many(shortlist, { relationName: "shortlists" }),
+	sentMessages: many(message, { relationName: "sentMessages" }),
+	receivedMessages: many(message, { relationName: "receivedMessages" }),
 }));
 
 export const sessionRelations = relations(session, ({ one }) => ({
@@ -517,6 +519,29 @@ export const shortlist = pgTable(
 	],
 );
 
+export const message = pgTable(
+	"message",
+	{
+		id: text("id")
+			.$defaultFn(() => cuid())
+			.primaryKey(),
+		fromUserId: text("fromUserId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		toUserId: text("toUserId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		content: text("content").notNull(),
+		read: boolean("read").default(false).notNull(),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+	},
+	(table) => [
+		index("message_fromUserId_idx").on(table.fromUserId),
+		index("message_toUserId_idx").on(table.toUserId),
+		index("message_conversation_idx").on(table.fromUserId, table.toUserId),
+	],
+);
+
 // ===== Rishta Relations =====
 
 export const biodataProfileRelations = relations(biodataProfile, ({ one }) => ({
@@ -555,6 +580,19 @@ export const shortlistRelations = relations(shortlist, ({ one }) => ({
 	profileUser: one(user, {
 		fields: [shortlist.profileUserId],
 		references: [user.id],
+	}),
+}));
+
+export const messageRelations = relations(message, ({ one }) => ({
+	fromUser: one(user, {
+		fields: [message.fromUserId],
+		references: [user.id],
+		relationName: "sentMessages",
+	}),
+	toUser: one(user, {
+		fields: [message.toUserId],
+		references: [user.id],
+		relationName: "receivedMessages",
 	}),
 }));
 

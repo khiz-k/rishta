@@ -1,11 +1,12 @@
 "use client";
 
 import { Badge } from "@repo/ui/components/badge";
+import { Button } from "@repo/ui/components/button";
 import { Card, CardContent } from "@repo/ui/components/card";
 import { PageHeader } from "@shared/components/PageHeader";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { useQuery } from "@tanstack/react-query";
-import { MailIcon, MapPinIcon, SparklesIcon } from "lucide-react";
+import { MailIcon, MapPinIcon, MessageCircleIcon, SparklesIcon } from "lucide-react";
 import Link from "next/link";
 
 function calcAge(dob: string): number {
@@ -54,14 +55,19 @@ export default function MatchesPage() {
 									</Badge>
 								</div>
 
-								{/* Contact info — revealed on match */}
-								<div className="mt-3 pt-3 border-t border-border/50">
-									<p className="text-xs text-muted-foreground font-medium uppercase mb-1">Contact Details</p>
-									<div className="flex items-center gap-2 text-sm">
-										<MailIcon className="size-3.5 text-primary" />
-										<span>{m.contactEmail}</span>
+								{/* Contact + Chat */}
+								<div className="mt-3 pt-3 border-t border-border/50 flex items-center justify-between">
+									<div>
+										<div className="flex items-center gap-2 text-sm">
+											<MailIcon className="size-3.5 text-primary" />
+											<span>{m.contactEmail}</span>
+										</div>
 									</div>
-									{m.contactName && <p className="text-sm text-muted-foreground mt-0.5">{m.contactName}</p>}
+									<Link href={`/matches/${m.userId}`}>
+										<Button size="sm" variant="outline" className="gap-1.5">
+											<MessageCircleIcon className="size-3.5" /> Chat
+										</Button>
+									</Link>
 								</div>
 							</CardContent>
 						</Card>

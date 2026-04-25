@@ -168,6 +168,38 @@ export default function DiscoverPage() {
 		orpc.profiles.browse.queryOptions({ input: {} }),
 	);
 
+	const { data: myPrefs } = useQuery(orpc.preferences.get.queryOptions({}));
+
+	// Calculate compatibility %
+	const calcCompatibility = (p: any): number => {
+		if (!myPrefs) return 0;
+		let score = 0;
+		let total = 0;
+
+		if (myPrefs.ageMin || myPrefs.ageMax) {
+			total += 1;
+			const age = calcAge(p.dateOfBirth);
+			if ((!myPrefs.ageMin || age >= myPrefs.ageMin) && (!myPrefs.ageMax || age <= myPrefs.ageMax)) score += 1;
+		}
+		if (myPrefs.religions) {
+			total += 1;
+			const prefR = myPrefs.religions.toLowerCase().split(",").map((r: string) => r.trim());
+			if (p.religion && prefR.includes(p.religion.toLowerCase())) score += 1;
+		}
+		if (myPrefs.diet) {
+			total += 1;
+			const prefD = myPrefs.diet.toLowerCase().split(",").map((d: string) => d.trim());
+			if (p.diet && prefD.includes(p.diet.toLowerCase())) score += 1;
+		}
+		if (myPrefs.locations) {
+			total += 1;
+			const prefL = myPrefs.locations.toLowerCase().split(",").map((l: string) => l.trim());
+			if (p.location && prefL.some((l: string) => p.location.toLowerCase().includes(l))) score += 1;
+		}
+
+		return total > 0 ? Math.round((score / total) * 100) : 0;
+	};
+
 	const interestMutation = useMutation({
 		...orpc.interests.send.mutationOptions(),
 		onSuccess: () => {
@@ -376,6 +408,18 @@ export default function DiscoverPage() {
 								{p.createdBy !== "self" && (
 									<Badge className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">By {p.createdBy}</Badge>
 								)}
+								{/* Compatibility badge */}
+								{myPrefs?.quizComplete && (() => {
+									const compat = calcCompatibility(p);
+									if (compat === 0) return null;
+									return (
+										<Badge className={`absolute bottom-3 right-3 text-xs border-0 backdrop-blur-sm ${
+											compat >= 75 ? "bg-emerald-500/30 text-emerald-100" : compat >= 50 ? "bg-amber-500/30 text-amber-100" : "bg-white/20 text-white"
+										}`}>
+											{compat}% match
+										</Badge>
+									);
+								})()}
 							</div>
 
 							{/* Name */}
