@@ -28,21 +28,33 @@
 
 ---
 
-## 2. Homepage / Discover (`/`)
+## 2. Homepage / Discover (`/`) — Single-Card View
 
-### Profile Cards (This IS the homepage)
-- [ ] Page title: "Discover" with subtitle showing profile count + "Rishta Aaya Hai ✨"
-- [ ] 8 sample profiles in 2-column grid
-- [ ] Gradient card headers (unique color per person)
-- [ ] Avatar initials floating over gradient
-- [ ] Bookmark button on gradient
-- [ ] Verified badge on verified profiles
-- [ ] Name, age, religion, community, location, profession, education, height
-- [ ] About me preview in italic
-- [ ] Diet + language tags
-- [ ] "Send Interest" + "View Biodata" buttons
-- [ ] 🔒 Privacy note on every card
-- [ ] Skeleton loading state while fetching
+### Card Layout (One profile at a time, like Hinge/Tinder)
+- [ ] Counter at top: "Discover · **1** of 8"
+- [ ] Arrow buttons (← →) at top-right to navigate
+- [ ] **Keyboard shortcuts**: ← → arrow keys work
+- [ ] Single centered card, max-width ~500px
+- [ ] Gradient banner (unique color per person) with floating avatar initial
+- [ ] Verified badge + "Created by family" badge on banner
+- [ ] Name, age, religion, community centered below avatar
+- [ ] Location + height row
+- [ ] About me in tinted quote card
+- [ ] "Looking for" section
+- [ ] Career + Family side-by-side details
+- [ ] Diet/language/lifestyle tags
+
+### Action Buttons (Bottom of card)
+- [ ] **✗ Pass** — outline circle, moves to next profile
+- [ ] **⭐ Shortlist** — amber circle, saves profile
+- [ ] **❤️ Send Interest** — large filled primary circle with shadow
+- [ ] **Feedback overlay** — "💕 Interest sent!" / "⭐ Shortlisted!" / "Passed" flashes briefly
+- [ ] After sending interest → auto-advances to next profile
+- [ ] Hint text: "← → arrow keys to browse · ❤️ to connect"
+
+### Loading & Empty States
+- [ ] Skeleton loading state (gradient placeholder + text placeholders)
+- [ ] Empty state: large heart icon + "No profiles yet"
 
 ### Sidebar
 - [ ] **Collapsed by default** (icons only — maximizes card viewing area)
@@ -264,15 +276,16 @@ Create a profile with:
 ## Quick Test Flow (5 minutes)
 
 1. Sign up → complete onboarding (name/avatar)
-2. Homepage = **Discover** page → see 8 gradient profile cards immediately
-3. Sidebar is **collapsed** (icons only) — click expand to see labels
-4. Send interest to 2 profiles directly from the homepage
-5. Shortlist 1 profile via bookmark button on gradient
-6. Create biodata (`/profile/edit`) → fill basic fields → save
-7. Go to Activity (`/activity`) → see completeness progress bar + stats
-8. Check Interests → Sent tab → see 2 pending
-9. Check Shortlist → see 1 saved profile
-10. ✅ Done — discovery-first flow works end to end
+2. Homepage = **Discover** → single profile card centered, sidebar collapsed
+3. Use ← → arrows or buttons to browse through 8 profiles
+4. Hit ❤️ on 2 profiles → see "💕 Interest sent!" feedback + auto-advance
+5. Hit ⭐ on 1 profile → see "⭐ Shortlisted!" feedback
+6. Hit ✗ on 1 profile → "Passed" + advances
+7. Create biodata (`/profile/edit`) → fill basic fields → save
+8. Go to Activity (`/activity`) → see completeness bar + 2 sent interests
+9. Check Interests → Sent tab → see 2 pending
+10. Check Shortlist → see 1 saved profile
+11. ✅ Done — Hinge-style discovery flow works end to end
 
 ---
 
