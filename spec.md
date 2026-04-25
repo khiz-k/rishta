@@ -47,7 +47,8 @@ Tagline: **"Rishta Aaya Hai"**
 
 | Page | Route | Description |
 |------|-------|-------------|
-| Dashboard | `/` | Overview: profile completion, new interests received, matches |
+| Discover | `/` | Tinder-style single-card profile browsing (swipe/buttons) |
+| Activity | `/activity` | Profile completion, interests stats, privacy info |
 | My Profile | `/profile` | View/edit your own biodata |
 | Edit Profile | `/profile/edit` | Full profile edit form |
 | Browse | `/browse` | Discover profiles matching your preferences |
@@ -139,17 +140,31 @@ shortlist
 
 ### Acceptance Criteria
 
-- [ ] User can create/edit biodata profile
-- [ ] User can upload profile photo
-- [ ] User can set partner preferences
-- [ ] Browse page shows filtered profiles
-- [ ] User can express interest
-- [ ] User can accept/decline interests
-- [ ] Matched users can see each other's contact info
-- [ ] Shortlist/bookmark profiles
-- [ ] "Created by Family" badge on family-created profiles
-- [ ] Profile completeness indicator
-- [ ] Dark mode (default)
+- [x] User can create/edit biodata profile
+- [ ] User can upload profile photo (Phase 1.1 — needs S3/storage)
+- [x] User can set partner preferences
+- [ ] Browse page shows preference-filtered profiles (Phase 1.1 — currently shows all)
+- [x] User can express interest (buttons + swipe gestures)
+- [x] User can accept/decline interests
+- [x] Matched users can see each other's contact info
+- [x] Shortlist/bookmark profiles
+- [x] "Created by Family" badge on family-created profiles
+- [x] Profile completeness indicator (progress bar on Activity page)
+- [x] Dark mode (default)
+- [ ] Gender-based browsing — males see females, vice versa (Phase 1.1)
+
+### Beyond-Spec Features (Implemented)
+- [x] Tinder-style swipe gestures (drag left=pass, right=interest, with tilt)
+- [x] Ghost overlays during swipe (✗ red / ❤️ pink)
+- [x] Sound design (whoosh, ding, pop via Web Audio API)
+- [x] Confetti burst on interest sent
+- [x] Haptic feedback on mobile
+- [x] Spring-physics action buttons
+- [x] Staggered content reveal animations
+- [x] Instagram-style progress dot navigation
+- [x] Ambient glow behind card
+- [x] Card-shaped skeleton loading
+- [x] DM Sans body font (upgraded from Inter per design review)
 
 ### Architecture Decisions
 
@@ -164,6 +179,6 @@ shortlist
 - **Dark mode default** — deep, warm tones
 - **Rose/burgundy accent** — romantic but dignified, not dating-app flashy
 - **Traditional meets modern** — Biodata format in a card UI with clean typography
-- **Outfit display font + Inter body** — same premium stack as MasjidStock
+- **Outfit display font + DM Sans body** — upgraded from Inter per design review (Inter flagged as AI slop)
 - **Loading skeletons** — no $0 blip, learned from MasjidStock
 - **Client components with TanStack Query** — instant data refresh, learned from MasjidStock
