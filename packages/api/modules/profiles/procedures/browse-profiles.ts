@@ -19,13 +19,24 @@ export const browseProfiles = protectedProcedure
 		}),
 	)
 	.handler(async ({ context: { user }, input }) => {
+		// Auto-filter by opposite gender if not specified
+		let targetGender = input.gender;
+		if (!targetGender) {
+			const myProfile = await db.query.biodataProfile.findFirst({
+				where: eq(biodataProfile.userId, user.id),
+				columns: { gender: true },
+			});
+			if (myProfile?.gender === "male") targetGender = "female";
+			else if (myProfile?.gender === "female") targetGender = "male";
+		}
+
 		const conditions = [
 			ne(biodataProfile.userId, user.id),
 			eq(biodataProfile.isActive, true),
 		];
 
-		if (input.gender) {
-			conditions.push(eq(biodataProfile.gender, input.gender));
+		if (targetGender) {
+			conditions.push(eq(biodataProfile.gender, targetGender));
 		}
 		if (input.religion) {
 			conditions.push(eq(biodataProfile.religion, input.religion));
