@@ -69,7 +69,7 @@ export default function EditProfilePage() {
 		...orpc.profiles.upsert.mutationOptions(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: orpc.profiles.me.queryKey({}) });
-			router.push("/profile");
+			router.push("/");
 		},
 	});
 

@@ -1,7 +1,7 @@
-# Rishta — Manual Testing Checklist
+# Vow — Manual Testing Checklist
 
 ## Prerequisites
-- App deployed at `https://rishta-saas.vercel.app`
+- App deployed at `https://vow-saas.vercel.app`
 - Supabase database with schema pushed
 - 8 sample profiles seeded in the database
 
@@ -69,7 +69,7 @@
 ### Overview
 - [ ] Profile completeness card with progress bar + contextual messages
 - [ ] 4 stat cards: Pending Interests, Interests Sent, Matches, Privacy
-- [ ] "Your rishta is waiting" CTA if no profile exists
+- [ ] "Your vow is waiting" CTA if no profile exists
 
 ---
 

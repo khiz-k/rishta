@@ -1,10 +1,10 @@
-# SPEC.md — Rishta
+# SPEC.md — Vow
 
 ## What it is
 
-Rishta is a modern matrimonial platform for the South Asian diaspora. It combines the traditional biodata format families trust with a sleek, privacy-first digital experience. Families and individuals can create profiles, set preferences, express interest, and connect — all without the cringe of dating apps.
+Vow is a modern matrimonial platform for the South Asian diaspora. It combines the traditional biodata format families trust with a sleek, privacy-first digital experience. Families and individuals can create profiles, set preferences, express interest, and connect — all without the cringe of dating apps.
 
-Tagline: **"Rishta Aaya Hai"**
+Tagline: **"Vow Aaya Hai"**
 
 ---
 
