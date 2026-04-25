@@ -1,14 +1,10 @@
 "use client";
 
 import { Badge } from "@repo/ui/components/badge";
-import { Button } from "@repo/ui/components/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/components/card";
-import { PageHeader } from "@shared/components/PageHeader";
+import { Card, CardContent } from "@repo/ui/components/card";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-	ArrowLeftIcon,
-	ArrowRightIcon,
 	BookmarkIcon,
 	BriefcaseIcon,
 	ChevronLeftIcon,
@@ -20,35 +16,153 @@ import {
 	UsersIcon,
 	XIcon,
 } from "lucide-react";
-import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useEffect, useState } from "react";
+import {
+	AnimatePresence,
+	motion,
+	useMotionValue,
+	useTransform,
+} from "motion/react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+// ── Helpers ──
 
 function calcAge(dob: string): number {
-	const birth = new Date(dob);
-	const today = new Date();
-	let age = today.getFullYear() - birth.getFullYear();
-	if (today.getMonth() < birth.getMonth() || (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())) age--;
-	return age;
+	const b = new Date(dob);
+	const t = new Date();
+	let a = t.getFullYear() - b.getFullYear();
+	if (t.getMonth() < b.getMonth() || (t.getMonth() === b.getMonth() && t.getDate() < b.getDate())) a--;
+	return a;
 }
 
 function avatarGradient(name: string): string {
-	const gradients = [
-		"from-rose-400 to-pink-600",
-		"from-violet-400 to-purple-600",
-		"from-amber-400 to-orange-600",
-		"from-emerald-400 to-teal-600",
-		"from-blue-400 to-indigo-600",
-		"from-fuchsia-400 to-pink-600",
-		"from-red-400 to-rose-600",
-		"from-cyan-400 to-blue-600",
+	const g = [
+		"from-rose-400 to-pink-600", "from-violet-400 to-purple-600",
+		"from-amber-400 to-orange-600", "from-emerald-400 to-teal-600",
+		"from-blue-400 to-indigo-600", "from-fuchsia-400 to-pink-600",
+		"from-red-400 to-rose-600", "from-cyan-400 to-blue-600",
 	];
-	return gradients[name.charCodeAt(0) % gradients.length]!;
+	return g[name.charCodeAt(0) % g.length]!;
 }
+
+// ── Sounds ──
+
+function playSound(type: "whoosh" | "ding" | "pop") {
+	if (typeof window === "undefined") return;
+	try {
+		const ctx = new AudioContext();
+		const osc = ctx.createOscillator();
+		const gain = ctx.createGain();
+		osc.connect(gain);
+		gain.connect(ctx.destination);
+
+		if (type === "whoosh") {
+			osc.type = "sine";
+			osc.frequency.setValueAtTime(400, ctx.currentTime);
+			osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.15);
+			gain.gain.setValueAtTime(0.08, ctx.currentTime);
+			gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
+			osc.start(); osc.stop(ctx.currentTime + 0.15);
+		} else if (type === "ding") {
+			osc.type = "sine";
+			osc.frequency.setValueAtTime(880, ctx.currentTime);
+			osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.05);
+			gain.gain.setValueAtTime(0.12, ctx.currentTime);
+			gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+			osc.start(); osc.stop(ctx.currentTime + 0.3);
+		} else {
+			osc.type = "sine";
+			osc.frequency.setValueAtTime(600, ctx.currentTime);
+			gain.gain.setValueAtTime(0.06, ctx.currentTime);
+			gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
+			osc.start(); osc.stop(ctx.currentTime + 0.1);
+		}
+	} catch { /* silent fail */ }
+}
+
+// ── Confetti ──
+
+function Confetti({ active }: { active: boolean }) {
+	if (!active) return null;
+	const pieces = Array.from({ length: 24 }, (_, i) => ({
+		id: i,
+		x: Math.random() * 100,
+		delay: Math.random() * 0.3,
+		color: ["#f43f5e", "#ec4899", "#a855f7", "#f59e0b", "#10b981", "#3b82f6"][i % 6],
+		rotation: Math.random() * 360,
+	}));
+
+	return (
+		<div className="pointer-events-none absolute inset-0 z-40 overflow-hidden">
+			{pieces.map((p) => (
+				<motion.div
+					key={p.id}
+					initial={{ y: "50%", x: `${p.x}%`, opacity: 1, rotate: 0, scale: 1 }}
+					animate={{ y: "-100%", opacity: 0, rotate: p.rotation + 360, scale: 0.5 }}
+					transition={{ duration: 1.5, delay: p.delay, ease: "easeOut" }}
+					className="absolute w-2 h-3 rounded-sm"
+					style={{ backgroundColor: p.color, left: `${p.x}%` }}
+				/>
+			))}
+		</div>
+	);
+}
+
+// ── Skeleton ──
+
+function DiscoverSkeleton() {
+	return (
+		<div className="flex flex-col items-center">
+			<div className="w-full max-w-lg">
+				{/* Dot placeholders */}
+				<div className="flex items-center justify-center gap-1.5 mb-3">
+					{[...Array(8)].map((_, i) => (
+						<div key={i} className="h-1 w-1.5 rounded-full bg-muted-foreground/10" />
+					))}
+				</div>
+				<Card className="overflow-hidden">
+					{/* Gradient banner skeleton */}
+					<div className="h-36 bg-gradient-to-br from-muted to-muted/50 animate-pulse relative">
+						<div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
+							<div className="size-20 rounded-full bg-background border-4 border-background animate-pulse" />
+						</div>
+					</div>
+					<CardContent className="pt-14 pb-6 space-y-4">
+						<div className="flex flex-col items-center gap-2">
+							<div className="h-6 w-40 bg-muted rounded animate-pulse" />
+							<div className="h-4 w-56 bg-muted rounded animate-pulse" />
+						</div>
+						<div className="rounded-xl bg-muted/50 h-16 animate-pulse" />
+						<div className="grid grid-cols-2 gap-4">
+							<div className="h-16 bg-muted rounded animate-pulse" />
+							<div className="h-16 bg-muted rounded animate-pulse" />
+						</div>
+						<div className="flex justify-center gap-4 pt-2">
+							<div className="size-14 rounded-full bg-muted animate-pulse" />
+							<div className="size-12 rounded-full bg-muted animate-pulse" />
+							<div className="size-16 rounded-full bg-muted animate-pulse" />
+						</div>
+					</CardContent>
+				</Card>
+			</div>
+		</div>
+	);
+}
+
+// ── Main Page ──
 
 export default function DiscoverPage() {
 	const queryClient = useQueryClient();
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [actionFeedback, setActionFeedback] = useState<string | null>(null);
+	const [showConfetti, setShowConfetti] = useState(false);
+	const constraintsRef = useRef(null);
+
+	// Drag state
+	const dragX = useMotionValue(0);
+	const dragRotate = useTransform(dragX, [-200, 0, 200], [-12, 0, 12]);
+	const dragOpacity = useTransform(dragX, [-200, -100, 0, 100, 200], [0.5, 0.8, 1, 0.8, 0.5]);
+	const passOverlay = useTransform(dragX, [-200, -80, 0], [1, 0, 0]);
+	const likeOverlay = useTransform(dragX, [0, 80, 200], [0, 0, 1]);
 
 	const { data: profiles = [], isLoading } = useQuery(
 		orpc.profiles.browse.queryOptions({ input: {} }),
@@ -58,8 +172,10 @@ export default function DiscoverPage() {
 		...orpc.interests.send.mutationOptions(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: orpc.interests.list.queryKey({ input: { type: "sent" } }) });
-			showFeedback("💕 Interest sent!");
-			goNext();
+			playSound("ding");
+			triggerConfetti();
+			showFeedbackMsg("Interest sent");
+			setTimeout(goNext, 800);
 		},
 	});
 
@@ -67,63 +183,75 @@ export default function DiscoverPage() {
 		...orpc.shortlists.toggle.mutationOptions(),
 		onSuccess: (data: any) => {
 			queryClient.invalidateQueries({ queryKey: orpc.shortlists.list.queryKey({}) });
-			showFeedback(data.shortlisted ? "⭐ Shortlisted!" : "Removed from shortlist");
+			playSound("pop");
+			showFeedbackMsg(data.shortlisted ? "Shortlisted" : "Removed");
 		},
 	});
 
-	const showFeedback = (msg: string) => {
+	const showFeedbackMsg = (msg: string) => {
 		setActionFeedback(msg);
-		setTimeout(() => setActionFeedback(null), 1500);
+		setTimeout(() => setActionFeedback(null), 1200);
+	};
+
+	const triggerConfetti = () => {
+		setShowConfetti(true);
+		setTimeout(() => setShowConfetti(false), 2000);
 	};
 
 	const goNext = useCallback(() => {
-		if (profiles.length > 0) {
-			setCurrentIndex((prev) => (prev + 1) % profiles.length);
-		}
+		if (profiles.length > 0) setCurrentIndex((p) => (p + 1) % profiles.length);
 	}, [profiles.length]);
 
 	const goPrev = useCallback(() => {
-		if (profiles.length > 0) {
-			setCurrentIndex((prev) => (prev - 1 + profiles.length) % profiles.length);
-		}
+		if (profiles.length > 0) setCurrentIndex((p) => (p - 1 + profiles.length) % profiles.length);
 	}, [profiles.length]);
 
 	const handlePass = () => {
-		showFeedback("Passed");
+		playSound("whoosh");
+		showFeedbackMsg("Passed");
 		goNext();
 	};
 
-	// Keyboard navigation
+	const handleDragEnd = (_: any, info: { offset: { x: number } }) => {
+		if (info.offset.x > 100) {
+			// Swiped right → interest
+			interestMutation.mutate({ toUserId: profiles[currentIndex]!.userId });
+		} else if (info.offset.x < -100) {
+			// Swiped left → pass
+			handlePass();
+		}
+	};
+
+	// Keyboard
 	useEffect(() => {
-		const handler = (e: KeyboardEvent) => {
+		const h = (e: KeyboardEvent) => {
 			if (e.key === "ArrowRight") goNext();
 			if (e.key === "ArrowLeft") goPrev();
 		};
-		window.addEventListener("keydown", handler);
-		return () => window.removeEventListener("keydown", handler);
+		window.addEventListener("keydown", h);
+		return () => window.removeEventListener("keydown", h);
 	}, [goNext, goPrev]);
 
-	if (isLoading) {
-		return (
-			<div className="flex flex-col items-center justify-center min-h-[60vh]">
-				<div className="w-full max-w-lg space-y-4">
-					<div className="h-40 bg-muted rounded-t-xl animate-pulse" />
-					<div className="space-y-3 px-6">
-						<div className="h-6 w-48 bg-muted rounded animate-pulse" />
-						<div className="h-4 w-64 bg-muted rounded animate-pulse" />
-						<div className="h-20 bg-muted rounded animate-pulse" />
-					</div>
-				</div>
-			</div>
-		);
-	}
+	// Haptic
+	const haptic = () => {
+		if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+			navigator.vibrate(10);
+		}
+	};
+
+	if (isLoading) return <DiscoverSkeleton />;
 
 	if (profiles.length === 0) {
 		return (
 			<div className="flex flex-col items-center justify-center min-h-[60vh] text-center">
-				<div className="size-20 rounded-full bg-gradient-to-br from-rose-500/20 to-pink-500/20 flex items-center justify-center mb-6">
+				<motion.div
+					initial={{ scale: 0.8, opacity: 0 }}
+					animate={{ scale: 1, opacity: 1 }}
+					transition={{ type: "spring", stiffness: 200, damping: 20 }}
+					className="size-20 rounded-full bg-gradient-to-br from-rose-500/20 to-pink-500/20 flex items-center justify-center mb-6"
+				>
 					<HeartIcon className="size-9 text-primary" />
-				</div>
+				</motion.div>
 				<p className="font-display text-2xl font-bold">No profiles yet</p>
 				<p className="text-muted-foreground mt-2 max-w-sm">Be one of the first to create a biodata and start discovering matches</p>
 			</div>
@@ -135,16 +263,18 @@ export default function DiscoverPage() {
 	const grad = avatarGradient(p.displayName);
 
 	return (
-		<div className="flex flex-col items-center">
-			{/* Progress bar + navigation */}
-			<div className="w-full max-w-lg mb-5">
-				{/* Dot indicators */}
+		<div className="flex flex-col items-center relative" ref={constraintsRef}>
+			{/* Ambient glow */}
+			<div className="pointer-events-none absolute top-20 left-1/2 -translate-x-1/2 h-[300px] w-[300px] rounded-full bg-primary/3 blur-[120px]" />
+
+			{/* Progress dots */}
+			<div className="w-full max-w-lg mb-5 relative z-10">
 				<div className="flex items-center justify-center gap-1.5 mb-3">
 					{profiles.map((_, i) => (
 						<button
 							key={i}
 							type="button"
-							onClick={() => setCurrentIndex(i)}
+							onClick={() => { setCurrentIndex(i); playSound("pop"); }}
 							className={`h-1 rounded-full transition-all duration-300 ${
 								i === currentIndex ? "w-6 bg-primary" : "w-1.5 bg-muted-foreground/20 hover:bg-muted-foreground/40"
 							}`}
@@ -156,166 +286,229 @@ export default function DiscoverPage() {
 						<span className="font-display">Discover</span> · {currentIndex + 1}/{profiles.length}
 					</p>
 					<div className="flex items-center gap-1">
-						<button onClick={goPrev} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
+						<button onClick={() => { goPrev(); playSound("pop"); }} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
 							<ChevronLeftIcon className="size-4 text-muted-foreground" />
 						</button>
-						<button onClick={goNext} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
+						<button onClick={() => { goNext(); playSound("pop"); }} className="size-8 rounded-full hover:bg-accent flex items-center justify-center transition-colors">
 							<ChevronRightIcon className="size-4 text-muted-foreground" />
 						</button>
 					</div>
 				</div>
 			</div>
 
-			{/* Profile Card */}
+			{/* Card */}
 			<AnimatePresence mode="wait">
-			<motion.div
-				key={currentIndex}
-				initial={{ opacity: 0, x: 40, scale: 0.98 }}
-				animate={{ opacity: 1, x: 0, scale: 1 }}
-				exit={{ opacity: 0, x: -40, scale: 0.98 }}
-				transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
-				className="w-full max-w-lg"
-			>
-			<Card className="w-full overflow-hidden relative">
-				{/* Action feedback overlay */}
-				<AnimatePresence>
-				{actionFeedback && (
+				<motion.div
+					key={currentIndex}
+					initial={{ opacity: 0, y: 20, scale: 0.97 }}
+					animate={{ opacity: 1, y: 0, scale: 1 }}
+					exit={{ opacity: 0, y: -20, scale: 0.97 }}
+					transition={{ duration: 0.35, ease: [0.32, 0.72, 0, 1] }}
+					className="w-full max-w-lg relative z-10"
+				>
+					{/* Draggable wrapper */}
 					<motion.div
-						initial={{ opacity: 0 }}
-						animate={{ opacity: 1 }}
-						exit={{ opacity: 0 }}
-						className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm"
+						drag="x"
+						dragConstraints={{ left: 0, right: 0 }}
+						dragElastic={0.7}
+						onDragEnd={handleDragEnd}
+						style={{ x: dragX, rotate: dragRotate, opacity: dragOpacity }}
+						className="cursor-grab active:cursor-grabbing"
 					>
-						<motion.p
-							initial={{ scale: 0.5 }}
-							animate={{ scale: 1 }}
-							transition={{ type: "spring", stiffness: 400, damping: 15 }}
-							className="font-display text-2xl font-bold"
-						>
-							{actionFeedback}
-						</motion.p>
+						<Card className="w-full overflow-hidden relative select-none">
+							{/* Confetti */}
+							<Confetti active={showConfetti} />
+
+							{/* Swipe overlays */}
+							<motion.div
+								style={{ opacity: passOverlay }}
+								className="absolute inset-0 z-30 flex items-center justify-center bg-rose-500/20 backdrop-blur-[2px] pointer-events-none rounded-lg"
+							>
+								<div className="size-20 rounded-full border-4 border-rose-500 flex items-center justify-center">
+									<XIcon className="size-10 text-rose-500" />
+								</div>
+							</motion.div>
+							<motion.div
+								style={{ opacity: likeOverlay }}
+								className="absolute inset-0 z-30 flex items-center justify-center bg-primary/20 backdrop-blur-[2px] pointer-events-none rounded-lg"
+							>
+								<div className="size-20 rounded-full border-4 border-primary flex items-center justify-center">
+									<HeartIcon className="size-10 text-primary" />
+								</div>
+							</motion.div>
+
+							{/* Feedback overlay */}
+							<AnimatePresence>
+								{actionFeedback && (
+									<motion.div
+										initial={{ opacity: 0 }}
+										animate={{ opacity: 1 }}
+										exit={{ opacity: 0 }}
+										className="absolute inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm"
+									>
+										<motion.p
+											initial={{ scale: 0.5, y: 10 }}
+											animate={{ scale: 1, y: 0 }}
+											transition={{ type: "spring", stiffness: 400, damping: 15 }}
+											className="font-display text-2xl font-bold"
+										>
+											{actionFeedback}
+										</motion.p>
+									</motion.div>
+								)}
+							</AnimatePresence>
+
+							{/* Gradient Banner */}
+							<div className={`relative h-36 bg-gradient-to-br ${grad}`}>
+								<div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
+									<motion.div
+										initial={{ scale: 0.8 }}
+										animate={{ scale: 1 }}
+										transition={{ type: "spring", stiffness: 300, damping: 20, delay: 0.1 }}
+										className="size-20 rounded-full bg-background border-4 border-background flex items-center justify-center shadow-lg"
+									>
+										<span className="font-display text-3xl font-bold text-primary">{p.displayName.charAt(0)}</span>
+									</motion.div>
+								</div>
+								{p.isVerified && (
+									<Badge className="absolute top-3 left-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">Verified</Badge>
+								)}
+								{p.createdBy !== "self" && (
+									<Badge className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">By {p.createdBy}</Badge>
+								)}
+							</div>
+
+							{/* Name */}
+							<CardContent className="pt-12 text-center">
+								<motion.h2
+									initial={{ opacity: 0, y: 8 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.1 }}
+									className="font-display text-2xl font-bold"
+								>
+									{p.displayName}
+								</motion.h2>
+								<motion.p
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ delay: 0.15 }}
+									className="text-muted-foreground mt-1"
+								>
+									{age} years · {p.religion}{p.community ? ` · ${p.community}` : ""}
+								</motion.p>
+
+								<div className="flex flex-wrap items-center justify-center gap-3 mt-4 text-sm text-muted-foreground">
+									{p.location && <span className="flex items-center gap-1"><MapPinIcon className="size-3.5 text-primary/70" />{p.location}</span>}
+									{p.height && <span className="flex items-center gap-1"><RulerIcon className="size-3.5 text-primary/70" />{p.height} cm</span>}
+								</div>
+							</CardContent>
+
+							{/* About */}
+							{p.aboutMe && (
+								<CardContent className="pt-0">
+									<motion.div
+										initial={{ opacity: 0, y: 8 }}
+										animate={{ opacity: 1, y: 0 }}
+										transition={{ delay: 0.2 }}
+										className="rounded-xl bg-accent/50 p-4"
+									>
+										<p className="text-sm italic text-foreground/80">"{p.aboutMe}"</p>
+									</motion.div>
+								</CardContent>
+							)}
+
+							{/* Looking for */}
+							{p.lookingFor && (
+								<CardContent className="pt-0">
+									<motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.25 }}>
+										<p className="text-xs text-muted-foreground font-medium uppercase mb-1">Looking for</p>
+										<p className="text-sm text-muted-foreground">{p.lookingFor}</p>
+									</motion.div>
+								</CardContent>
+							)}
+
+							{/* Details */}
+							<CardContent className="pt-0">
+								<motion.div
+									initial={{ opacity: 0, y: 8 }}
+									animate={{ opacity: 1, y: 0 }}
+									transition={{ delay: 0.3 }}
+									className="grid grid-cols-2 gap-4"
+								>
+									<div className="space-y-3">
+										<div className="flex items-center gap-2 text-xs text-muted-foreground font-medium uppercase"><BriefcaseIcon className="size-3 text-primary/60" /> Career</div>
+										{p.profession && <p className="text-sm">{p.profession}</p>}
+										{p.employer && <p className="text-xs text-muted-foreground">at {p.employer}</p>}
+										{p.education && <p className="text-sm flex items-center gap-1.5"><GraduationCapIcon className="size-3.5 text-primary/60" />{p.education}</p>}
+									</div>
+									<div className="space-y-3">
+										<div className="flex items-center gap-2 text-xs text-muted-foreground font-medium uppercase"><UsersIcon className="size-3 text-primary/60" /> Family</div>
+										{p.familyType && <p className="text-sm">{p.familyType} family</p>}
+										{p.siblings && <p className="text-xs text-muted-foreground">{p.siblings}</p>}
+									</div>
+								</motion.div>
+							</CardContent>
+
+							{/* Tags */}
+							<CardContent className="pt-0">
+								<motion.div
+									initial={{ opacity: 0 }}
+									animate={{ opacity: 1 }}
+									transition={{ delay: 0.35 }}
+									className="flex flex-wrap gap-1.5"
+								>
+									{p.diet && <Badge className="bg-muted text-muted-foreground text-xs">{p.diet.replace(/_/g, " ")}</Badge>}
+									{p.motherTongue && <Badge className="bg-muted text-muted-foreground text-xs">{p.motherTongue}</Badge>}
+									{p.smoking !== "never" && <Badge className="bg-muted text-muted-foreground text-xs">Smokes: {p.smoking}</Badge>}
+									{p.drinking !== "never" && <Badge className="bg-muted text-muted-foreground text-xs">Drinks: {p.drinking}</Badge>}
+									{p.maritalStatus !== "never_married" && <Badge className="bg-amber-500/10 text-amber-500 text-xs">{p.maritalStatus.replace(/_/g, " ")}</Badge>}
+								</motion.div>
+							</CardContent>
+
+							{/* Action Buttons */}
+							<CardContent className="pt-2 pb-6">
+								<div className="flex items-center justify-center gap-4">
+									<motion.button
+										type="button"
+										onClick={() => { haptic(); handlePass(); }}
+										whileTap={{ scale: 0.8 }}
+										whileHover={{ scale: 1.08 }}
+										transition={{ type: "spring", stiffness: 500, damping: 15 }}
+										className="size-14 rounded-full border-2 border-muted-foreground/20 flex items-center justify-center hover:border-rose-500 hover:bg-rose-500/10"
+									>
+										<XIcon className="size-6 text-muted-foreground" />
+									</motion.button>
+
+									<motion.button
+										type="button"
+										onClick={() => { haptic(); shortlistMutation.mutate({ profileUserId: p.userId }); }}
+										whileTap={{ scale: 0.8 }}
+										whileHover={{ scale: 1.12 }}
+										transition={{ type: "spring", stiffness: 500, damping: 15 }}
+										className="size-12 rounded-full border-2 border-amber-500/30 flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10"
+									>
+										<BookmarkIcon className="size-5 text-amber-500" />
+									</motion.button>
+
+									<motion.button
+										type="button"
+										onClick={() => { haptic(); interestMutation.mutate({ toUserId: p.userId }); }}
+										whileTap={{ scale: 0.75 }}
+										whileHover={{ scale: 1.12 }}
+										transition={{ type: "spring", stiffness: 350, damping: 10 }}
+										className="size-16 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/25"
+									>
+										<HeartIcon className="size-7 text-primary-foreground" />
+									</motion.button>
+								</div>
+
+								<p className="text-center text-[11px] text-muted-foreground/60 mt-4 tracking-wide">
+									Swipe right to connect · left to pass · ← → keys
+								</p>
+							</CardContent>
+						</Card>
 					</motion.div>
-				)}
-				</AnimatePresence>
-
-				{/* Gradient Banner */}
-				<div className={`relative h-36 bg-gradient-to-br ${grad}`}>
-					<div className="absolute -bottom-10 left-1/2 -translate-x-1/2">
-						<div className="size-20 rounded-full bg-background border-4 border-background flex items-center justify-center shadow-lg">
-							<span className="font-display text-3xl font-bold text-primary">{p.displayName.charAt(0)}</span>
-						</div>
-					</div>
-					{p.isVerified && (
-						<Badge className="absolute top-3 left-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">✓ Verified</Badge>
-					)}
-					{p.createdBy !== "self" && (
-						<Badge className="absolute top-3 right-3 bg-white/20 backdrop-blur-sm text-white text-xs border-0">👨‍👩‍👧 By {p.createdBy}</Badge>
-					)}
-				</div>
-
-				{/* Name + basics */}
-				<CardContent className="pt-12 text-center">
-					<h2 className="font-display text-2xl font-bold">{p.displayName}</h2>
-					<p className="text-muted-foreground mt-1">{age} years · {p.religion}{p.community ? ` · ${p.community}` : ""}</p>
-
-					{/* Key details row */}
-					<div className="flex flex-wrap items-center justify-center gap-3 mt-4 text-sm text-muted-foreground">
-						{p.location && <span className="flex items-center gap-1"><MapPinIcon className="size-3.5 text-primary/70" />{p.location}</span>}
-						{p.height && <span className="flex items-center gap-1"><RulerIcon className="size-3.5 text-primary/70" />{p.height} cm</span>}
-					</div>
-				</CardContent>
-
-				{/* About */}
-				{p.aboutMe && (
-					<CardContent className="pt-0">
-						<div className="rounded-xl bg-accent/50 p-4">
-							<p className="text-sm italic text-foreground/80">"{p.aboutMe}"</p>
-						</div>
-					</CardContent>
-				)}
-
-				{/* Looking for */}
-				{p.lookingFor && (
-					<CardContent className="pt-0">
-						<p className="text-xs text-muted-foreground font-medium uppercase mb-1">Looking for</p>
-						<p className="text-sm text-muted-foreground">{p.lookingFor}</p>
-					</CardContent>
-				)}
-
-				{/* Details grid */}
-				<CardContent className="pt-0">
-					<div className="grid grid-cols-2 gap-4">
-						<div className="space-y-3">
-							<div className="flex items-center gap-2 text-xs text-muted-foreground font-medium uppercase"><BriefcaseIcon className="size-3 text-primary/60" /> Career</div>
-							{p.profession && <p className="text-sm">{p.profession}</p>}
-							{p.employer && <p className="text-xs text-muted-foreground">at {p.employer}</p>}
-							{p.education && <p className="text-sm flex items-center gap-1.5"><GraduationCapIcon className="size-3.5 text-primary/60" />{p.education}</p>}
-						</div>
-						<div className="space-y-3">
-							<div className="flex items-center gap-2 text-xs text-muted-foreground font-medium uppercase"><UsersIcon className="size-3 text-primary/60" /> Family</div>
-							{p.familyType && <p className="text-sm">{p.familyType} family</p>}
-							{p.siblings && <p className="text-xs text-muted-foreground">{p.siblings}</p>}
-						</div>
-					</div>
-				</CardContent>
-
-				{/* Tags */}
-				<CardContent className="pt-0">
-					<div className="flex flex-wrap gap-1.5">
-						{p.diet && <Badge className="bg-muted text-muted-foreground text-xs">{p.diet.replace(/_/g, " ")}</Badge>}
-						{p.motherTongue && <Badge className="bg-muted text-muted-foreground text-xs">{p.motherTongue}</Badge>}
-						{p.smoking !== "never" && <Badge className="bg-muted text-muted-foreground text-xs">Smokes: {p.smoking}</Badge>}
-						{p.drinking !== "never" && <Badge className="bg-muted text-muted-foreground text-xs">Drinks: {p.drinking}</Badge>}
-						{p.maritalStatus !== "never_married" && <Badge className="bg-amber-500/10 text-amber-500 text-xs">{p.maritalStatus.replace(/_/g, " ")}</Badge>}
-					</div>
-				</CardContent>
-
-				{/* Action Buttons */}
-				<CardContent className="pt-2 pb-6">
-					<div className="flex items-center justify-center gap-4">
-						{/* Pass */}
-						<motion.button
-							type="button"
-							onClick={handlePass}
-							whileTap={{ scale: 0.85 }}
-							whileHover={{ scale: 1.08 }}
-							transition={{ type: "spring", stiffness: 500, damping: 15 }}
-							className="size-14 rounded-full border-2 border-muted-foreground/20 flex items-center justify-center hover:border-rose-500 hover:bg-rose-500/10"
-						>
-							<XIcon className="size-6 text-muted-foreground" />
-						</motion.button>
-
-						{/* Shortlist */}
-						<motion.button
-							type="button"
-							onClick={() => shortlistMutation.mutate({ profileUserId: p.userId })}
-							whileTap={{ scale: 0.85 }}
-							whileHover={{ scale: 1.1 }}
-							transition={{ type: "spring", stiffness: 500, damping: 15 }}
-							className="size-12 rounded-full border-2 border-amber-500/30 flex items-center justify-center hover:border-amber-500 hover:bg-amber-500/10"
-						>
-							<BookmarkIcon className="size-5 text-amber-500" />
-						</motion.button>
-
-						{/* Send Interest */}
-						<motion.button
-							type="button"
-							onClick={() => interestMutation.mutate({ toUserId: p.userId })}
-							whileTap={{ scale: 0.8 }}
-							whileHover={{ scale: 1.1 }}
-							transition={{ type: "spring", stiffness: 400, damping: 12 }}
-							className="size-16 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/25"
-						>
-							<HeartIcon className="size-7 text-primary-foreground" />
-						</motion.button>
-					</div>
-
-					<p className="text-center text-xs text-muted-foreground mt-3">
-						← → to browse · tap ❤️ to connect
-					</p>
-				</CardContent>
-			</Card>
-			</motion.div>
+				</motion.div>
 			</AnimatePresence>
 		</div>
 	);
