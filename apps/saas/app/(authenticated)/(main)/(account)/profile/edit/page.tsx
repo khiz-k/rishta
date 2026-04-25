@@ -80,8 +80,14 @@ export default function EditProfilePage() {
 
 	const set = (key: string, value: string) => setForm((f) => ({ ...f, [key]: value }));
 
+	const [error, setError] = useState("");
+
 	const handleSubmit = () => {
-		if (!form.displayName || !form.dateOfBirth || !form.religion) return;
+		if (!form.displayName) { setError("Display name is required"); return; }
+		if (!form.dateOfBirth) { setError("Date of birth is required"); return; }
+		if (!form.gender) { setError("Gender is required"); return; }
+		if (!form.religion) { setError("Religion is required"); return; }
+		setError("");
 		const { profilePhoto, ...rest } = form;
 		mutation.mutate({
 			...rest,
@@ -114,7 +120,7 @@ export default function EditProfilePage() {
 	};
 
 	return (
-		<div className="space-y-6 max-w-2xl">
+		<div className="space-y-6 max-w-2xl mx-auto">
 			<PageHeader title={existing ? "Edit Biodata" : "Create Biodata"} subtitle="Fill in your details" />
 
 			{/* Photo Upload */}
@@ -259,6 +265,7 @@ export default function EditProfilePage() {
 				</CardContent>
 			</Card>
 
+			{error && <p className="text-sm text-destructive text-center">{error}</p>}
 			<Button onClick={handleSubmit} loading={mutation.isPending} className="w-full" size="lg">
 				{existing ? "Save Changes" : "Create Profile"}
 			</Button>
