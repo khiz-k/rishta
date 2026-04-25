@@ -28,29 +28,36 @@
 
 ---
 
-## 2. Dashboard (`/`)
+## 2. Homepage / Discover (`/`)
 
-### First Time (No Profile)
-- [ ] "Welcome back, [Name]" header with "Rishta Aaya Hai ✨" subtitle
-- [ ] Profile completeness card shows **0%** with "Start building your profile" message
-- [ ] Progress bar is empty
-- [ ] "Create your biodata" link visible
-- [ ] "Your rishta is waiting" CTA card with gradient heart icon
-- [ ] Stats show: 0 new interests, 0 matches
-- [ ] Privacy card shows "Contact hidden — email only revealed on mutual match"
-- [ ] 5 Quick Action cards: Browse, Interests, Matches, Shortlist, Preferences
+### Profile Cards (This IS the homepage)
+- [ ] Page title: "Discover" with subtitle showing profile count + "Rishta Aaya Hai ✨"
+- [ ] 8 sample profiles in 2-column grid
+- [ ] Gradient card headers (unique color per person)
+- [ ] Avatar initials floating over gradient
+- [ ] Bookmark button on gradient
+- [ ] Verified badge on verified profiles
+- [ ] Name, age, religion, community, location, profession, education, height
+- [ ] About me preview in italic
+- [ ] Diet + language tags
+- [ ] "Send Interest" + "View Biodata" buttons
+- [ ] 🔒 Privacy note on every card
+- [ ] Skeleton loading state while fetching
 
-### After Profile Created
-- [ ] Completeness % updates (e.g. 69% after filling basic fields)
-- [ ] Progress bar fills proportionally
-- [ ] Message changes based on %: "Complete your biodata" → "Almost there" → "Complete 🎉"
-- [ ] CTA card disappears once profile exists
-
-### Sidebar Nav
-- [ ] Shows: Dashboard, Browse, Interests, Matches, Shortlist, My Biodata, Preferences
-- [ ] No "Cases", "Price List", "AI Chatbot" (template items removed)
+### Sidebar
+- [ ] **Collapsed by default** (icons only — maximizes card viewing area)
+- [ ] Click expand button to see labels
+- [ ] Nav order: Discover → Interests → Matches → Shortlist → My Biodata → Activity → Preferences
 - [ ] Heart logo (not rocket) in top-left
 - [ ] No organization selector (orgs disabled)
+- [ ] No template items (Cases, Price List, Chatbot)
+
+## 2b. Activity (`/activity`)
+
+### Overview
+- [ ] Profile completeness card with progress bar + contextual messages
+- [ ] 4 stat cards: Pending Interests, Interests Sent, Matches, Privacy
+- [ ] "Your rishta is waiting" CTA if no profile exists
 
 ---
 
@@ -257,15 +264,15 @@ Create a profile with:
 ## Quick Test Flow (5 minutes)
 
 1. Sign up → complete onboarding (name/avatar)
-2. Go to Dashboard → see 0% completeness + "Your rishta is waiting"
-3. Create biodata (`/profile/edit`) → fill basic fields → save
-4. Dashboard → see completeness jump to ~60%
-5. Browse → see 8 sample profiles with gradient cards
-6. Send interest to 2 profiles
-7. Check Interests → Sent tab → see 2 pending
-8. Shortlist 1 profile → check Shortlist page
-9. Set preferences → save → verify persistence
-10. ✅ Done — core flow works end to end
+2. Homepage = **Discover** page → see 8 gradient profile cards immediately
+3. Sidebar is **collapsed** (icons only) — click expand to see labels
+4. Send interest to 2 profiles directly from the homepage
+5. Shortlist 1 profile via bookmark button on gradient
+6. Create biodata (`/profile/edit`) → fill basic fields → save
+7. Go to Activity (`/activity`) → see completeness progress bar + stats
+8. Check Interests → Sent tab → see 2 pending
+9. Check Shortlist → see 1 saved profile
+10. ✅ Done — discovery-first flow works end to end
 
 ---
 
