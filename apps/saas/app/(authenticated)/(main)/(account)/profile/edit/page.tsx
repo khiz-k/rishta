@@ -105,15 +105,19 @@ export default function EditProfilePage() {
 	const [uploading, setUploading] = useState(false);
 	const fileRef = useRef<HTMLInputElement>(null);
 
+	const [uploadError, setUploadError] = useState("");
+
 	const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
 		const file = e.target.files?.[0];
 		if (!file) return;
 		setUploading(true);
+		setUploadError("");
 		try {
 			const url = await uploadProfilePhoto(user?.id || "unknown", file);
 			set("profilePhoto", url);
-		} catch (err) {
+		} catch (err: any) {
 			console.error("Upload failed:", err);
+			setUploadError(err?.message || "Upload failed. Check Storage policies.");
 		} finally {
 			setUploading(false);
 		}
@@ -145,6 +149,7 @@ export default function EditProfilePage() {
 						</div>
 					</button>
 					<p className="text-xs text-muted-foreground mt-2">{uploading ? "Uploading..." : "Click to upload photo"}</p>
+					{uploadError && <p className="text-xs text-destructive mt-1">{uploadError}</p>}
 				</CardContent>
 			</Card>
 
