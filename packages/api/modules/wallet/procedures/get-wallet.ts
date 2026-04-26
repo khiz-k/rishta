@@ -5,6 +5,7 @@ import { protectedProcedure } from "../../../orpc/procedures";
 
 export const getWallet = protectedProcedure
 	.route({ method: "GET", path: "/wallet", tags: ["Wallet"], summary: "Get or create wallet" })
+	.input({})
 	.handler(async ({ context: { user } }) => {
 		let w = await db.query.wallet.findFirst({
 			where: eq(wallet.userId, user.id),

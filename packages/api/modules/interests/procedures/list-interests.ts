@@ -29,9 +29,10 @@ export const listInterests = protectedProcedure
 			return results.map((r) => ({ ...r, profile: profileMap.get(r.toUserId) }));
 		}
 
+		// Sort received interests by bid amount (highest first), then by date
 		const results = await db.query.interest.findMany({
 			where: eq(interest.toUserId, user.id),
-			orderBy: [desc(interest.createdAt)],
+			orderBy: [desc(interest.bidAmount), desc(interest.createdAt)],
 		});
 		const profileIds = results.map((r) => r.fromUserId);
 		const profiles = profileIds.length > 0

@@ -68,7 +68,10 @@ export default function InterestsPage() {
 										</div>
 									</Link>
 									<div className="flex items-center gap-2 ml-3 shrink-0">
-										<Badge className={`text-xs ${statusColors[item.status] || ""}`}>{item.status}</Badge>
+										{item.bidAmount > 0 && (
+										<Badge className="bg-amber-500/10 text-amber-500 text-xs gap-1">🔥 {item.bidAmount} credits</Badge>
+									)}
+									<Badge className={`text-xs ${statusColors[item.status] || ""}`}>{item.status}</Badge>
 										{tab === "received" && item.status === "pending" && (
 											<>
 												<Button size="sm" variant="outline" onClick={() => respondMutation.mutate({ interestId: item.id, action: "accepted" })} loading={respondMutation.isPending}>
