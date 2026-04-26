@@ -101,6 +101,8 @@ export default function DiscoverPage() {
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [actionFeedback, setActionFeedback] = useState<string | null>(null);
 	const [showConfetti, setShowConfetti] = useState(false);
+	const [bidAmount, setBidAmount] = useState(0);
+	const [showBidSlider, setShowBidSlider] = useState(false);
 	const constraintsRef = useRef(null);
 
 	// Drag state
@@ -115,6 +117,7 @@ export default function DiscoverPage() {
 	);
 
 	const { data: myPrefs } = useQuery(orpc.preferences.get.queryOptions({}));
+	const { data: myWallet } = useQuery(orpc.wallet.get.queryOptions({}));
 
 	// Calculate compatibility %
 	const calcCompatibility = (p: any): number => {
@@ -150,9 +153,12 @@ export default function DiscoverPage() {
 		...orpc.interests.send.mutationOptions(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: orpc.interests.list.queryKey({ input: { type: "sent" } }) });
+			queryClient.invalidateQueries({ queryKey: orpc.wallet.get.queryKey({}) });
 			playSound("ding");
 			triggerConfetti();
-			showFeedbackMsg("Interest sent");
+			showFeedbackMsg(bidAmount > 0 ? `Interest sent with ${bidAmount} credits` : "Interest sent");
+			setBidAmount(0);
+			setShowBidSlider(false);
 			setTimeout(goNext, 800);
 		},
 	});
@@ -454,6 +460,32 @@ export default function DiscoverPage() {
 
 							{/* Action Buttons */}
 							<CardContent className="pt-2 pb-6">
+								{/* Bid slider */}
+								{showBidSlider && (
+									<motion.div
+										initial={{ opacity: 0, height: 0 }}
+										animate={{ opacity: 1, height: "auto" }}
+										className="mb-4 rounded-xl bg-amber-500/5 border border-amber-500/20 p-4"
+									>
+										<div className="flex items-center justify-between mb-2">
+											<span className="text-xs font-medium text-amber-500">Boost with credits</span>
+											<span className="text-sm font-display font-bold text-amber-500">{bidAmount} credits</span>
+										</div>
+										<input
+											type="range"
+											min={0}
+											max={Math.min(myWallet?.credits || 0, 50)}
+											value={bidAmount}
+											onChange={(e) => setBidAmount(Number.parseInt(e.target.value))}
+											className="w-full accent-amber-500"
+										/>
+										<div className="flex justify-between text-[10px] text-muted-foreground mt-1">
+											<span>Free</span>
+											<span>Balance: {myWallet?.credits || 0}</span>
+										</div>
+									</motion.div>
+								)}
+
 								<div className="flex items-center justify-center gap-4">
 									<motion.button
 										type="button"
@@ -479,18 +511,25 @@ export default function DiscoverPage() {
 
 									<motion.button
 										type="button"
-										onClick={() => { haptic(); interestMutation.mutate({ toUserId: p.userId }); }}
+										onClick={() => { haptic(); interestMutation.mutate({ toUserId: p.userId, bidAmount: bidAmount || undefined }); }}
 										whileTap={{ scale: 0.75 }}
 										whileHover={{ scale: 1.12 }}
 										transition={{ type: "spring", stiffness: 350, damping: 10 }}
-										className="size-16 rounded-full bg-primary flex items-center justify-center shadow-lg shadow-primary/25"
+										className={`size-16 rounded-full flex items-center justify-center shadow-lg ${bidAmount > 0 ? "bg-amber-500 shadow-amber-500/25" : "bg-primary shadow-primary/25"}`}
 									>
 										<HeartIcon className="size-7 text-primary-foreground" />
 									</motion.button>
 								</div>
 
-								<p className="text-center text-[11px] text-muted-foreground/60 mt-4 tracking-wide">
-									Swipe right to connect · left to pass · ← → keys
+								<button
+									type="button"
+									onClick={() => setShowBidSlider(!showBidSlider)}
+									className="w-full text-center text-[11px] text-amber-500/60 hover:text-amber-500 mt-3 transition-colors"
+								>
+									{showBidSlider ? "Hide bid" : "⚡ Boost with credits to stand out"}
+								</button>
+								<p className="text-center text-[10px] text-muted-foreground/40 mt-1">
+									← → keys · swipe · tap ❤️
 								</p>
 							</CardContent>
 						</Card>

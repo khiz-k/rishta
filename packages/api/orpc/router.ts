@@ -11,6 +11,7 @@ import { preferencesRouter } from "../modules/preferences/router";
 import { profilesRouter } from "../modules/profiles/router";
 import { shortlistsRouter } from "../modules/shortlists/router";
 import { usersRouter } from "../modules/users/router";
+import { walletRouter } from "../modules/wallet/router";
 import { publicProcedure } from "./procedures";
 
 export const router = publicProcedure.router({
@@ -25,6 +26,7 @@ export const router = publicProcedure.router({
 	preferences: preferencesRouter,
 	shortlists: shortlistsRouter,
 	messages: messagesRouter,
+	wallet: walletRouter,
 });
 
 export type ApiRouterClient = RouterClient<typeof router>;

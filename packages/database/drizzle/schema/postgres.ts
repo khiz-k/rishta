@@ -486,6 +486,7 @@ export const interest = pgTable(
 			.references(() => user.id, { onDelete: "cascade" }),
 		status: text("status").notNull().default("pending"), // "pending", "accepted", "declined", "withdrawn"
 		message: text("message"),
+		bidAmount: integer("bidAmount").default(0).notNull(), // Credits attached to this interest
 		createdAt: timestamp("createdAt").defaultNow().notNull(),
 		updatedAt: timestamp("updatedAt")
 			.defaultNow()
@@ -517,6 +518,27 @@ export const shortlist = pgTable(
 		index("shortlist_userId_idx").on(table.userId),
 		uniqueIndex("shortlist_user_profile_uidx").on(table.userId, table.profileUserId),
 	],
+);
+
+export const wallet = pgTable(
+	"wallet",
+	{
+		id: text("id")
+			.$defaultFn(() => cuid())
+			.primaryKey(),
+		userId: text("userId")
+			.notNull()
+			.unique()
+			.references(() => user.id, { onDelete: "cascade" }),
+		credits: integer("credits").notNull().default(10), // New users get 10 free credits
+		totalSpent: integer("totalSpent").notNull().default(0),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+		updatedAt: timestamp("updatedAt")
+			.defaultNow()
+			.$onUpdate(() => new Date())
+			.notNull(),
+	},
+	(table) => [index("wallet_userId_idx").on(table.userId)],
 );
 
 export const profileView = pgTable(
