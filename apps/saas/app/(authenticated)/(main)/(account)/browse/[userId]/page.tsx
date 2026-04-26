@@ -6,21 +6,21 @@ import { Card, CardContent, CardHeader, CardTitle } from "@repo/ui/components/ca
 import { PageHeader } from "@shared/components/PageHeader";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { ArrowLeftIcon, BookmarkIcon, HeartIcon, MapPinIcon, GraduationCapIcon, BriefcaseIcon, UsersIcon } from "lucide-react";
+import { ArrowLeftIcon, BookmarkIcon, HeartIcon, MapPinIcon, GraduationCapIcon, BriefcaseIcon, ShieldBanIcon, UsersIcon } from "lucide-react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-
-function calcAge(dob: string): number {
-	const birth = new Date(dob);
-	const today = new Date();
-	let age = today.getFullYear() - birth.getFullYear();
-	if (today.getMonth() < birth.getMonth() || (today.getMonth() === birth.getMonth() && today.getDate() < birth.getDate())) age--;
-	return age;
-}
+import { useEffect } from "react";
+import { calcAge } from "@shared/lib/utils";
 
 export default function ProfileDetailPage() {
 	const params = useParams<{ userId: string }>();
 	const queryClient = useQueryClient();
+
+	// Track profile view
+	const trackMutation = useMutation(orpc.profiles.trackView.mutationOptions());
+	useEffect(() => {
+		trackMutation.mutate({ profileUserId: params.userId });
+	}, [params.userId]);
 
 	const { data: profile, isLoading } = useQuery(
 		orpc.profiles.get.queryOptions({ input: { userId: params.userId } }),
@@ -36,6 +36,11 @@ export default function ProfileDetailPage() {
 		onSuccess: () => queryClient.invalidateQueries({ queryKey: orpc.shortlists.list.queryKey({}) }),
 	});
 
+	const blockMutation = useMutation({
+		...orpc.profiles.block.mutationOptions(),
+		onSuccess: () => queryClient.invalidateQueries({ queryKey: orpc.profiles.browse.queryKey({ input: {} }) }),
+	});
+
 	if (isLoading) {
 		return <div className="space-y-4">{[...Array(4)].map((_, i) => <Card key={i}><CardContent className="pt-6"><div className="h-16 bg-muted rounded animate-pulse" /></CardContent></Card>)}</div>;
 	}
@@ -48,8 +53,8 @@ export default function ProfileDetailPage() {
 
 	return (
 		<div className="space-y-6 max-w-2xl">
-			<Link href="/browse" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
-				<ArrowLeftIcon className="size-3.5" /> Back to browse
+			<Link href="/" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground">
+				<ArrowLeftIcon className="size-3.5" /> Back to discover
 			</Link>
 
 			{/* Header */}
@@ -58,8 +63,12 @@ export default function ProfileDetailPage() {
 				<CardContent className="pt-6">
 					<div className="flex items-start justify-between">
 						<div className="flex items-center gap-4">
-							<div className="size-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-display font-bold text-primary">
-								{profile.displayName.charAt(0)}
+							<div className="size-16 rounded-full bg-primary/10 flex items-center justify-center text-2xl font-display font-bold text-primary overflow-hidden">
+								{profile.profilePhoto ? (
+									<img src={profile.profilePhoto} alt={profile.displayName} className="size-full object-cover" />
+								) : (
+									profile.displayName.charAt(0)
+								)}
 							</div>
 							<div>
 								<h2 className="font-display text-xl font-bold">{profile.displayName}</h2>
@@ -89,6 +98,14 @@ export default function ProfileDetailPage() {
 							loading={shortlistMutation.isPending}
 						>
 							<BookmarkIcon className="size-4 mr-1" /> Shortlist
+						</Button>
+						<Button
+							variant="ghost"
+							size="icon"
+							onClick={() => { if (confirm("Block this user? They won't appear in your discover.")) blockMutation.mutate({ blockedUserId: params.userId }); }}
+							className="text-muted-foreground hover:text-destructive"
+						>
+							<ShieldBanIcon className="size-4" />
 						</Button>
 					</div>
 
