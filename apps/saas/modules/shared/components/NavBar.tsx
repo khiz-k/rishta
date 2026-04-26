@@ -30,6 +30,7 @@ import { UserMenu } from "@shared/components/UserMenu";
 import {
 	ActivityIcon,
 	BookmarkIcon,
+	EyeIcon,
 	ChevronRightIcon,
 	HeartIcon,
 	IdCardIcon,
@@ -379,6 +380,12 @@ export function NavBar() {
 				href: "/profile",
 				icon: IdCardIcon,
 				isActive: pathname.startsWith("/profile"),
+			},
+			{
+				label: "Viewers",
+				href: "/viewers",
+				icon: EyeIcon,
+				isActive: pathname.startsWith("/viewers"),
 			},
 			{
 				label: "Activity",

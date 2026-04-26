@@ -519,6 +519,48 @@ export const shortlist = pgTable(
 	],
 );
 
+export const profileView = pgTable(
+	"profile_view",
+	{
+		id: text("id")
+			.$defaultFn(() => cuid())
+			.primaryKey(),
+		viewerUserId: text("viewerUserId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		profileUserId: text("profileUserId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+	},
+	(table) => [
+		index("profile_view_viewer_idx").on(table.viewerUserId),
+		index("profile_view_profile_idx").on(table.profileUserId),
+		uniqueIndex("profile_view_unique_idx").on(table.viewerUserId, table.profileUserId),
+	],
+);
+
+export const blockUser = pgTable(
+	"block_user",
+	{
+		id: text("id")
+			.$defaultFn(() => cuid())
+			.primaryKey(),
+		blockerUserId: text("blockerUserId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		blockedUserId: text("blockedUserId")
+			.notNull()
+			.references(() => user.id, { onDelete: "cascade" }),
+		reason: text("reason"),
+		createdAt: timestamp("createdAt").defaultNow().notNull(),
+	},
+	(table) => [
+		index("block_user_blocker_idx").on(table.blockerUserId),
+		uniqueIndex("block_user_unique_idx").on(table.blockerUserId, table.blockedUserId),
+	],
+);
+
 export const message = pgTable(
 	"message",
 	{

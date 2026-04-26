@@ -1,5 +1,5 @@
-import { db, biodataProfile, partnerPreference } from "@repo/database";
-import { eq, and, ne, desc } from "drizzle-orm";
+import { db, biodataProfile, partnerPreference, blockUser } from "@repo/database";
+import { eq, and, ne, desc, notInArray } from "drizzle-orm";
 import { z } from "zod";
 
 import { protectedProcedure } from "../../../orpc/procedures";
@@ -35,9 +35,24 @@ export const browseProfiles = protectedProcedure
 			targetGender = myProfile.gender === "male" ? "female" : myProfile.gender === "female" ? "male" : undefined;
 		}
 
+		// Get blocked users (both directions)
+		const blockedByMe = await db.query.blockUser.findMany({
+			where: eq(blockUser.blockerUserId, user.id),
+			columns: { blockedUserId: true },
+		});
+		const blockedMe = await db.query.blockUser.findMany({
+			where: eq(blockUser.blockedUserId, user.id),
+			columns: { blockerUserId: true },
+		});
+		const excludeIds = [
+			...blockedByMe.map((b) => b.blockedUserId),
+			...blockedMe.map((b) => b.blockerUserId),
+		];
+
 		const conditions = [
 			ne(biodataProfile.userId, user.id),
 			eq(biodataProfile.isActive, true),
+			...(excludeIds.length > 0 ? [notInArray(biodataProfile.userId, excludeIds)] : []),
 		];
 
 		if (targetGender) {
