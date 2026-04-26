@@ -178,7 +178,7 @@ export const auth = betterAuth({
 		// If signup is disabled, the only way to sign up is via an invitation. So in this case we can auto sign in the user, as the email is already verified by the invitation.
 		// If signup is enabled, we can't auto sign in the user, as the email is not verified yet.
 		autoSignIn: !config.enableSignup,
-		requireEmailVerification: config.enableSignup,
+		requireEmailVerification: false, // TODO: Re-enable when email provider (Resend) is configured
 		sendResetPassword: async ({ user, url }, request) => {
 			const locale = getLocaleFromRequest(request);
 			await sendEmail({
