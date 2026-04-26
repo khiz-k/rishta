@@ -117,7 +117,7 @@ export default function DiscoverPage() {
 	);
 
 	const { data: myPrefs } = useQuery(orpc.preferences.get.queryOptions({}));
-	const { data: myWallet } = useQuery(orpc.wallet.get.queryOptions({}));
+	const { data: myWallet } = useQuery(orpc.wallet.get.queryOptions({ input: {} }));
 
 	// Calculate compatibility %
 	const calcCompatibility = (p: any): number => {
@@ -153,7 +153,7 @@ export default function DiscoverPage() {
 		...orpc.interests.send.mutationOptions(),
 		onSuccess: () => {
 			queryClient.invalidateQueries({ queryKey: orpc.interests.list.queryKey({ input: { type: "sent" } }) });
-			queryClient.invalidateQueries({ queryKey: orpc.wallet.get.queryKey({}) });
+			queryClient.invalidateQueries({ queryKey: orpc.wallet.get.queryKey({ input: {} }) });
 			playSound("ding");
 			triggerConfetti();
 			showFeedbackMsg(bidAmount > 0 ? `Interest sent with ${bidAmount} credits` : "Interest sent");

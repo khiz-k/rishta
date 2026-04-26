@@ -1,11 +1,12 @@
 import { db, wallet } from "@repo/database";
 import { eq } from "drizzle-orm";
+import { z } from "zod";
 
 import { protectedProcedure } from "../../../orpc/procedures";
 
 export const getWallet = protectedProcedure
 	.route({ method: "GET", path: "/wallet", tags: ["Wallet"], summary: "Get or create wallet" })
-	.input({})
+	.input(z.object({}))
 	.handler(async ({ context: { user } }) => {
 		let w = await db.query.wallet.findFirst({
 			where: eq(wallet.userId, user.id),
