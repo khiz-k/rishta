@@ -30,6 +30,7 @@ import { UserMenu } from "@shared/components/UserMenu";
 import {
 	ActivityIcon,
 	BookmarkIcon,
+	CrownIcon,
 	EyeIcon,
 	ChevronRightIcon,
 	HeartIcon,
@@ -398,6 +399,12 @@ export function NavBar() {
 				href: "/preferences",
 				icon: SlidersHorizontalIcon,
 				isActive: pathname.startsWith("/preferences"),
+			},
+			{
+				label: "Premium",
+				href: "/premium",
+				icon: CrownIcon,
+				isActive: pathname.startsWith("/premium"),
 			},
 			...(organizationSubItems
 				? [
