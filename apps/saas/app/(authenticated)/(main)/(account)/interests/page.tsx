@@ -50,38 +50,60 @@ export default function InterestsPage() {
 					{interests.map((item: any) => {
 						const p = item.profile;
 						if (!p) return null;
+						const isHighBid = item.bidAmount >= 10;
+						const isSuperBid = item.bidAmount >= 25;
 						const statusColors: Record<string, string> = {
 							pending: "bg-amber-500/10 text-amber-500",
 							accepted: "bg-emerald-500/10 text-emerald-500",
 							declined: "bg-rose-500/10 text-rose-500",
 						};
 						return (
-							<Card key={item.id} className="transition-all hover:border-primary/20">
-								<CardContent className="py-4 flex items-center justify-between">
+							<Card key={item.id} className={`transition-all hover:border-primary/20 relative overflow-hidden ${
+								isSuperBid ? "border-amber-500/50 shadow-lg shadow-amber-500/10" : isHighBid ? "border-amber-500/30" : ""
+							}`}>
+								{/* Gold accent bar for bids */}
+								{isHighBid && (
+									<div className={`absolute top-0 left-0 h-1 w-full ${isSuperBid ? "bg-gradient-to-r from-amber-400 via-yellow-300 to-amber-400" : "bg-amber-500/50"}`} />
+								)}
+								<CardContent className={`flex items-center justify-between ${isHighBid ? "py-5" : "py-4"}`}>
 									<Link href={`/browse/${p.userId}`} className="flex items-center gap-3 min-w-0 flex-1">
-										<div className="size-12 rounded-full bg-primary/10 flex items-center justify-center text-lg font-display font-bold text-primary shrink-0">
-											{p.displayName.charAt(0)}
+										<div className={`rounded-full bg-primary/10 flex items-center justify-center font-display font-bold text-primary shrink-0 overflow-hidden ${isHighBid ? "size-14 text-xl" : "size-12 text-lg"} ${isSuperBid ? "ring-2 ring-amber-500/50" : ""}`}>
+											{p.profilePhoto ? (
+												<img src={p.profilePhoto} alt={p.displayName} className="size-full object-cover" />
+											) : (
+												p.displayName.charAt(0)
+											)}
 										</div>
 										<div className="min-w-0">
-											<p className="font-medium truncate">{p.displayName}</p>
+											<p className={`font-medium truncate ${isHighBid ? "text-base" : ""}`}>{p.displayName}</p>
 											<p className="text-sm text-muted-foreground">{calcAge(p.dateOfBirth)} yrs • {p.religion} • {p.location || "—"}</p>
+											{item.message && (
+												<p className="text-xs text-muted-foreground/70 italic truncate mt-0.5">"{item.message}"</p>
+											)}
 										</div>
 									</Link>
-									<div className="flex items-center gap-2 ml-3 shrink-0">
+									<div className="flex flex-col items-end gap-1.5 ml-3 shrink-0">
 										{item.bidAmount > 0 && (
-										<Badge className="bg-amber-500/10 text-amber-500 text-xs gap-1">🔥 {item.bidAmount} credits</Badge>
-									)}
-									<Badge className={`text-xs ${statusColors[item.status] || ""}`}>{item.status}</Badge>
-										{tab === "received" && item.status === "pending" && (
-											<>
-												<Button size="sm" variant="outline" onClick={() => respondMutation.mutate({ interestId: item.id, action: "accepted" })} loading={respondMutation.isPending}>
-													<CheckIcon className="size-3.5 text-emerald-500" />
-												</Button>
-												<Button size="sm" variant="outline" onClick={() => respondMutation.mutate({ interestId: item.id, action: "declined" })} loading={respondMutation.isPending}>
-													<XIcon className="size-3.5 text-rose-500" />
-												</Button>
-											</>
+											<div className={`flex items-center gap-1.5 rounded-full px-3 py-1 ${
+												isSuperBid ? "bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-400 font-bold" : "bg-amber-500/10 text-amber-500"
+											}`}>
+												<span className="text-sm">🔥</span>
+												<span className={`font-display ${isSuperBid ? "text-base" : "text-xs"}`}>{item.bidAmount} credits</span>
+											</div>
 										)}
+										<div className="flex items-center gap-2">
+											<Badge className={`text-xs ${statusColors[item.status] || ""}`}>{item.status}</Badge>
+											{tab === "received" && item.status === "pending" && (
+												<>
+													<Button size="sm" variant="outline" onClick={() => respondMutation.mutate({ interestId: item.id, action: "accepted" })} loading={respondMutation.isPending}>
+														<CheckIcon className="size-3.5 text-emerald-500" />
+													</Button>
+													<Button size="sm" variant="outline" onClick={() => respondMutation.mutate({ interestId: item.id, action: "declined" })} loading={respondMutation.isPending}>
+														<XIcon className="size-3.5 text-rose-500" />
+													</Button>
+												</>
+											)}
+										</div>
 									</div>
 								</CardContent>
 							</Card>
