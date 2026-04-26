@@ -28,14 +28,14 @@ import {
 import { NotificationCenter } from "@shared/components/NotificationCenter";
 import { UserMenu } from "@shared/components/UserMenu";
 import {
-	
+	ActivityIcon,
 	BookmarkIcon,
 	ChevronRightIcon,
 	HeartIcon,
+	IdCardIcon,
 	SearchIcon,
 	SlidersHorizontalIcon,
 	SparklesIcon,
-	HomeIcon,
 	MessageCircleIcon,
 	MenuIcon,
 	PanelLeftCloseIcon,
@@ -377,13 +377,13 @@ export function NavBar() {
 			{
 				label: "My Biodata",
 				href: "/profile",
-				icon: UserCogIcon,
+				icon: IdCardIcon,
 				isActive: pathname.startsWith("/profile"),
 			},
 			{
 				label: "Activity",
 				href: "/activity",
-				icon: MessageCircleIcon,
+				icon: ActivityIcon,
 				isActive: pathname.startsWith("/activity"),
 			},
 			{
