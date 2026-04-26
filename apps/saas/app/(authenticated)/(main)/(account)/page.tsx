@@ -22,62 +22,8 @@ import {
 	useMotionValue,
 	useTransform,
 } from "motion/react";
-import { useCallback, useEffect, useRef, useState } from "react";
-
-// ── Helpers ──
-
-function calcAge(dob: string): number {
-	const b = new Date(dob);
-	const t = new Date();
-	let a = t.getFullYear() - b.getFullYear();
-	if (t.getMonth() < b.getMonth() || (t.getMonth() === b.getMonth() && t.getDate() < b.getDate())) a--;
-	return a;
-}
-
-function avatarGradient(name: string): string {
-	const g = [
-		"from-rose-400 to-pink-600", "from-violet-400 to-purple-600",
-		"from-amber-400 to-orange-600", "from-emerald-400 to-teal-600",
-		"from-blue-400 to-indigo-600", "from-fuchsia-400 to-pink-600",
-		"from-red-400 to-rose-600", "from-cyan-400 to-blue-600",
-	];
-	return g[name.charCodeAt(0) % g.length]!;
-}
-
-// ── Sounds ──
-
-function playSound(type: "whoosh" | "ding" | "pop") {
-	if (typeof window === "undefined") return;
-	try {
-		const ctx = new AudioContext();
-		const osc = ctx.createOscillator();
-		const gain = ctx.createGain();
-		osc.connect(gain);
-		gain.connect(ctx.destination);
-
-		if (type === "whoosh") {
-			osc.type = "sine";
-			osc.frequency.setValueAtTime(400, ctx.currentTime);
-			osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.15);
-			gain.gain.setValueAtTime(0.08, ctx.currentTime);
-			gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.15);
-			osc.start(); osc.stop(ctx.currentTime + 0.15);
-		} else if (type === "ding") {
-			osc.type = "sine";
-			osc.frequency.setValueAtTime(880, ctx.currentTime);
-			osc.frequency.setValueAtTime(1100, ctx.currentTime + 0.05);
-			gain.gain.setValueAtTime(0.12, ctx.currentTime);
-			gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
-			osc.start(); osc.stop(ctx.currentTime + 0.3);
-		} else {
-			osc.type = "sine";
-			osc.frequency.setValueAtTime(600, ctx.currentTime);
-			gain.gain.setValueAtTime(0.06, ctx.currentTime);
-			gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.1);
-			osc.start(); osc.stop(ctx.currentTime + 0.1);
-		}
-	} catch { /* silent fail */ }
-}
+import { avatarGradient, calcAge, haptic, playSound } from "@shared/lib/utils";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 // ── Confetti ──
 
@@ -263,13 +209,6 @@ export default function DiscoverPage() {
 		window.addEventListener("keydown", h);
 		return () => window.removeEventListener("keydown", h);
 	}, [goNext, goPrev]);
-
-	// Haptic
-	const haptic = () => {
-		if (typeof navigator !== "undefined" && "vibrate" in navigator) {
-			navigator.vibrate(10);
-		}
-	};
 
 	if (isLoading) return <DiscoverSkeleton />;
 

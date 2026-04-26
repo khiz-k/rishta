@@ -36,5 +36,10 @@ export default function AccountLayout({ children }: PropsWithChildren) {
 		}
 	}, [isLoading, isSetupPage, prefs, profile, router]);
 
+	// Show nothing while checking — prevents flash of unauthorized content
+	if (isLoading) {
+		return <AppWrapper><div className="flex items-center justify-center min-h-[60vh]"><div className="size-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div></AppWrapper>;
+	}
+
 	return <AppWrapper>{children}</AppWrapper>;
 }
