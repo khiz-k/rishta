@@ -1,44 +1,34 @@
-import { config as storageConfig } from "@repo/storage/config";
 import { cn } from "@repo/ui";
-import { Avatar, AvatarFallback, AvatarImage } from "@repo/ui/components/avatar";
-import { useMemo } from "react";
 
+/**
+ * A square tile with initials in Tiro (design.md §4.1): never a circle and never a photo, so a
+ * glance over a shoulder never shows a face.
+ */
 export const UserAvatar = ({
 	name,
-	avatarUrl,
 	className,
-	ref,
-}: React.ComponentProps<typeof Avatar> & {
+}: {
 	name: string;
 	avatarUrl?: string | null;
 	className?: string;
 }) => {
-	const initials = useMemo(
-		() =>
-			name
-				.split(" ")
-				.slice(0, 2)
-				.map((n) => n[0])
-				.join(""),
-		[name],
-	);
-
-	const avatarSrc = useMemo(
-		() =>
-			avatarUrl
-				? avatarUrl.startsWith("http")
-					? avatarUrl
-					: `/image-proxy/${storageConfig.bucketNames.avatars}/${avatarUrl}`
-				: undefined,
-		[avatarUrl],
-	);
+	const initials = name
+		.trim()
+		.split(/\s+/)
+		.slice(0, 2)
+		.map((part) => Array.from(part)[0] ?? "")
+		.join("")
+		.toUpperCase();
 
 	return (
-		<Avatar ref={ref} className={cn("size-8 rounded-full", className)}>
-			<AvatarImage src={avatarSrc} />
-			<AvatarFallback className="bg-primary/10 text-primary">{initials}</AvatarFallback>
-		</Avatar>
+		<span
+			aria-hidden="true"
+			className={cn(
+				"size-8 inline-flex shrink-0 items-center justify-center border border-foreground/70 bg-card font-display text-ui text-foreground",
+				className,
+			)}
+		>
+			{initials || "·"}
+		</span>
 	);
 };
-
-UserAvatar.displayName = "UserAvatar";

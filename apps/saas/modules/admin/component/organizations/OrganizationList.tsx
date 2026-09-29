@@ -268,7 +268,7 @@ export function OrganizationList() {
 						) : (
 							<TableRow>
 								<TableCell colSpan={columns.length} className="h-24 text-center">
-									<p>No results.</p>
+									<p>{t("admin.organizations.empty")}</p>
 								</TableCell>
 							</TableRow>
 						)}

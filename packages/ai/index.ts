@@ -1,6 +1,8 @@
 import { openai } from "@ai-sdk/openai";
 
-export const textModel = openai("gpt-4o-mini");
+import { TEXT_MODEL_ID } from "./lib/config";
+
+export const textModel = openai(TEXT_MODEL_ID);
 export const imageModel = openai("dall-e-3");
 export const audioModel = openai("whisper-1");
 

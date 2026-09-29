@@ -1,11 +1,25 @@
-import { cn } from "@repo/ui";
+import { config } from "@config";
+import { getTranslations } from "next-intl/server";
 
-export function Footer() {
+/** A quiet foot line: the name, the safety notice and the legal links. */
+export async function Footer() {
+	const t = await getTranslations("footer");
+	const base = config.marketingUrl ?? "";
 	return (
-		<footer className={cn("max-w-6xl py-6 text-xs container text-center text-foreground/60")}>
-			<span>
-				Vow
-			</span>
+		<footer className="px-5 mt-10 max-w-5xl mx-auto w-full text-center text-meta text-muted-foreground">
+			<p>{t("safety")}</p>
+			<p className="mt-2 gap-4 flex flex-wrap items-baseline justify-center">
+				<span className="font-display">Rishta</span>
+				<a href={`${base}/safety`} className="hover:text-foreground">
+					{t("safetyLink")}
+				</a>
+				<a href={`${base}/legal/privacy-policy`} className="hover:text-foreground">
+					{t("privacy")}
+				</a>
+				<a href={`${base}/legal/terms`} className="hover:text-foreground">
+					{t("terms")}
+				</a>
+			</p>
 		</footer>
 	);
 }

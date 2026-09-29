@@ -1,0 +1,209 @@
+{
+	"page": {
+		"sections": {
+			"personal": "અંગત",
+			"education": "અભ્યાસ અને કામ",
+			"family": "કુટુંબ",
+			"lifestyle": "જીવનશૈલી",
+			"about": "પરિચય",
+			"looking_for": "કેવો જીવનસાથી જોઈએ",
+			"sealed": "મહોરબંધ"
+		},
+		"fields": {
+			"born": "જન્મ",
+			"dateOfBirth": "જન્મ તારીખ",
+			"height": "ઊંચાઈ",
+			"maritalStatus": "અગાઉ લગ્ન",
+			"hasChildren": "બાળકો",
+			"motherTongue": "માતૃભાષા",
+			"languages": "ભાષાઓ",
+			"religion": "ધર્મ",
+			"sect": "પરંપરા",
+			"practice": "ધાર્મિકતા",
+			"community": "સમાજ",
+			"residency": "રહેઠાણ સ્થિતિ",
+			"manglik": "માંગલિક",
+			"education": "અભ્યાસ",
+			"university": "ક્યાંથી અભ્યાસ",
+			"profession": "કામ",
+			"employer": "કામનું સ્થળ",
+			"incomeRange": "આવક",
+			"fatherOccupation": "પિતા",
+			"motherOccupation": "માતા",
+			"siblings": "ભાઈ-બહેન",
+			"familyType": "કુટુંબ",
+			"familyValues": "કૌટુંબિક મૂલ્યો",
+			"nativePlace": "વતન",
+			"aboutFamily": "કુટુંબ વિશે",
+			"diet": "ખોરાક",
+			"smoking": "ધૂમ્રપાન",
+			"drinking": "દારૂ",
+			"fullName": "પૂરું નામ",
+			"birthTime": "જન્મ સમય",
+			"birthPlace": "જન્મ સ્થળ",
+			"contactPhone": "ફોન",
+			"location": "રહેઠાણ",
+			"country": "દેશ",
+			"aboutMe": "પરિચય",
+			"lookingFor": "કેવો જીવનસાથી જોઈએ"
+		},
+		"values": {
+			"maritalStatus": {
+				"never_married": "અપરિણીત",
+				"divorced": "છૂટાછેડા થયેલ",
+				"widowed": "વિધુર/વિધવા",
+				"annulled": "લગ્ન રદ"
+			},
+			"hasChildren": {
+				"yes": "બાળકો છે",
+				"no": "બાળકો નથી"
+			},
+			"religion": {
+				"hindu": "હિંદુ",
+				"muslim": "મુસ્લિમ",
+				"sikh": "શીખ",
+				"christian": "ખ્રિસ્તી",
+				"jain": "જૈન",
+				"buddhist": "બૌદ્ધ",
+				"jewish": "યહૂદી",
+				"parsi": "પારસી",
+				"other": "અન્ય ધર્મ",
+				"none": "કોઈ ધર્મ નહીં"
+			},
+			"practice": {
+				"very": "ખૂબ ધાર્મિક",
+				"moderately": "મધ્યમ ધાર્મિક",
+				"somewhat": "થોડા ધાર્મિક",
+				"not_practising": "ધાર્મિક નથી"
+			},
+			"residency": {
+				"citizen": "નાગરિક",
+				"permanent_resident": "કાયમી રહેવાસી",
+				"work_visa": "વર્ક વિઝા",
+				"student_visa": "સ્ટુડન્ટ વિઝા",
+				"other": "અન્ય"
+			},
+			"manglik": {
+				"yes": "માંગલિક",
+				"no": "માંગલિક નથી",
+				"partial": "આંશિક માંગલિક",
+				"dont_know": "ખબર નથી"
+			},
+			"education": {
+				"high_school": "હાઈ સ્કૂલ",
+				"diploma": "ડિપ્લોમા",
+				"bachelors": "સ્નાતક",
+				"masters": "અનુસ્નાતક",
+				"phd": "પીએચડી",
+				"professional": "વ્યાવસાયિક ડિગ્રી",
+				"other": "અન્ય"
+			},
+			"incomeRange": {
+				"under_50k": "$50,000થી ઓછી",
+				"50k_75k": "$50,000–75,000",
+				"75k_100k": "$75,000–100,000",
+				"100k_150k": "$100,000–150,000",
+				"150k_plus": "$150,000થી વધુ",
+				"prefer_not_to_say": "જણાવવા માંગતા નથી"
+			},
+			"familyType": {
+				"joint": "સંયુક્ત કુટુંબ",
+				"nuclear": "વિભક્ત કુટુંબ"
+			},
+			"familyValues": {
+				"traditional": "પરંપરાગત",
+				"moderate": "મધ્યમ",
+				"liberal": "ઉદાર"
+			},
+			"diet": {
+				"veg": "શાકાહારી",
+				"eggetarian": "ઈંડા ખાનારા શાકાહારી",
+				"vegan": "વીગન",
+				"jain_veg": "જૈન શાકાહારી",
+				"non_veg": "માંસાહારી",
+				"halal": "હલાલ"
+			},
+			"smoking": {
+				"never": "ધૂમ્રપાન કરતા નથી",
+				"occasionally": "ક્યારેક",
+				"regularly": "ધૂમ્રપાન કરે છે"
+			},
+			"drinking": {
+				"never": "દારૂ પીતા નથી",
+				"occasionally": "ક્યારેક",
+				"socially": "પ્રસંગોપાત",
+				"regularly": "નિયમિત"
+			}
+		},
+		"signer": {
+			"self": "{name}એ પોતે લખ્યું",
+			"parent": "{name}ના માતા-પિતાએ લખ્યું",
+			"parentConfirmed": "{name}ના માતા-પિતાએ લખ્યું, {name}એ પુષ્ટિ કરી",
+			"sibling": "{name}ના ભાઈ કે બહેને લખ્યું",
+			"siblingConfirmed": "{name}ના ભાઈ કે બહેને લખ્યું, {name}એ પુષ્ટિ કરી",
+			"relative": "{name}ના કુટુંબે લખ્યું",
+			"relativeConfirmed": "{name}ના કુટુંબે લખ્યું, {name}એ પુષ્ટિ કરી",
+			"friend": "{name}ના એક મિત્રએ લખ્યું",
+			"friendConfirmed": "એક મિત્રએ લખ્યું, {name}એ પુષ્ટિ કરી"
+		},
+		"verified": {
+			"email": "ઈમેલ ચકાસાયેલ",
+			"phone": "ફોન ચકાસાયેલ",
+			"id": "ઓળખ ચકાસાયેલ"
+		},
+		"ref": "ક્ર. {ref} · {date}એ અપડેટ",
+		"photo": {
+			"veiledAlt": "ફોટો ઢાંકેલો છે, બંનેની હા પછી ખુલશે",
+			"alt": "{name}નો ફોટો",
+			"none": "આ પાના પર ફોટો નથી",
+			"veiled": "ઢાંકેલો"
+		},
+		"sealed": {
+			"aria": "મહોરબંધ. બંનેની હા પછી ખુલશે.",
+			"closed": "ફોટા, પૂરું નામ, કામનું સ્થળ અને સંપર્ક બંનેની હા પછી ખુલશે.",
+			"empty": "આ પાના પર બીજું કંઈ મહોરબંધ નથી."
+		},
+		"printWatermark": "રિશ્તા તરફથી · ક્ર. {ref} · ખાનગી રીતે શેર કરેલ, આગળ ન મોકલશો"
+	},
+	"family": {
+		"link": {
+			"strip": "{name}એ {label} સાથે ખાનગી રીતે શેર કર્યું",
+			"until": "{date} સુધી ખુલ્લું · આગળ ન મોકલશો",
+			"languageLabel": "ભાષા",
+			"translated": "અનુવાદિત.",
+			"showOriginal": "મૂળ જુઓ",
+			"showTranslation": "અનુવાદ જુઓ",
+			"noTranslation": "હાલમાં અનુવાદ ઉપલબ્ધ નથી. શીર્ષકો તમારી ભાષામાં છે; બાકીનું જેમ લખાયું તેમ છે.",
+			"noteFrom": "{name}નો સંદેશ",
+			"watermark": "{label} માટે · {name} તરફથી · {date}",
+			"question": "તમારો શો અભિપ્રાય છે?",
+			"reactions": {
+				"proceed": "આગળ વધો",
+				"lets_talk": "વાત કરીએ",
+				"not_for_us": "અમારા માટે નહીં"
+			},
+			"thanks": "આભાર. {name}ને પાનાની બાજુમાં “{reaction}” દેખાશે.",
+			"canChange": "લિંક બંધ થાય ત્યાં સુધી તમે તેને બદલી શકો છો.",
+			"notSaved": "આ સાચવાયું નથી. કૃપા કરી ફરી પ્રયાસ કરો.",
+			"words": "થોડા શબ્દો ઉમેરો (વૈકલ્પિક)",
+			"send": "{name}ને મોકલો",
+			"sent": "મોકલાયું. {name}ને તમારા શબ્દો પાનાની બાજુમાં દેખાશે.",
+			"report": "આ પાનાની ફરિયાદ કરો",
+			"reportTitle": "આ પાનામાં શું ખોટું છે?",
+			"reportCategories": {
+				"scam_money": "પૈસા માંગે છે અથવા છેતરપિંડી લાગે છે",
+				"harassment": "હેરાનગતિ અથવા ખરાબ વાતો",
+				"fake_profile": "પાનું નકલી લાગે છે",
+				"underage": "વ્યક્તિ 18 વર્ષથી નાની લાગે છે",
+				"pressure_to_marry": "લગ્નનું દબાણ",
+				"hate": "નફરતભરી વાતો",
+				"other": "બીજું કંઈ"
+			},
+			"reportSubmit": "ફરિયાદ મોકલો",
+			"reportThanks": "આભાર. અમારી ટીમની એક વ્યક્તિ તે વાંચશે.",
+			"closed": "આ લિંક બંધ થઈ ગઈ છે. {name}ને ફરી મોકલવા કહો.",
+			"closedNoName": "આ લિંક બંધ થઈ ગઈ છે. તેને ફરી મોકલવા કહો.",
+			"error": "આ પાનું ખૂલી શક્યું નહીં. કૃપા કરી એક મિનિટ પછી લિંક ફરી ખોલો."
+		}
+	}
+}

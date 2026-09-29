@@ -1,38 +1,149 @@
 {
 	"common": {
-		"openLinkInBrowser": "If you want to open the link in a different browser than your default one, copy and paste this link:",
-		"otp": "One-time password",
-		"useLink": "or use the following link:"
+		"openLinkInBrowser": "If the button doesn’t open, copy this address into your browser:",
+		"otp": "Your one-time code",
+		"useLink": "Or confirm with the button below.",
+		"notYou": "If you didn’t ask for this, you can ignore this email. Nothing will change.",
+		"footer": "Rishta · a discreet email. We never name anyone in a subject line. You can choose which emails we send in Settings."
 	},
 	"emailVerification": {
-		"body": "Hey,\nplease click the link below to verify this new email address.",
-		"confirmEmail": "Verify email",
-		"subject": "Verify your email"
+		"subject": "Confirm your email address",
+		"headline": "Confirm your email address",
+		"body": "Please confirm this address so we can send you letters and answers. A page can only be confirmed or published from a confirmed address.",
+		"confirmEmail": "Confirm my email"
 	},
 	"forgotPassword": {
-		"body": "Hey,\nyou requested a password reset.\n\nClick the button below to reset your password.",
-		"resetPassword": "Reset password",
-		"subject": "Reset your password"
+		"subject": "Choose a new password",
+		"headline": "Choose a new password",
+		"body": "Someone, we hope you, asked to reset the password for your Rishta account. The link below works once and expires soon.",
+		"resetPassword": "Choose a new password"
 	},
 	"magicLink": {
-		"body": "Hey,\nyou requested a login email from Rishta.\n\nClick the link below to login.",
-		"login": "Login",
-		"subject": "Login to Rishta"
+		"subject": "Your sign-in link for Rishta",
+		"headline": "Your sign-in link",
+		"body": "Here is the link you asked for. It signs you in to Rishta and works once.",
+		"login": "Sign in to Rishta"
 	},
 	"newUser": {
-		"body": "Hey,\nthanks for signing up for Rishta.\n\nTo start using our app, please confirm your email address by clicking the link below.",
-		"confirmEmail": "Confirm email",
-		"subject": "Confirm your email"
+		"subject": "Welcome to Rishta",
+		"headline": "Welcome to Rishta",
+		"body": "Thank you for joining. Please confirm your email address to begin your page. Nothing about you is visible to anyone until you publish it.",
+		"confirmEmail": "Confirm my email"
 	},
 	"organizationInvitation": {
-		"body": "You have been invited to join the organization {organizationName}. Click the button below or copy and paste the link into your browser of choice to accept the invitation and join the organization.",
-		"headline": "Join the organization {organizationName}",
-		"join": "Join the organization",
-		"subject": "You have been invited to join an organization"
+		"subject": "You’ve been invited to a household on Rishta",
+		"headline": "Join {organizationName}’s household",
+		"body": "{inviterName} has asked you to help with {organizationName}’s search on Rishta. In a household you read pages, keep them and leave pencil notes in the margin: Proceed, Let’s talk or Not for us. Only {organizationName} can write to someone or say yes, and nobody in the household reads their letters.",
+		"join": "Join the household",
+		"claimSubject": "Someone in your family has started a page for you",
+		"claimHeadline": "{inviterName} has started a page for you",
+		"claimBody": "{inviterName} has begun writing a biodata page for you on Rishta. Nothing about you is visible to anyone until you read it and confirm it. If you would rather not have a page, you can decline, kindly.",
+		"claimJoin": "Read the page",
+		"someoneInFamily": "Someone in your family"
 	},
 	"notification": {
-		"openInApp": "Open this notification in the app:",
-		"subject": "New notification",
-		"view": "View"
+		"openInApp": "Open Rishta to read it.",
+		"subject": "A note from Rishta",
+		"view": "Open Rishta"
+	},
+	"rishta": {
+		"notifications": {
+			"LETTER_RECEIVED": {
+				"headline": "A letter is waiting for you",
+				"message": "A new letter is waiting."
+			},
+			"LETTER_ANSWERED_YES": {
+				"headline": "Your letter has an answer",
+				"message": "Your letter has an answer. The seals are broken."
+			},
+			"LETTER_ANSWERED": {
+				"headline": "Your letter has an answer",
+				"message": "Your letter has an answer."
+			},
+			"CALL_PROPOSED": {
+				"headline": "A time has been proposed",
+				"message": "A time has been proposed."
+			},
+			"CALL_BOOKED": {
+				"headline": "Your call is booked",
+				"message": "Your call is booked for {when}."
+			},
+			"INTRODUCTION_CLOSED": {
+				"headline": "A conversation has closed",
+				"message": "A conversation has closed."
+			},
+			"FAMILY_REACTION": {
+				"headline": "A note from your family",
+				"message": "{author} left a pencil note on a page."
+			},
+			"CLAIM_REQUESTED": {
+				"headline": "Someone in your family has started a page for you",
+				"message": "Nothing about you is visible to anyone until you confirm it."
+			},
+			"PAGE_CLAIMED": {
+				"headline": "About the page you started",
+				"message": "{name} confirmed the page."
+			},
+			"CLAIM_DECLINED": {
+				"headline": "About the page you started",
+				"message": "{name} would rather not have a page. Thank you for caring."
+			},
+			"discreetBody": "Open Rishta to read it."
+		},
+		"defaults": {
+			"declineNote": "Thank you for writing. I don't think we're right for each other, and I wish you well in your search.",
+			"closingNote": "Thank you for our conversations. I've decided not to continue, and I wish you well.",
+			"searchClosedNote": "I've closed my search. Thank you, and I wish you well."
+		},
+		"familyLink": {
+			"shareText": "{name} would like your thoughts on a page: {url}"
+		},
+		"call": {
+			"summary": "A first call, arranged on Rishta",
+			"description": "Your first call. Rishta keeps contact sealed until you each choose to share it."
+		},
+		"firstLine": {
+			"intro": "I noticed {first}.",
+			"introTwo": "I noticed {first}, and {second}.",
+			"timeline": "we both hope to marry {timeline}",
+			"language": "we both speak {language}",
+			"diet": "we're both {diet}",
+			"religion": "we share a faith",
+			"community": "our families are both {community}",
+			"region": "both our families are from {region}",
+			"location": "we both live around {city}",
+			"education": "we both value our studies",
+			"fallback": "I read your page with care, and I'd like to know more about you and your family."
+		},
+		"timelines": {
+			"3_months": "within three months",
+			"6_months": "within six months",
+			"1_year": "within a year",
+			"2_years_plus": "in the next few years"
+		},
+		"diets": {
+			"veg": "vegetarian",
+			"eggetarian": "eggetarian",
+			"vegan": "vegan",
+			"jain_veg": "Jain vegetarian",
+			"non_veg": "non-vegetarian",
+			"halal": "halal"
+		},
+		"drafts": {
+			"self": {
+				"work": "I work as {profession}.",
+				"workIn": "I work as {profession} in {city}.",
+				"nativePlace": "My family is from {nativePlace}.",
+				"parents": "My father is {father}, and my mother is {mother}.",
+				"timeline": "I hope to marry {timeline}."
+			},
+			"other": {
+				"work": "{name} works as {profession}.",
+				"workIn": "{name} works as {profession} in {city}.",
+				"nativePlace": "Our family is from {nativePlace}.",
+				"parents": "{name}'s father is {father}, and mother is {mother}.",
+				"timeline": "{name} hopes to marry {timeline}."
+			}
+		}
 	}
 }

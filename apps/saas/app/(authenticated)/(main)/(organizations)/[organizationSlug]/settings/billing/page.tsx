@@ -1,60 +1,43 @@
 import { getActiveOrganization } from "@auth/lib/server";
-import { ActivePlan } from "@payments/components/ActivePlan";
-import { ChangePlan } from "@payments/components/ChangePlan";
+import { CreditsAndPlan } from "@household/components/CreditsAndPlan";
 import { listPurchases } from "@payments/lib/server";
-import { createPurchasesHelper } from "@repo/payments/lib/helper";
-import { PageHeader } from "@shared/components/PageHeader";
-import { SettingsList } from "@shared/components/SettingsList";
+import { SettingsPage } from "@shared/components/shell/SettingsNav";
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { getServerQueryClient } from "@shared/lib/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
 import { getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 
 export async function generateMetadata() {
-	const t = await getTranslations("settings.billing");
-
-	return {
-		title: t("title"),
-	};
+	const t = await getTranslations("credits");
+	return { title: t("title") };
 }
 
-export default async function BillingSettingsPage({
+/** Credits & plan: Free or Premium, credits and their ledger, and a $5 pack. */
+export default async function CreditsPage({
 	params,
 }: {
 	params: Promise<{ organizationSlug: string }>;
 }) {
 	const { organizationSlug } = await params;
 	const organization = await getActiveOrganization(organizationSlug);
-
 	if (!organization) {
 		return notFound();
 	}
-
-	const purchases = await listPurchases(organization.id);
-
 	const queryClient = getServerQueryClient();
-
 	await queryClient.prefetchQuery({
 		queryKey: orpc.payments.listPurchases.queryKey({
-			input: {
-				organizationId: organization.id,
-			},
+			input: { organizationId: organization.id },
 		}),
-		queryFn: () => purchases,
+		queryFn: () => listPurchases(organization.id),
 	});
-
-	const { activePlan } = createPurchasesHelper(purchases);
-
-	const t = await getTranslations("settings.billing");
+	const t = await getTranslations("credits");
 
 	return (
-		<>
-			<PageHeader title={t("title")} subtitle={t("changePlan.description")} />
-
-			<SettingsList>
-				{activePlan && <ActivePlan organizationId={organization.id} />}
-				<ChangePlan organizationId={organization.id} activePlanId={activePlan?.id} />
-			</SettingsList>
-		</>
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<SettingsPage title={t("title")} lead={t("lead")}>
+				<CreditsAndPlan />
+			</SettingsPage>
+		</HydrationBoundary>
 	);
 }

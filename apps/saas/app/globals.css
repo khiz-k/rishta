@@ -9,7 +9,7 @@
 
 @utility container {
 	margin-inline: auto;
-	padding-inline: 1.5rem;
+	padding-inline: 1.25rem;
 	width: 100%;
 	max-width: var(--container-7xl);
 }
@@ -22,6 +22,277 @@
 	scrollbar-width: none;
 }
 
+/* ─── Motion (design.md §10) ──────────────────────────────────────────────────────────── */
+
+@keyframes turn-in-next {
+	from {
+		opacity: 0;
+		transform: translateX(24px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes turn-in-prev {
+	from {
+		opacity: 0;
+		transform: translateX(-24px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@keyframes paper-fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes paper-fade-out {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@keyframes slip-in {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+/* Skeletons appear after 150ms so fast loads never flash. No shimmer. */
+@keyframes paper-appear {
+	to {
+		opacity: 1;
+	}
+}
+
+/* Seal press: 1.04 → 1 while the ink spreads from the centre. */
+@keyframes seal-press {
+	from {
+		transform: scale(1.04);
+	}
+	to {
+		transform: scale(1);
+	}
+}
+
+@keyframes ink-spread {
+	from {
+		clip-path: circle(0% at 50% 50%);
+	}
+	to {
+		clip-path: circle(71% at 50% 50%);
+	}
+}
+
+/* A failed send: the press is reversed in 150ms. */
+@keyframes seal-lift {
+	from {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.04);
+	}
+	to {
+		transform: scale(1);
+	}
+}
+
+/* Both seals break together: the crack draws, then the halves rotate ∓8° and part 6px. */
+@keyframes crack-draw {
+	from {
+		stroke-dashoffset: 1;
+	}
+	40%,
+	to {
+		stroke-dashoffset: 0;
+	}
+}
+
+@keyframes seal-half-left {
+	0%,
+	30% {
+		transform: none;
+	}
+	to {
+		transform: translateX(-3px) rotate(-8deg);
+	}
+}
+
+@keyframes seal-half-right {
+	0%,
+	30% {
+		transform: none;
+	}
+	to {
+		transform: translateX(3px) rotate(8deg);
+	}
+}
+
+@keyframes unveil {
+	from {
+		filter: blur(16px);
+	}
+	to {
+		filter: blur(0);
+	}
+}
+
+@keyframes veil-lift {
+	from {
+		opacity: 1;
+	}
+	to {
+		opacity: 0;
+	}
+}
+
+@utility animate-turn-next {
+	animation: turn-in-next var(--dur-turn) var(--ease-paper) both;
+}
+
+@utility animate-turn-prev {
+	animation: turn-in-prev var(--dur-turn) var(--ease-paper) both;
+}
+
+@utility animate-paper-fade {
+	animation: paper-fade-in var(--dur-turn) ease-out both;
+}
+
+@utility animate-slip-in {
+	animation: slip-in 180ms ease-out both;
+}
+
+@utility animate-paper-appear {
+	opacity: 0;
+	animation: paper-appear 0ms linear 150ms forwards;
+}
+
+@utility animate-seal-press {
+	animation: seal-press var(--dur-press) var(--ease-press) both;
+}
+
+@utility animate-ink-spread {
+	animation: ink-spread var(--dur-press) var(--ease-press) both;
+}
+
+@utility animate-seal-lift {
+	animation: seal-lift 150ms ease-out both;
+}
+
+@utility animate-crack-draw {
+	animation: crack-draw var(--dur-break) var(--ease-break) both;
+}
+
+@utility animate-seal-half-left {
+	animation: seal-half-left var(--dur-break) var(--ease-break) both;
+}
+
+@utility animate-seal-half-right {
+	animation: seal-half-right var(--dur-break) var(--ease-break) both;
+}
+
+@utility animate-unveil {
+	animation: unveil var(--dur-unblur) ease-out both;
+}
+
+@utility animate-veil-lift {
+	animation: veil-lift var(--dur-unblur) ease-out both;
+}
+
+/* prefers-reduced-motion applies the right-hand column of design.md §10 globally. */
+@media (prefers-reduced-motion: reduce) {
+	.animate-turn-next,
+	.animate-turn-prev {
+		animation: paper-fade-in 120ms ease-out both;
+	}
+	.animate-slip-in,
+	.animate-paper-fade {
+		animation: paper-fade-in 120ms ease-out both;
+	}
+	.animate-seal-press,
+	.animate-ink-spread,
+	.animate-seal-lift,
+	.animate-unveil,
+	.animate-veil-lift,
+	.animate-crack-draw {
+		animation: none;
+	}
+	.animate-seal-half-left {
+		animation: none;
+		transform: translateX(-3px) rotate(-8deg);
+	}
+	.animate-seal-half-right {
+		animation: none;
+		transform: translateX(3px) rotate(8deg);
+	}
+	.animate-veil-lift {
+		opacity: 0;
+	}
+	[data-motion="slide"] {
+		transition: none !important;
+	}
+	/*
+	 * Anything that transitions a transform (a disclosure glyph turning, a bar sliding) changes
+	 * state instantly, even where a component forgot its own motion-reduce guard.
+	 */
+	.transition-transform,
+	[class*=":transition-transform"],
+	.transition-all,
+	[class*=":transition-all"] {
+		transition-duration: 0s !important;
+	}
+	/*
+	 * Radix enter and exit (dialogs, sheets, menus, popovers, selects): opacity only, 120ms. The
+	 * slide, zoom and spin variables go to rest, so nothing moves.
+	 */
+	.animate-in,
+	.animate-out,
+	[class*=":animate-in"],
+	[class*=":animate-out"] {
+		--tw-enter-translate-x: 0;
+		--tw-enter-translate-y: 0;
+		--tw-enter-scale: 1;
+		--tw-enter-rotate: 0;
+		--tw-exit-translate-x: 0;
+		--tw-exit-translate-y: 0;
+		--tw-exit-scale: 1;
+		--tw-exit-rotate: 0;
+		animation-duration: 120ms !important;
+	}
+	/* The phone sheet (vaul): a 120ms fade instead of the slide; a drag no longer glides. */
+	[data-vaul-drawer] {
+		transition: none !important;
+		animation-duration: 120ms !important;
+		animation-fill-mode: both !important;
+	}
+	[data-vaul-drawer][data-state="open"] {
+		animation-name: paper-fade-in !important;
+	}
+	[data-vaul-drawer][data-state="closed"] {
+		animation-name: paper-fade-out !important;
+	}
+	[data-vaul-overlay] {
+		animation-duration: 120ms !important;
+	}
+}
+
 @layer base {
 	*,
 	::after,
@@ -31,7 +302,69 @@
 		border-color: var(--border);
 	}
 
+	html {
+		-webkit-text-size-adjust: 100%;
+		text-size-adjust: 100%;
+	}
+
+	body {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+		line-height: 1.625;
+		font-weight: 420;
+		/* Tiro has one weight: never a faux bold. */
+		font-synthesis: none;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-weight: 400;
+	}
+
+	:lang(ur) {
+		font-family: var(--font-urdu);
+		line-height: 2;
+	}
+
 	svg.lucide {
 		stroke-width: 1.5;
+	}
+
+	/* Focus: a 2px ink outline with a 2px offset. Square everywhere; circular on the seal. */
+	:focus-visible {
+		outline: 2px solid var(--ring);
+		outline-offset: 2px;
+	}
+
+	::selection {
+		background: var(--accent);
+		color: var(--foreground);
+	}
+
+	/* Slips replace toasts: flat paper, 180ms in, 120ms out. */
+	[data-sonner-toaster] [data-sonner-toast] {
+		transition-duration: 180ms !important;
+	}
+}
+
+/* Print-true: only the page itself prints, on A4 (the "Save as PDF" export). */
+@media print {
+	@page {
+		size: A4;
+		margin: 14mm;
+	}
+	body {
+		background: #fff !important;
+	}
+	[data-print-hide] {
+		display: none !important;
+	}
+	[data-print-page] {
+		border: none !important;
+		box-shadow: none !important;
+		max-width: none !important;
+		width: 100% !important;
 	}
 }

@@ -18,9 +18,9 @@ export async function generateMetadata() {
 export default async function CheckoutReturnPage({
 	searchParams,
 }: {
-	searchParams: Promise<{ organizationId?: string }>;
+	searchParams: Promise<{ organizationId?: string; next?: string }>;
 }) {
-	const [session, t, { organizationId }] = await Promise.all([
+	const [session, t, { organizationId, next }] = await Promise.all([
 		getSession(),
 		getTranslations("checkoutReturn"),
 		searchParams,
@@ -33,11 +33,11 @@ export default async function CheckoutReturnPage({
 	return (
 		<AuthWrapper>
 			<div className="mb-4 text-center">
-				<h1 className="font-bold text-2xl lg:text-3xl">{t("title")}</h1>
-				<p className="text-sm lg:text-base text-muted-foreground">{t("description")}</p>
+				<h1 className="font-display text-title-sm">{t("title")}</h1>
+				<p className="text-body text-muted-foreground">{t("description")}</p>
 			</div>
 
-			<CheckoutReturnContent organizationId={organizationId} />
+			<CheckoutReturnContent organizationId={organizationId} next={next} />
 		</AuthWrapper>
 	);
 }

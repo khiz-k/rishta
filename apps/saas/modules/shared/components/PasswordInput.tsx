@@ -34,7 +34,7 @@ function generateValidPassword(): string {
 }
 
 interface PasswordCriterion {
-	labelKey: string;
+	labelKey: "minLength" | "upperAndLowercase" | "number" | "specialCharacter";
 	check: (password: string) => boolean;
 }
 
@@ -85,7 +85,7 @@ export function PasswordInput({
 		setShowPassword(true);
 	};
 
-	const rightPadding = showGenerateButton ? "pr-20" : "pr-10";
+	const rightPadding = showGenerateButton ? "pr-24" : "pr-12";
 	const password = value || "";
 
 	return (
@@ -99,13 +99,14 @@ export function PasswordInput({
 					autoComplete={autoComplete}
 					name={name}
 				/>
-				<div className="inset-y-0 right-0 pr-2 absolute flex items-center">
+				<div className="inset-y-0 right-0 absolute flex items-center">
 					{showGenerateButton && (
 						<button
 							type="button"
 							onClick={generateRandomPassword}
-							className="p-2 flex cursor-pointer items-center justify-center text-primary transition-colors hover:text-primary/80"
-							title="Generate random password"
+							className="size-11 flex cursor-pointer items-center justify-center text-seal-ink transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+							title={t("common.password.generate")}
+							aria-label={t("common.password.generate")}
 						>
 							<RefreshCw className="size-4" />
 						</button>
@@ -113,8 +114,12 @@ export function PasswordInput({
 					<button
 						type="button"
 						onClick={() => setShowPassword(!showPassword)}
-						className="p-2 flex cursor-pointer items-center justify-center text-primary transition-colors hover:text-primary/80"
-						title={showPassword ? "Hide password" : "Show password"}
+						className="size-11 flex cursor-pointer items-center justify-center text-seal-ink transition-colors hover:text-foreground focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring"
+						title={showPassword ? t("common.password.hide") : t("common.password.show")}
+						aria-label={
+							showPassword ? t("common.password.hide") : t("common.password.show")
+						}
+						aria-pressed={showPassword}
 					>
 						{showPassword ? (
 							<EyeOffIcon className="size-4" />
@@ -134,14 +139,14 @@ export function PasswordInput({
 								{isMet ? (
 									<CircleCheckIcon className="size-3.5 shrink-0 text-success" />
 								) : (
-									<CircleXIcon className="size-3.5 shrink-0 text-foreground/40" />
+									<CircleXIcon className="size-3.5 shrink-0 text-muted-foreground" />
 								)}
 								<span
 									className={cn(
 										"text-xs",
 										isMet
 											? "font-normal text-success"
-											: "font-light text-foreground/40",
+											: "font-light text-muted-foreground",
 									)}
 								>
 									{t(`common.passwordCriteria.${criterion.labelKey}`)}

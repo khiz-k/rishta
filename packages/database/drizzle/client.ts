@@ -14,3 +14,9 @@ if (!databaseUrl) {
 export const db = drizzle(databaseUrl, {
 	schema,
 });
+
+/** A transaction handle from `db.transaction`. */
+export type DbTransaction = Parameters<Parameters<typeof db.transaction>[0]>[0];
+
+/** Either the pooled client or an open transaction, so queries can join a caller's transaction. */
+export type DbExecutor = typeof db | DbTransaction;

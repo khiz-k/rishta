@@ -21,12 +21,13 @@ import {
 	InputOTPSlot,
 } from "@repo/ui/components/input-otp";
 import { useRouter } from "@shared/hooks/router";
-import { AlertTriangleIcon, ArrowLeftIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+
+import { AuthHeading } from "./AuthHeading";
 
 const formSchema = z.object({
 	code: z.string().min(6).max(6),
@@ -74,14 +75,16 @@ export function OtpForm() {
 
 	return (
 		<>
-			<h1 className="font-bold text-xl md:text-2xl">{t("auth.verify.title")}</h1>
-			<p className="mt-1 mb-4 text-foreground/60">{t("auth.verify.message")}</p>
+			<AuthHeading
+				overline={t("auth.verify.overline")}
+				title={t("auth.verify.title")}
+				lead={t("auth.verify.message")}
+			/>
 
 			<Form {...form}>
-				<form className="gap-4 flex flex-col items-stretch" onSubmit={onSubmit}>
+				<form className="gap-5 flex flex-col items-stretch" onSubmit={onSubmit}>
 					{form.formState.errors.root && (
 						<Alert variant="error">
-							<AlertTriangleIcon />
 							<AlertTitle>{form.formState.errors.root.message}</AlertTitle>
 						</Alert>
 					)}
@@ -103,15 +106,33 @@ export function OtpForm() {
 										}}
 									>
 										<InputOTPGroup>
-											<InputOTPSlot className="size-10 text-lg" index={0} />
-											<InputOTPSlot className="size-10 text-lg" index={1} />
-											<InputOTPSlot className="size-10 text-lg" index={2} />
+											<InputOTPSlot
+												className="size-12 text-section tabular"
+												index={0}
+											/>
+											<InputOTPSlot
+												className="size-12 text-section tabular"
+												index={1}
+											/>
+											<InputOTPSlot
+												className="size-12 text-section tabular"
+												index={2}
+											/>
 										</InputOTPGroup>
 										<InputOTPSeparator className="opacity-40" />
 										<InputOTPGroup>
-											<InputOTPSlot className="size-10 text-lg" index={3} />
-											<InputOTPSlot className="size-10 text-lg" index={4} />
-											<InputOTPSlot className="size-10 text-lg" index={5} />
+											<InputOTPSlot
+												className="size-12 text-section tabular"
+												index={3}
+											/>
+											<InputOTPSlot
+												className="size-12 text-section tabular"
+												index={4}
+											/>
+											<InputOTPSlot
+												className="size-12 text-section tabular"
+												index={5}
+											/>
 										</InputOTPGroup>
 									</InputOTP>
 								</FormControl>
@@ -120,16 +141,21 @@ export function OtpForm() {
 						)}
 					/>
 
-					<Button loading={form.formState.isSubmitting}>{t("auth.verify.submit")}</Button>
+					<Button
+						variant="primary"
+						className="w-full"
+						loading={form.formState.isSubmitting}
+					>
+						{t("auth.verify.submit")}
+					</Button>
 				</form>
 			</Form>
 
-			<div className="mt-6 text-sm text-center">
-				<Link href="/login">
-					<ArrowLeftIcon className="mr-1 size-4 inline align-middle" />
-					{t("auth.verify.backToSignin")}
+			<p className="mt-8 text-center text-body">
+				<Link href="/login" className="text-seal-ink underline underline-offset-4">
+					← {t("auth.verify.backToSignin")}
 				</Link>
-			</div>
+			</p>
 		</>
 	);
 }

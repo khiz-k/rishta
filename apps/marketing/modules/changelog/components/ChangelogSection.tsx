@@ -1,55 +1,49 @@
-"use client";
+import { getFormatter, getTranslations } from "next-intl/server";
 
-import { useFormatter } from "next-intl";
-import type { ReactNode } from "react";
-
-export type ChangelogItem = {
+interface ChangelogEntry {
 	date: string;
 	title: string;
-	changes: ReactNode[];
-};
+	changes: string[];
+}
 
-export function ChangelogSection() {
-	const formatter = useFormatter();
-
-	const items: ChangelogItem[] = [
-		{
-			date: "2026-01-30",
-			title: "Performance Improvements",
-			changes: ["🚀 Improved performance"],
-		},
-		{
-			date: "2026-01-26",
-			title: "Design Updates",
-			changes: ["🎨 Updated design", "🐞 Fixed a bug"],
-		},
-		{
-			date: "2026-01-12",
-			title: "New Features",
-			changes: ["🎉 Added new feature", "🐞 Fixed a bug"],
-		},
-	];
+/** What changed, in plain words: a dated ledger, newest first. */
+export async function ChangelogSection() {
+	const t = await getTranslations("changelog");
+	const format = await getFormatter();
+	const entries = t.raw("entries") as ChangelogEntry[];
 
 	return (
 		<section id="changelog">
-			<div className="max-w-xl gap-4 mx-auto grid w-full grid-cols-1 text-left">
-				{items?.map((item, i) => (
-					<div key={i} className="p-6 rounded-3xl border bg-muted">
-						<div className="gap-1 flex flex-col items-start">
-							<small className="font-medium tracking-wide text-xs whitespace-nowrap text-primary uppercase">
-								{formatter.dateTime(new Date(item.date))}
-							</small>
-
-							<h2 className="text-xl font-semibold">{item.title}</h2>
+			<ol className="border-t border-border">
+				{entries.map((entry) => (
+					<li
+						key={entry.date}
+						className="py-8 gap-x-8 gap-y-2 sm:grid-cols-[9rem_1fr] grid border-b border-border"
+					>
+						<p className="pt-1 label-caps text-muted-foreground tabular">
+							<time dateTime={entry.date}>
+								{format.dateTime(new Date(entry.date), { dateStyle: "medium" })}
+							</time>
+						</p>
+						<div>
+							<h2 className="font-display text-section text-foreground">
+								{entry.title}
+							</h2>
+							<ul className="mt-3 space-y-1.5 text-body text-foreground">
+								{entry.changes.map((change) => (
+									<li key={change} className="gap-3 grid grid-cols-[0.75rem_1fr]">
+										<span
+											aria-hidden="true"
+											className="w-3 mt-[0.8rem] h-px bg-foreground"
+										/>
+										<span>{change}</span>
+									</li>
+								))}
+							</ul>
 						</div>
-						<ul className="mt-4 space-y-2 pl-6 list-disc">
-							{item.changes.map((change, j) => (
-								<li key={j}>{change}</li>
-							))}
-						</ul>
-					</div>
+					</li>
 				))}
-			</div>
+			</ol>
 		</section>
 	);
 }

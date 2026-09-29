@@ -2,46 +2,40 @@ import { config } from "@config";
 import { cn, Logo } from "@repo/ui";
 import type { PropsWithChildren } from "react";
 
-import { ColorModeToggle } from "./ColorModeToggle";
 import { Footer } from "./Footer";
-import { LocaleSwitch } from "./LocaleSwitch";
 
+/**
+ * Sign in, begin a page, onboarding and invitations: one sheet of paper on the desk, under a
+ * slim masthead with the Rishta lockup. The sheet carries the double marigold rule; a pencil
+ * note may sit in its left margin. No glow, no blur, no locale switcher, no colour toggle.
+ */
 export function AuthWrapper({
 	children,
 	contentClass,
 }: PropsWithChildren<{ contentClass?: string }>) {
 	return (
-		<div className="relative py-6 flex min-h-screen w-full overflow-hidden">
-			{/* Subtle rose glow */}
-			<div className="pointer-events-none absolute left-1/2 top-1/3 -translate-x-1/2 -translate-y-1/2 h-[400px] w-[400px] rounded-full bg-primary/5 blur-[100px]" />
+		<div className="flex min-h-dvh w-full flex-col">
+			<header className="h-14 border-b border-border">
+				<div className="px-5 md:px-8 max-w-5xl mx-auto flex h-full w-full items-center">
+					<a
+						href={config.marketingUrl ?? "/"}
+						className="-mx-1 px-1 py-2 focus-visible:outline-2 focus-visible:outline-ring"
+					>
+						<Logo variant="lockup" />
+					</a>
+				</div>
+			</header>
 
-			<div className="relative gap-8 flex w-full flex-col items-center justify-between">
-				<div className="container">
-					<div className="flex items-center justify-between">
-						<a href={config.marketingUrl ?? "/"} className="block">
-							<Logo />
-						</a>
-
-						<div className="gap-2 flex items-center justify-end">
-							<LocaleSwitch />
-							<ColorModeToggle />
-						</div>
+			<main className="px-0 sm:px-5 pt-8 pb-12 md:pt-16 flex flex-1 justify-center">
+				<div className={cn("max-w-md relative w-full", contentClass)}>
+					<div className="max-sm:border-x-0 border border-border bg-card">
+						<div aria-hidden="true" className="double-rule" />
+						<div className="px-5 py-8 md:px-10 md:py-10">{children}</div>
 					</div>
 				</div>
+			</main>
 
-				<div className="container flex justify-center">
-					<main
-						className={cn(
-							"max-w-md p-6 lg:p-8 w-full rounded-3xl border border-border/50 bg-card/80 backdrop-blur-sm",
-							contentClass,
-						)}
-					>
-						{children}
-					</main>
-				</div>
-
-				<Footer />
-			</div>
+			<Footer />
 		</div>
 	);
 }

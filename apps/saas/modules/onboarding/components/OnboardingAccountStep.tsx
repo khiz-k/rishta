@@ -4,26 +4,18 @@ import { useSession } from "@auth/hooks/use-session";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
 import { Button } from "@repo/ui/components/button";
-import {
-	Form,
-	FormControl,
-	FormDescription,
-	FormField,
-	FormItem,
-	FormLabel,
-} from "@repo/ui/components/form";
+import { Form, FormControl, FormField, FormItem, FormLabel } from "@repo/ui/components/form";
 import { Input } from "@repo/ui/components/input";
-import { UserAvatarUpload } from "@settings/components/UserAvatarUpload";
-import { ArrowRightIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 const formSchema = z.object({
-	name: z.string(),
+	name: z.string().trim().min(1).max(80),
 });
 
+/** Your name, as it signs your notes and pencil notes. No photo: the avatar tile is initials. */
 export function OnboardingAccountStep({ onCompleted }: { onCompleted: () => void }) {
 	const t = useTranslations();
 	const { user } = useSession();
@@ -58,48 +50,41 @@ export function OnboardingAccountStep({ onCompleted }: { onCompleted: () => void
 	});
 
 	return (
-		<div>
-			<Form {...form}>
-				<form className="gap-8 flex flex-col items-stretch" onSubmit={onSubmit}>
-					<FormField
-						control={form.control}
-						name="name"
-						render={({ field }) => (
-							<FormItem>
-								<FormLabel>{t("onboarding.account.name")}</FormLabel>
-								<FormControl>
-									<Input {...field} />
-								</FormControl>
-							</FormItem>
-						)}
-					/>
+		<Form {...form}>
+			<form className="gap-6 flex flex-col items-stretch" onSubmit={onSubmit}>
+				<FormField
+					control={form.control}
+					name="name"
+					render={({ field }) => (
+						<FormItem>
+							<FormLabel>{t("onboarding.account.name")}</FormLabel>
+							<FormControl>
+								<Input {...field} autoComplete="name" />
+							</FormControl>
+							<p className="text-meta text-muted-foreground">
+								{t("onboarding.account.nameHint")}
+							</p>
+						</FormItem>
+					)}
+				/>
 
-					<FormItem className="gap-4 flex items-center justify-between">
-						<div>
-							<FormLabel>{t("onboarding.account.avatar")}</FormLabel>
+				{form.formState.errors.root && (
+					<p role="alert" className="text-body text-destructive">
+						{form.formState.errors.root.message}
+					</p>
+				)}
 
-							<FormDescription>
-								{t("onboarding.account.avatarDescription")}
-							</FormDescription>
-						</div>
-						<FormControl>
-							<UserAvatarUpload
-								onSuccess={() => {
-									return;
-								}}
-								onError={() => {
-									return;
-								}}
-							/>
-						</FormControl>
-					</FormItem>
-
-					<Button type="submit" loading={form.formState.isSubmitting}>
+				<div>
+					<Button
+						type="submit"
+						variant="secondary"
+						size="lg"
+						loading={form.formState.isSubmitting}
+					>
 						{t("onboarding.continue")}
-						<ArrowRightIcon className="ml-2 size-4" />
 					</Button>
-				</form>
-			</Form>
-		</div>
+				</div>
+			</form>
+		</Form>
 	);
 }

@@ -1,0 +1,209 @@
+{
+	"page": {
+		"sections": {
+			"personal": "ਨਿੱਜੀ",
+			"education": "ਪੜ੍ਹਾਈ ਅਤੇ ਕੰਮ",
+			"family": "ਪਰਿਵਾਰ",
+			"lifestyle": "ਰਹਿਣ-ਸਹਿਣ",
+			"about": "ਜਾਣ-ਪਛਾਣ",
+			"looking_for": "ਕਿਹੋ ਜਿਹਾ ਜੀਵਨ ਸਾਥੀ ਚਾਹੀਦਾ ਹੈ",
+			"sealed": "ਮੋਹਰਬੰਦ"
+		},
+		"fields": {
+			"born": "ਜਨਮ",
+			"dateOfBirth": "ਜਨਮ ਤਰੀਕ",
+			"height": "ਕੱਦ",
+			"maritalStatus": "ਪਹਿਲਾਂ ਵਿਆਹ",
+			"hasChildren": "ਬੱਚੇ",
+			"motherTongue": "ਮਾਂ-ਬੋਲੀ",
+			"languages": "ਭਾਸ਼ਾਵਾਂ",
+			"religion": "ਧਰਮ",
+			"sect": "ਪਰੰਪਰਾ",
+			"practice": "ਧਾਰਮਿਕਤਾ",
+			"community": "ਭਾਈਚਾਰਾ",
+			"residency": "ਰਿਹਾਇਸ਼ੀ ਸਥਿਤੀ",
+			"manglik": "ਮੰਗਲੀਕ",
+			"education": "ਪੜ੍ਹਾਈ",
+			"university": "ਕਿੱਥੋਂ ਪੜ੍ਹੇ",
+			"profession": "ਕੰਮ",
+			"employer": "ਕੰਮ ਦੀ ਥਾਂ",
+			"incomeRange": "ਆਮਦਨ",
+			"fatherOccupation": "ਪਿਤਾ",
+			"motherOccupation": "ਮਾਤਾ",
+			"siblings": "ਭੈਣ-ਭਰਾ",
+			"familyType": "ਪਰਿਵਾਰ",
+			"familyValues": "ਪਰਿਵਾਰਕ ਕਦਰਾਂ",
+			"nativePlace": "ਜੱਦੀ ਥਾਂ",
+			"aboutFamily": "ਪਰਿਵਾਰ ਬਾਰੇ",
+			"diet": "ਖਾਣ-ਪੀਣ",
+			"smoking": "ਤਮਾਕੂਨੋਸ਼ੀ",
+			"drinking": "ਸ਼ਰਾਬ",
+			"fullName": "ਪੂਰਾ ਨਾਮ",
+			"birthTime": "ਜਨਮ ਦਾ ਸਮਾਂ",
+			"birthPlace": "ਜਨਮ ਸਥਾਨ",
+			"contactPhone": "ਫ਼ੋਨ",
+			"location": "ਰਹਿੰਦੇ ਹਨ",
+			"country": "ਦੇਸ਼",
+			"aboutMe": "ਜਾਣ-ਪਛਾਣ",
+			"lookingFor": "ਕਿਹੋ ਜਿਹਾ ਜੀਵਨ ਸਾਥੀ ਚਾਹੀਦਾ ਹੈ"
+		},
+		"values": {
+			"maritalStatus": {
+				"never_married": "ਕੁਆਰੇ",
+				"divorced": "ਤਲਾਕਸ਼ੁਦਾ",
+				"widowed": "ਵਿਧਵਾ/ਰੰਡੇ",
+				"annulled": "ਵਿਆਹ ਰੱਦ"
+			},
+			"hasChildren": {
+				"yes": "ਬੱਚੇ ਹਨ",
+				"no": "ਬੱਚੇ ਨਹੀਂ"
+			},
+			"religion": {
+				"hindu": "ਹਿੰਦੂ",
+				"muslim": "ਮੁਸਲਮਾਨ",
+				"sikh": "ਸਿੱਖ",
+				"christian": "ਈਸਾਈ",
+				"jain": "ਜੈਨ",
+				"buddhist": "ਬੋਧੀ",
+				"jewish": "ਯਹੂਦੀ",
+				"parsi": "ਪਾਰਸੀ",
+				"other": "ਹੋਰ ਧਰਮ",
+				"none": "ਕੋਈ ਧਰਮ ਨਹੀਂ"
+			},
+			"practice": {
+				"very": "ਬਹੁਤ ਧਾਰਮਿਕ",
+				"moderately": "ਦਰਮਿਆਨੇ ਧਾਰਮਿਕ",
+				"somewhat": "ਥੋੜ੍ਹੇ ਧਾਰਮਿਕ",
+				"not_practising": "ਧਾਰਮਿਕ ਨਹੀਂ"
+			},
+			"residency": {
+				"citizen": "ਨਾਗਰਿਕ",
+				"permanent_resident": "ਪੱਕੇ ਵਸਨੀਕ",
+				"work_visa": "ਵਰਕ ਵੀਜ਼ਾ",
+				"student_visa": "ਸਟੂਡੈਂਟ ਵੀਜ਼ਾ",
+				"other": "ਹੋਰ"
+			},
+			"manglik": {
+				"yes": "ਮੰਗਲੀਕ",
+				"no": "ਮੰਗਲੀਕ ਨਹੀਂ",
+				"partial": "ਅੰਸ਼ਕ ਮੰਗਲੀਕ",
+				"dont_know": "ਪਤਾ ਨਹੀਂ"
+			},
+			"education": {
+				"high_school": "ਹਾਈ ਸਕੂਲ",
+				"diploma": "ਡਿਪਲੋਮਾ",
+				"bachelors": "ਗ੍ਰੈਜੂਏਟ",
+				"masters": "ਪੋਸਟ-ਗ੍ਰੈਜੂਏਟ",
+				"phd": "ਪੀਐਚਡੀ",
+				"professional": "ਪੇਸ਼ੇਵਰ ਡਿਗਰੀ",
+				"other": "ਹੋਰ"
+			},
+			"incomeRange": {
+				"under_50k": "$50,000 ਤੋਂ ਘੱਟ",
+				"50k_75k": "$50,000–75,000",
+				"75k_100k": "$75,000–100,000",
+				"100k_150k": "$100,000–150,000",
+				"150k_plus": "$150,000 ਤੋਂ ਵੱਧ",
+				"prefer_not_to_say": "ਦੱਸਣਾ ਨਹੀਂ ਚਾਹੁੰਦੇ"
+			},
+			"familyType": {
+				"joint": "ਸਾਂਝਾ ਪਰਿਵਾਰ",
+				"nuclear": "ਛੋਟਾ ਪਰਿਵਾਰ"
+			},
+			"familyValues": {
+				"traditional": "ਰਵਾਇਤੀ",
+				"moderate": "ਦਰਮਿਆਨੇ",
+				"liberal": "ਖੁੱਲ੍ਹੇ ਵਿਚਾਰਾਂ ਵਾਲੇ"
+			},
+			"diet": {
+				"veg": "ਸ਼ਾਕਾਹਾਰੀ",
+				"eggetarian": "ਆਂਡਾ ਖਾਣ ਵਾਲੇ ਸ਼ਾਕਾਹਾਰੀ",
+				"vegan": "ਵੀਗਨ",
+				"jain_veg": "ਜੈਨ ਸ਼ਾਕਾਹਾਰੀ",
+				"non_veg": "ਮਾਸਾਹਾਰੀ",
+				"halal": "ਹਲਾਲ"
+			},
+			"smoking": {
+				"never": "ਤਮਾਕੂਨੋਸ਼ੀ ਨਹੀਂ ਕਰਦੇ",
+				"occasionally": "ਕਦੇ-ਕਦੇ",
+				"regularly": "ਤਮਾਕੂਨੋਸ਼ੀ ਕਰਦੇ ਹਨ"
+			},
+			"drinking": {
+				"never": "ਸ਼ਰਾਬ ਨਹੀਂ ਪੀਂਦੇ",
+				"occasionally": "ਕਦੇ-ਕਦੇ",
+				"socially": "ਮੌਕੇ 'ਤੇ",
+				"regularly": "ਨਿਯਮਿਤ ਤੌਰ 'ਤੇ"
+			}
+		},
+		"signer": {
+			"self": "{name} ਨੇ ਆਪ ਲਿਖਿਆ",
+			"parent": "{name} ਦੇ ਮਾਪਿਆਂ ਨੇ ਲਿਖਿਆ",
+			"parentConfirmed": "{name} ਦੇ ਮਾਪਿਆਂ ਨੇ ਲਿਖਿਆ, {name} ਨੇ ਪੁਸ਼ਟੀ ਕੀਤੀ",
+			"sibling": "{name} ਦੇ ਭੈਣ ਜਾਂ ਭਰਾ ਨੇ ਲਿਖਿਆ",
+			"siblingConfirmed": "{name} ਦੇ ਭੈਣ ਜਾਂ ਭਰਾ ਨੇ ਲਿਖਿਆ, {name} ਨੇ ਪੁਸ਼ਟੀ ਕੀਤੀ",
+			"relative": "{name} ਦੇ ਪਰਿਵਾਰ ਨੇ ਲਿਖਿਆ",
+			"relativeConfirmed": "{name} ਦੇ ਪਰਿਵਾਰ ਨੇ ਲਿਖਿਆ, {name} ਨੇ ਪੁਸ਼ਟੀ ਕੀਤੀ",
+			"friend": "{name} ਦੇ ਇੱਕ ਦੋਸਤ ਨੇ ਲਿਖਿਆ",
+			"friendConfirmed": "ਇੱਕ ਦੋਸਤ ਨੇ ਲਿਖਿਆ, {name} ਨੇ ਪੁਸ਼ਟੀ ਕੀਤੀ"
+		},
+		"verified": {
+			"email": "ਈਮੇਲ ਪ੍ਰਮਾਣਿਤ",
+			"phone": "ਫ਼ੋਨ ਪ੍ਰਮਾਣਿਤ",
+			"id": "ਪਛਾਣ ਪ੍ਰਮਾਣਿਤ"
+		},
+		"ref": "ਨੰ. {ref} · {date} ਨੂੰ ਅੱਪਡੇਟ",
+		"photo": {
+			"veiledAlt": "ਫ਼ੋਟੋ ਢਕੀ ਹੋਈ ਹੈ, ਦੋਵਾਂ ਦੀ ਹਾਂ ਤੋਂ ਬਾਅਦ ਖੁੱਲ੍ਹੇਗੀ",
+			"alt": "{name} ਦੀ ਫ਼ੋਟੋ",
+			"none": "ਇਸ ਪੰਨੇ 'ਤੇ ਫ਼ੋਟੋ ਨਹੀਂ",
+			"veiled": "ਢਕੀ ਹੋਈ"
+		},
+		"sealed": {
+			"aria": "ਮੋਹਰਬੰਦ। ਦੋਵਾਂ ਦੀ ਹਾਂ ਤੋਂ ਬਾਅਦ ਖੁੱਲ੍ਹੇਗਾ।",
+			"closed": "ਫ਼ੋਟੋਆਂ, ਪੂਰਾ ਨਾਮ, ਕੰਮ ਦੀ ਥਾਂ ਅਤੇ ਸੰਪਰਕ ਦੋਵਾਂ ਦੀ ਹਾਂ ਤੋਂ ਬਾਅਦ ਖੁੱਲ੍ਹਣਗੇ।",
+			"empty": "ਇਸ ਪੰਨੇ 'ਤੇ ਹੋਰ ਕੁਝ ਮੋਹਰਬੰਦ ਨਹੀਂ।"
+		},
+		"printWatermark": "ਰਿਸ਼ਤਾ ਤੋਂ · ਨੰ. {ref} · ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਸਾਂਝਾ, ਅੱਗੇ ਨਾ ਭੇਜੋ"
+	},
+	"family": {
+		"link": {
+			"strip": "{name} ਨੇ {label} ਨਾਲ ਨਿੱਜੀ ਤੌਰ 'ਤੇ ਸਾਂਝਾ ਕੀਤਾ",
+			"until": "{date} ਤੱਕ ਖੁੱਲ੍ਹਾ · ਅੱਗੇ ਨਾ ਭੇਜੋ",
+			"languageLabel": "ਭਾਸ਼ਾ",
+			"translated": "ਅਨੁਵਾਦ ਕੀਤਾ।",
+			"showOriginal": "ਮੂਲ ਵੇਖੋ",
+			"showTranslation": "ਅਨੁਵਾਦ ਵੇਖੋ",
+			"noTranslation": "ਹੁਣ ਅਨੁਵਾਦ ਉਪਲਬਧ ਨਹੀਂ। ਸਿਰਲੇਖ ਤੁਹਾਡੀ ਭਾਸ਼ਾ ਵਿੱਚ ਹਨ; ਬਾਕੀ ਜਿਵੇਂ ਲਿਖਿਆ ਗਿਆ ਉਵੇਂ ਹੈ।",
+			"noteFrom": "{name} ਦਾ ਸੁਨੇਹਾ",
+			"watermark": "{label} ਲਈ · {name} ਵੱਲੋਂ · {date}",
+			"question": "ਤੁਹਾਡੀ ਕੀ ਰਾਏ ਹੈ?",
+			"reactions": {
+				"proceed": "ਅੱਗੇ ਵਧੋ",
+				"lets_talk": "ਗੱਲ ਕਰੀਏ",
+				"not_for_us": "ਸਾਡੇ ਲਈ ਨਹੀਂ"
+			},
+			"thanks": "ਧੰਨਵਾਦ। {name} ਨੂੰ ਪੰਨੇ ਦੇ ਕੋਲ “{reaction}” ਦਿਖੇਗਾ।",
+			"canChange": "ਲਿੰਕ ਬੰਦ ਹੋਣ ਤੱਕ ਤੁਸੀਂ ਇਸਨੂੰ ਬਦਲ ਸਕਦੇ ਹੋ।",
+			"notSaved": "ਇਹ ਸੰਭਾਲਿਆ ਨਹੀਂ ਗਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਦੁਬਾਰਾ ਕੋਸ਼ਿਸ਼ ਕਰੋ।",
+			"words": "ਕੁਝ ਸ਼ਬਦ ਲਿਖੋ (ਵਿਕਲਪਿਕ)",
+			"send": "{name} ਨੂੰ ਭੇਜੋ",
+			"sent": "ਭੇਜ ਦਿੱਤਾ। {name} ਨੂੰ ਤੁਹਾਡੇ ਸ਼ਬਦ ਪੰਨੇ ਦੇ ਕੋਲ ਦਿਖਣਗੇ।",
+			"report": "ਇਸ ਪੰਨੇ ਦੀ ਸ਼ਿਕਾਇਤ ਕਰੋ",
+			"reportTitle": "ਇਸ ਪੰਨੇ ਵਿੱਚ ਕੀ ਗਲਤ ਹੈ?",
+			"reportCategories": {
+				"scam_money": "ਪੈਸੇ ਮੰਗਦਾ ਹੈ ਜਾਂ ਧੋਖਾ ਲੱਗਦਾ ਹੈ",
+				"harassment": "ਤੰਗ ਕਰਨ ਵਾਲੀਆਂ ਜਾਂ ਮਾੜੀਆਂ ਗੱਲਾਂ",
+				"fake_profile": "ਪੰਨਾ ਨਕਲੀ ਲੱਗਦਾ ਹੈ",
+				"underage": "ਵਿਅਕਤੀ 18 ਸਾਲ ਤੋਂ ਘੱਟ ਲੱਗਦਾ ਹੈ",
+				"pressure_to_marry": "ਵਿਆਹ ਦਾ ਦਬਾਅ",
+				"hate": "ਨਫ਼ਰਤ ਭਰੀਆਂ ਗੱਲਾਂ",
+				"other": "ਕੁਝ ਹੋਰ"
+			},
+			"reportSubmit": "ਸ਼ਿਕਾਇਤ ਭੇਜੋ",
+			"reportThanks": "ਧੰਨਵਾਦ। ਸਾਡੀ ਟੀਮ ਦਾ ਇੱਕ ਵਿਅਕਤੀ ਇਸਨੂੰ ਪੜ੍ਹੇਗਾ।",
+			"closed": "ਇਹ ਲਿੰਕ ਬੰਦ ਹੋ ਗਿਆ ਹੈ। {name} ਨੂੰ ਦੁਬਾਰਾ ਭੇਜਣ ਲਈ ਕਹੋ।",
+			"closedNoName": "ਇਹ ਲਿੰਕ ਬੰਦ ਹੋ ਗਿਆ ਹੈ। ਇਸਨੂੰ ਦੁਬਾਰਾ ਭੇਜਣ ਲਈ ਕਹੋ।",
+			"error": "ਇਹ ਪੰਨਾ ਨਹੀਂ ਖੁੱਲ੍ਹ ਸਕਿਆ। ਕਿਰਪਾ ਕਰਕੇ ਇੱਕ ਮਿੰਟ ਬਾਅਦ ਲਿੰਕ ਦੁਬਾਰਾ ਖੋਲ੍ਹੋ।"
+		}
+	}
+}

@@ -1,18 +1,19 @@
 import { PostContent } from "@blog/components/PostContent";
 import { localeRedirect } from "@i18n/routing";
 import { getAllLegalPagePaths, getLegalPageByPath } from "@legal/lib/pages";
+import { LetterHead } from "@shared/components/LetterHead";
 import { getActivePathFromUrlParam } from "@shared/lib/content";
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export function generateStaticParams() {
 	const paths = getAllLegalPagePaths();
 	return paths.map((path) => ({ path: [path] }));
 }
 
-type Params = {
+interface Params {
 	path: string;
 	locale: string;
-};
+}
 
 export async function generateMetadata(props: { params: Promise<Params> }) {
 	const { path, locale } = await props.params;
@@ -31,6 +32,7 @@ export default async function LegalPage(props: { params: Promise<Params> }) {
 	const { path, locale } = await props.params;
 	setRequestLocale(locale);
 
+	const t = await getTranslations({ locale, namespace: "legal" });
 	const activePath = getActivePathFromUrlParam(path);
 	const page = await getLegalPageByPath(activePath, { locale });
 
@@ -42,11 +44,8 @@ export default async function LegalPage(props: { params: Promise<Params> }) {
 	const { title, body } = page;
 
 	return (
-		<div className="max-w-6xl py-16 container">
-			<div className="mb-12 max-w-2xl mx-auto">
-				<h1 className="font-bold text-4xl text-center">{title}</h1>
-			</div>
-
+		<div className="letter-column pt-12 md:pt-20">
+			<LetterHead dateline={t("dateline")} title={title} />
 			<PostContent content={body} />
 		</div>
 	);

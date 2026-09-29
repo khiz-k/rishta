@@ -1,21 +1,23 @@
 import { passkey } from "@better-auth/passkey";
 import {
 	db,
+	getHouseholdMembershipLimit,
+	getHouseholdSetting,
 	getInvitationById,
+	getOrganizationMembership,
 	getPurchasesByOrganizationId,
 	getPurchasesByUserId,
 	getUserByEmail,
 	getUserById,
 } from "@repo/database";
-import { config as i18nConfig, type Locale } from "@repo/i18n";
+import { config as i18nConfig, resolveLocale } from "@repo/i18n";
 import { logger } from "@repo/logs";
 import { sendEmail } from "@repo/mail";
-import { createWelcomeNotification } from "@repo/notifications";
 import { cancelSubscription } from "@repo/payments";
 import { getBaseUrl } from "@repo/utils";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { createAuthMiddleware } from "better-auth/api";
+import { APIError, createAuthMiddleware } from "better-auth/api";
 import { admin, magicLink, openAPI, organization, twoFactor, username } from "better-auth/plugins";
 import { parse as parseCookies } from "cookie";
 
@@ -25,10 +27,18 @@ import { invitationOnlyPlugin } from "./plugins/invitation-only";
 
 const getLocaleFromRequest = (request?: Request) => {
 	const cookies = parseCookies(request?.headers.get("cookie") ?? "");
-	return (cookies[i18nConfig.localeCookieName] as Locale) ?? i18nConfig.defaultLocale;
+	return resolveLocale(cookies[i18nConfig.localeCookieName]);
 };
 
 const appUrl = getBaseUrl(process.env.NEXT_PUBLIC_SAAS_URL, 3000);
+
+const forbiddenSlugs: readonly string[] = config.organizations.forbiddenOrganizationSlugs;
+
+function assertAllowedSlug(slug: string | undefined) {
+	if (slug && forbiddenSlugs.includes(slug.toLowerCase())) {
+		throw new APIError("BAD_REQUEST", { message: "SLUG_UNAVAILABLE" });
+	}
+}
 
 export const auth = betterAuth({
 	baseURL: appUrl,
@@ -56,23 +66,6 @@ export const auth = betterAuth({
 							activeOrganizationId: user?.lastActiveOrganizationId ?? null,
 						},
 					};
-				},
-			},
-		},
-		user: {
-			create: {
-				after: async (createdUser) => {
-					if (!createdUser?.id) {
-						return;
-					}
-					try {
-						await createWelcomeNotification(createdUser.id);
-					} catch (error) {
-						logger.error(error, {
-							ctx: "createWelcomeNotification",
-							userId: createdUser.id,
-						});
-					}
 				},
 			},
 		},
@@ -242,9 +235,35 @@ export const auth = betterAuth({
 			},
 		}),
 		organization({
-			sendInvitationEmail: async ({ email, id, organization }, request) => {
+			// Household seats: the candidate plus 2 family members on Free, plus 6 on Premium.
+			membershipLimit: async (_user, organization) =>
+				await getHouseholdMembershipLimit(organization.id),
+			organizationHooks: {
+				// A household slug never shadows a top-level route, however the household is made.
+				beforeCreateOrganization: async ({ organization }) => {
+					assertAllowedSlug(organization.slug);
+				},
+				beforeUpdateOrganization: async ({ organization }) => {
+					assertAllowedSlug(organization.slug);
+				},
+				// The candidate invites anyone; guardians invite family at the member role only.
+				beforeCreateInvitation: async ({ invitation, inviter, organization }) => {
+					const membership = await getOrganizationMembership(organization.id, inviter.id);
+					if (membership?.role !== "owner" && invitation.role !== "member") {
+						throw new APIError("FORBIDDEN", {
+							message: "Guardians can invite family members only.",
+						});
+					}
+				},
+			},
+			sendInvitationEmail: async ({ email, id, organization, inviter }, request) => {
 				const locale = getLocaleFromRequest(request);
 				const existingUser = await getUserByEmail(email);
+				// The candidate invited to confirm a drafted page gets the claim letter, not the
+				// family one (spec.md F2).
+				const setting = await getHouseholdSetting(organization.id);
+				const isClaim =
+					setting?.pendingCandidateEmail?.toLowerCase() === email.toLowerCase();
 
 				const url = new URL(
 					existingUser ? "/login" : "/signup",
@@ -260,6 +279,8 @@ export const auth = betterAuth({
 					locale,
 					context: {
 						organizationName: organization.name,
+						inviterName: inviter.user.name,
+						kind: isClaim ? "claim" : "member",
 						url: url.toString(),
 					},
 				});

@@ -10,9 +10,17 @@
 
 @utility container {
 	margin-inline: auto;
-	padding-inline: 1.5rem;
+	padding-inline: 1.25rem;
 	width: 100%;
 	max-width: var(--container-7xl);
+}
+
+/* The letter column (design.md §15): 680px on the desk. */
+@utility letter-column {
+	margin-inline: auto;
+	width: 100%;
+	max-width: calc(680px + 2.5rem);
+	padding-inline: 1.25rem;
 }
 
 @utility no-scrollbar {
@@ -23,6 +31,28 @@
 	scrollbar-width: none;
 }
 
+/* Re-setting the sample page is a 180ms page turn; nothing else on the site moves. */
+@keyframes paper-fade-in {
+	from {
+		opacity: 0;
+		transform: translateX(12px);
+	}
+	to {
+		opacity: 1;
+		transform: none;
+	}
+}
+
+@utility animate-paper-fade {
+	animation: paper-fade-in var(--dur-turn) var(--ease-paper) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.animate-paper-fade {
+		animation: none;
+	}
+}
+
 @layer base {
 	*,
 	::after,
@@ -31,4 +61,101 @@
 	::file-selector-button {
 		border-color: var(--border);
 	}
+
+	html {
+		-webkit-text-size-adjust: 100%;
+		text-size-adjust: 100%;
+		color-scheme: light;
+	}
+
+	body {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+		line-height: 1.625;
+		font-weight: 420;
+		/* Tiro has one weight: never a faux bold. */
+		font-synthesis: none;
+	}
+
+	h1,
+	h2,
+	h3,
+	h4 {
+		font-weight: 400;
+	}
+
+	:lang(ur) {
+		font-family: var(--font-urdu);
+		line-height: 2;
+	}
+
+	svg.lucide {
+		stroke-width: 1.5;
+	}
+
+	a {
+		text-underline-offset: 0.2em;
+	}
+
+	/* Focus: a 2px ink outline with a 2px offset. Square everywhere. */
+	:focus-visible {
+		outline: 2px solid var(--ring);
+		outline-offset: 2px;
+	}
+
+	::selection {
+		background: var(--accent);
+		color: var(--foreground);
+	}
+}
+
+/*
+ * Long-form pages (Notes, legal, safety) read in ink on paper. The typography plugin's colours
+ * are mapped onto the tokens; headings are Tiro, never bold.
+ */
+.prose {
+	--tw-prose-body: var(--foreground);
+	--tw-prose-headings: var(--foreground);
+	--tw-prose-lead: var(--muted-foreground);
+	--tw-prose-links: var(--seal-ink);
+	--tw-prose-bold: var(--foreground);
+	--tw-prose-counters: var(--muted-foreground);
+	--tw-prose-bullets: var(--input);
+	--tw-prose-hr: var(--border);
+	--tw-prose-quotes: var(--foreground);
+	--tw-prose-quote-borders: var(--rule);
+	--tw-prose-captions: var(--muted-foreground);
+	--tw-prose-code: var(--foreground);
+	--tw-prose-pre-code: var(--foreground);
+	--tw-prose-pre-bg: var(--muted);
+	--tw-prose-th-borders: var(--border);
+	--tw-prose-td-borders: var(--border);
+	font-size: var(--text-body);
+	line-height: var(--text-body--line-height);
+}
+
+.prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"] *)) {
+	font-family: var(--font-display);
+	font-weight: 400;
+	letter-spacing: -0.005em;
+}
+
+.prose :where(strong):not(:where([class~="not-prose"] *)) {
+	font-weight: 600;
+}
+
+.prose :where(pre, code):not(:where([class~="not-prose"] *)) {
+	border-radius: 0;
+}
+
+/* A Note reads as a letter: Tiro 18/28, measure 34-38em. */
+.prose-letter {
+	font-family: var(--font-display);
+	font-size: var(--text-letter);
+	line-height: var(--text-letter--line-height);
+	max-width: 38em;
+}
+
+.prose-letter :where(li, p):not(:where([class~="not-prose"] *)) {
+	font-family: var(--font-display);
 }

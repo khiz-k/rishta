@@ -7,7 +7,10 @@ import { cn } from "../lib";
 
 const Avatar = ({ className, ...props }: React.ComponentProps<typeof AvatarPrimitive.Root>) => (
 	<AvatarPrimitive.Root
-		className={cn("h-8 w-8 relative flex shrink-0 overflow-hidden rounded-sm", className)}
+		className={cn(
+			"size-8 relative flex shrink-0 overflow-hidden border border-border",
+			className,
+		)}
 		{...props}
 	/>
 );
@@ -17,7 +20,7 @@ const AvatarImage = ({
 	...props
 }: React.ComponentProps<typeof AvatarPrimitive.Image>) => (
 	<AvatarPrimitive.Image
-		className={cn("aspect-square h-full w-full rounded-sm", className)}
+		className={cn("aspect-square size-full object-cover", className)}
 		{...props}
 	/>
 );
@@ -28,7 +31,7 @@ const AvatarFallback = ({
 }: React.ComponentProps<typeof AvatarPrimitive.Fallback>) => (
 	<AvatarPrimitive.Fallback
 		className={cn(
-			"font-bold text-xs flex h-full w-full items-center justify-center rounded-sm bg-muted",
+			"flex size-full items-center justify-center bg-card font-display text-ui",
 			className,
 		)}
 		{...props}

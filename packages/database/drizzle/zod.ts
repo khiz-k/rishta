@@ -1,8 +1,11 @@
 import { createInsertSchema, createSelectSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod";
 
+import { FIELD_VISIBILITIES, VISIBLE_FIELDS } from "./domain";
 import {
 	account,
+	biodataProfile,
+	partnerPreference,
 	invitation,
 	member,
 	notification,
@@ -52,3 +55,20 @@ export const UserNotificationPreferenceUpdateSchema = createUpdateSchema(
 	},
 );
 export type UserNotificationPreference = typeof userNotificationPreference.$inferSelect;
+
+export const FieldVisibilityMapSchema = z.partialRecord(
+	z.enum(VISIBLE_FIELDS),
+	z.enum(FIELD_VISIBILITIES),
+);
+
+/** The household's own page, every field, for the in-place editor. Legacy columns are left out. */
+export const BiodataProfileSchema = createSelectSchema(biodataProfile, {
+	fieldVisibility: FieldVisibilityMapSchema,
+}).omit({ isActive: true, isVerified: true, profilePhoto: true });
+
+/** "Looking for": the household's non-negotiables. */
+export const PartnerPreferenceSchema = createSelectSchema(partnerPreference).omit({
+	willingToRelocate: true,
+	requiresCitizenship: true,
+	quizComplete: true,
+});

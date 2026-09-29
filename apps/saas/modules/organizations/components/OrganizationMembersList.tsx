@@ -113,7 +113,9 @@ export function OrganizationMembersList({ organizationId }: { organizationId: st
 						/>
 						<div>
 							<strong className="block">{row.original.user.name}</strong>
-							<small className="text-foreground/60">{row.original.user.email}</small>
+							<small className="text-muted-foreground">
+								{row.original.user.email}
+							</small>
 						</div>
 					</div>
 				) : null,
@@ -167,7 +169,7 @@ export function OrganizationMembersList({ organizationId }: { organizationId: st
 								</DropdownMenu>
 							</>
 						) : (
-							<span className="font-medium text-sm text-foreground/60">
+							<span className="font-medium text-sm text-muted-foreground">
 								{memberRoles[row.original.role as keyof typeof memberRoles]}
 							</span>
 						)}
@@ -210,7 +212,7 @@ export function OrganizationMembersList({ organizationId }: { organizationId: st
 					) : (
 						<TableRow>
 							<TableCell colSpan={columns.length} className="h-24 text-center">
-								No results.
+								{t("organizations.settings.members.empty")}
 							</TableCell>
 						</TableRow>
 					)}

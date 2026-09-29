@@ -1,6 +1,6 @@
 "use client";
 
-import { CheckCircle2Icon, InfoIcon, LoaderIcon, TriangleAlertIcon, XIcon } from "lucide-react";
+import { CircleAlertIcon, TriangleAlertIcon } from "lucide-react";
 import { Toaster as Sonner, toast as sonnerToast } from "sonner";
 
 import { cn } from "../lib";
@@ -25,80 +25,56 @@ interface ToastProps {
 }
 
 function Toast({ id, title, description, action, cancel, icon, type = "default" }: ToastProps) {
-	const getIcon = () => {
-		if (icon !== undefined) {
-			return icon;
-		}
-		if (type === "success") {
-			return <CheckCircle2Icon className="size-5 text-success" aria-hidden="true" />;
-		}
-		if (type === "error") {
-			return <XIcon className="size-5 text-destructive" aria-hidden="true" />;
-		}
-		if (type === "info") {
-			return <InfoIcon className="size-5 text-primary" aria-hidden="true" />;
-		}
-		if (type === "loading") {
-			return <LoaderIcon className="size-5 animate-spin text-primary" aria-hidden="true" />;
-		}
-		if (type === "warning") {
-			return <TriangleAlertIcon className="size-5 text-amber-500" aria-hidden="true" />;
-		}
-		return null;
-	};
-
-	const getBorderColor = () => {
-		if (type === "success") {
-			return "border-success/20";
-		}
-		if (type === "error") {
-			return "border-destructive/20";
-		}
-		if (type === "info") {
-			return "border-primary/20";
-		}
-		if (type === "warning") {
-			return "border-amber-500/20";
-		}
-		return "border-border";
-	};
+	// A slip, not a toast: flat paper with a 1px edge, words first, no decorative icons. An error
+	// or a warning also carries its glyph, so the edge colour is never the only signal.
+	const edge =
+		type === "error"
+			? "border-destructive"
+			: type === "warning"
+				? "border-warning"
+				: type === "success"
+					? "border-foreground"
+					: "border-border";
+	const glyph =
+		icon ??
+		(type === "error" ? (
+			<CircleAlertIcon className="size-5 text-destructive" aria-hidden="true" />
+		) : type === "warning" ? (
+			<TriangleAlertIcon className="size-5 text-warning" aria-hidden="true" />
+		) : null);
 
 	return (
 		<div
+			role={type === "error" ? "alert" : "status"}
 			className={cn(
-				"group gap-3 p-4 text-sm shadow-md pointer-events-auto relative flex w-full items-center rounded-lg border bg-card text-card-foreground transition-all",
-				getBorderColor(),
+				"group gap-3 px-4 py-3 sm:min-w-[22rem] pointer-events-auto relative flex w-full items-start border bg-popover text-popover-foreground",
+				edge,
 			)}
 		>
-			{getIcon() && <div className="flex shrink-0 items-center">{getIcon()}</div>}
+			{glyph !== undefined && glyph !== null && (
+				<div className="mt-0.5 flex shrink-0 items-center">{glyph}</div>
+			)}
 			<div className="gap-1 flex flex-1 flex-col">
-				{title && <div className="font-medium leading-tight tracking-tight">{title}</div>}
+				{title && <div className="font-display text-letter">{title}</div>}
 				{description && (
-					<div className="text-sm leading-relaxed text-muted-foreground">
-						{description}
-					</div>
+					<div className="text-meta text-muted-foreground">{description}</div>
 				)}
 				{(action || cancel) && (
-					<div className="mt-2 gap-2 flex">
+					<div className="mt-1 gap-4 flex">
 						{action && (
-							<Button
-								variant="primary"
-								size="sm"
-								onClick={action.onClick}
-								className="h-7"
-							>
+							<Button variant="link" size="sm" onClick={action.onClick}>
 								{action.label}
 							</Button>
 						)}
 						{cancel && (
 							<Button
-								variant="ghost"
+								variant="link"
 								size="sm"
+								className="text-muted-foreground"
 								onClick={() => {
 									cancel.onClick?.();
 									sonnerToast.dismiss(id);
 								}}
-								className="h-7"
 							>
 								{cancel.label}
 							</Button>
@@ -106,6 +82,7 @@ function Toast({ id, title, description, action, cancel, icon, type = "default" 
 					</div>
 				)}
 			</div>
+			{type === "loading" && <span className="sr-only">…</span>}
 		</div>
 	);
 }

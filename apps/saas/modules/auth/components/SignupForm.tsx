@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { OrganizationInvitationAlert } from "@organizations/components/OrganizationInvitationAlert";
 import { authClient } from "@repo/auth/client";
 import { config as authConfig } from "@repo/auth/config";
-import { Alert, AlertDescription, AlertTitle } from "@repo/ui/components/alert";
+import { Alert, AlertDescription } from "@repo/ui/components/alert";
 import { Button } from "@repo/ui/components/button";
 import {
 	Form,
@@ -20,7 +20,6 @@ import {
 import { Input } from "@repo/ui/components/input";
 import { passwordSchema } from "@repo/utils";
 import { PasswordInput } from "@shared/components/PasswordInput";
-import { AlertTriangleIcon, ArrowRightIcon, MailboxIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -30,6 +29,10 @@ import { withQuery } from "ufo";
 import { z } from "zod";
 
 import { type OAuthProvider, oAuthProviders } from "../constants/oauth-providers";
+import { AuthDivider } from "./AuthDivider";
+import { AuthHeading } from "./AuthHeading";
+import { AuthMarginNote } from "./AuthMarginNote";
+import { AuthSentSlip } from "./AuthSentSlip";
 import { SocialSigninButton } from "./SocialSigninButton";
 
 const formSchema = z.object({
@@ -111,23 +114,25 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 
 	return (
 		<div>
-			<h1 className="font-display font-bold text-2xl md:text-3xl tracking-tight">{t("auth.signup.title")}</h1>
-			<p className="mt-1 mb-6 text-foreground/60">{t("auth.signup.message")}</p>
+			<AuthHeading
+				overline={t("auth.signup.overline")}
+				title={t("auth.signup.title")}
+				lead={t("auth.signup.message")}
+			/>
 
 			{form.formState.isSubmitSuccessful && !invitationOnlyMode ? (
-				<Alert variant="success">
-					<MailboxIcon />
-					<AlertTitle>{t("auth.signup.hints.verifyEmail")}</AlertTitle>
-				</Alert>
+				<AuthSentSlip
+					title={t("auth.signup.hints.verifyEmailTitle")}
+					message={t("auth.signup.hints.verifyEmail")}
+				/>
 			) : (
 				<>
 					{invitationId && <OrganizationInvitationAlert className="mb-6" />}
 
 					<Form {...form}>
-						<form className="gap-4 flex flex-col items-stretch" onSubmit={onSubmit}>
+						<form className="gap-5 flex flex-col items-stretch" onSubmit={onSubmit}>
 							{form.formState.isSubmitted && form.formState.errors.root && (
 								<Alert variant="error">
-									<AlertTriangleIcon />
 									<AlertDescription>
 										{form.formState.errors.root.message}
 									</AlertDescription>
@@ -141,8 +146,11 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 									<FormItem>
 										<FormLabel>{t("auth.signup.name")}</FormLabel>
 										<FormControl>
-											<Input {...field} />
+											<Input {...field} autoComplete="name" />
 										</FormControl>
+										<p className="text-meta text-muted-foreground">
+											{t("auth.signup.nameHint")}
+										</p>
 										<FormMessage />
 									</FormItem>
 								)}
@@ -157,6 +165,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 										<FormControl>
 											<Input
 												{...field}
+												type="email"
 												autoComplete="email"
 												readOnly={!!prefillEmail}
 											/>
@@ -187,7 +196,11 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 								/>
 							)}
 
-							<Button variant="primary" loading={form.formState.isSubmitting}>
+							<Button
+								variant="primary"
+								className="w-full"
+								loading={form.formState.isSubmitting}
+							>
 								{t("auth.signup.submit")}
 							</Button>
 						</form>
@@ -195,12 +208,7 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 
 					{authConfig.enableSignup && authConfig.enableSocialLogin && (
 						<>
-							<div className="my-6 h-4 relative">
-								<hr className="top-2 relative" />
-								<p className="top-0 h-4 px-2 font-medium text-sm leading-tight absolute left-1/2 mx-auto inline-block -translate-x-1/2 bg-card text-center text-foreground/60">
-									{t("auth.login.continueWith")}
-								</p>
-							</div>
+							<AuthDivider label={t("auth.login.continueWith")} />
 
 							<div className="gap-2 sm:grid-cols-2 grid grid-cols-1 items-stretch">
 								{Object.keys(oAuthProviders).map((providerId) => (
@@ -215,13 +223,19 @@ export function SignupForm({ prefillEmail }: { prefillEmail?: string }) {
 				</>
 			)}
 
-			<div className="mt-6 text-sm text-center">
-				<span className="text-foreground/60">{t("auth.signup.alreadyHaveAccount")} </span>
-				<Link href={withQuery("/login", Object.fromEntries(searchParams.entries()))}>
+			<p className="mt-8 text-center text-body">
+				<span className="text-muted-foreground">
+					{t("auth.signup.alreadyHaveAccount")}{" "}
+				</span>
+				<Link
+					href={withQuery("/login", Object.fromEntries(searchParams.entries()))}
+					className="text-seal-ink underline underline-offset-4"
+				>
 					{t("auth.signup.signIn")}
-					<ArrowRightIcon className="ml-1 size-4 inline align-middle" />
 				</Link>
-			</div>
+			</p>
+
+			<AuthMarginNote>{t("auth.signup.marginNote")}</AuthMarginNote>
 		</div>
 	);
 }

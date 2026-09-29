@@ -1,61 +1,36 @@
 {
 	"pricing": {
-		"choosePlan": "Choose plan",
-		"contactSales": "Contact sales",
-		"description": "Choose the plan that works best for you.",
-		"getStarted": "Get started",
-		"month": "{count, plural, one {month} other {{count} months}}",
-		"monthly": "Monthly",
 		"products": {
-			"basic": {
-				"description": "Perfect to small teams.",
-				"features": {
-					"anotherFeature": "Another amazing feature",
-					"limitedSupport": "Limited support"
-				},
-				"title": "Basic"
-			},
-			"enterprise": {
-				"description": "Custom plan tailored to your requirements",
-				"features": {
-					"enterpriseSupport": "Enterprise support",
-					"unlimitedProjects": "Unlimited projects"
-				},
-				"title": "Enterprise"
-			},
 			"free": {
-				"description": "Start for free",
+				"description": "A small folio each evening, for as long as you're searching.",
 				"features": {
-					"anotherFeature": "Another amazing feature",
-					"limitedSupport": "Limited support"
+					"folio": "5 pages each evening",
+					"notes": "3 sealed notes a day",
+					"family": "Your candidate plus 2 family members",
+					"links": "3 family links at a time",
+					"safety": "Every safety feature, always free"
 				},
 				"title": "Free"
 			},
-			"lifetime": {
-				"description": "Buy once. Use forever.",
+			"premium": {
+				"description": "For a household in an active search.",
 				"features": {
-					"extendSupport": "Extended support",
-					"noRecurringCosts": "No recurring costs"
+					"folio": "7 pages each evening",
+					"notes": "10 sealed notes a day",
+					"credits": "2 credits each month",
+					"family": "Your candidate plus 6 family members",
+					"links": "Unlimited family links"
 				},
-				"title": "Lifetime"
+				"title": "Premium"
 			},
-			"pro": {
-				"description": "Best for teams",
+			"credits": {
+				"description": "5 credits. One credit is an extra note on a busy day, or a priority note.",
 				"features": {
-					"anotherFeature": "Another amazing feature",
-					"fiveMembers": "Up to 5 members",
-					"fullSupport": "Full support"
+					"extraNote": "An extra note beyond the day's limit",
+					"priority": "A priority note, labelled for the reader and kept at the top of her letters for two days"
 				},
-				"title": "Pro"
+				"title": "Credits"
 			}
-		},
-		"purchase": "Purchase",
-		"recommended": "Recommended",
-		"subscribe": "Subscribe",
-		"title": "Pricing",
-		"trialPeriod": "{days} {days, plural, one {day} other {days}} free trial",
-		"year": "{count, plural, one {year} other {{count} years}}",
-		"yearly": "Yearly",
-		"perSeat": "seat"
+		}
 	}
 }

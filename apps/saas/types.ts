@@ -1,4 +1,5 @@
-export type Theme = "light" | "dark";
+/** "light" is Paper, "dark" is Lamp, "system" is "Follow my phone". */
+export type Theme = "light" | "dark" | "system";
 
 export interface SaasConfig {
 	/**

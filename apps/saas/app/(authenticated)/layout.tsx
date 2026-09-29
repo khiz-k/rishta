@@ -10,6 +10,8 @@ import { ConfirmationAlertProvider } from "@shared/components/ConfirmationAlertP
 import { orpc } from "@shared/lib/orpc-query-utils";
 import { getServerQueryClient } from "@shared/lib/server";
 import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import { NextIntlClientProvider } from "next-intl";
+import { getMessages } from "next-intl/server";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
@@ -46,13 +48,17 @@ export default async function AuthenticatedLayout({ children }: PropsWithChildre
 		});
 	}
 
+	const messages = await getMessages();
+
 	return (
-		<HydrationBoundary state={dehydrate(queryClient)}>
-			<SessionProvider>
-				<ActiveOrganizationProvider>
-					<ConfirmationAlertProvider>{children}</ConfirmationAlertProvider>
-				</ActiveOrganizationProvider>
-			</SessionProvider>
-		</HydrationBoundary>
+		<NextIntlClientProvider messages={messages}>
+			<HydrationBoundary state={dehydrate(queryClient)}>
+				<SessionProvider>
+					<ActiveOrganizationProvider>
+						<ConfirmationAlertProvider>{children}</ConfirmationAlertProvider>
+					</ActiveOrganizationProvider>
+				</SessionProvider>
+			</HydrationBoundary>
+		</NextIntlClientProvider>
 	);
 }

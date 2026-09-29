@@ -30,9 +30,9 @@ export function SocialSigninButton({
 	};
 
 	return (
-		<Button onClick={() => onSignin()} variant="secondary" type="button" className={className}>
+		<Button onClick={() => onSignin()} variant="outline" type="button" className={className}>
 			{providerData.icon && (
-				<i className="mr-2 text-primary">
+				<i className="mr-2 text-foreground">
 					<providerData.icon className="size-4" />
 				</i>
 			)}

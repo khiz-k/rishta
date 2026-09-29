@@ -97,7 +97,7 @@ export function OrganizationInvitationsList({ organizationId }: { organizationId
 						>
 							{row.original.email}
 						</strong>
-						<small className="gap-1 flex flex-wrap text-foreground/60">
+						<small className="gap-1 flex flex-wrap text-muted-foreground">
 							<span className="gap-0.5 flex items-center">
 								<InvitationStatusIcon className="size-3" />
 								{t(

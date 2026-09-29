@@ -10,6 +10,8 @@ export async function sendEmail<T extends TemplateId>(
 	params: {
 		to: string;
 		from?: string;
+		/** Where replies go, e.g. the visitor who wrote through the contact form. */
+		replyTo?: string;
 		locale?: Locale;
 	} & (
 		| {
@@ -23,7 +25,7 @@ export async function sendEmail<T extends TemplateId>(
 		  }
 	),
 ) {
-	const { to, from, locale = config.defaultLocale as Locale } = params;
+	const { to, from, replyTo, locale = config.defaultLocale as Locale } = params;
 
 	let html: string;
 	let text: string;
@@ -49,6 +51,7 @@ export async function sendEmail<T extends TemplateId>(
 		await send({
 			to,
 			from,
+			replyTo,
 			subject,
 			text,
 			html,

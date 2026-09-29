@@ -1,11 +1,11 @@
 import { getSession } from "@auth/lib/server";
+import { AppearanceForm } from "@settings/components/AppearanceForm";
 import { ChangeEmailForm } from "@settings/components/ChangeEmailForm";
 import { ChangeNameForm } from "@settings/components/ChangeNameForm";
 import { DeleteAccountForm } from "@settings/components/DeleteAccountForm";
-import { UserAvatarForm } from "@settings/components/UserAvatarForm";
-import { UserLanguageForm } from "@settings/components/UserLanguageForm";
-import { PageHeader } from "@shared/components/PageHeader";
+import { PaperSlip } from "@shared/components/PaperSlip";
 import { SettingsList } from "@shared/components/SettingsList";
+import { SettingsPage } from "@shared/components/shell/SettingsNav";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -17,26 +17,28 @@ export async function generateMetadata() {
 	};
 }
 
-export default async function AccountSettingsPage() {
+export default async function AccountSettingsPage({
+	searchParams,
+}: {
+	searchParams: Promise<{ deleted?: string }>;
+}) {
 	const session = await getSession();
 
 	if (!session) {
 		redirect("/login");
 	}
 
-	const t = await getTranslations("settings.account");
+	const [t, { deleted }] = await Promise.all([getTranslations("settings.account"), searchParams]);
 
 	return (
-		<>
-			<PageHeader title={t("title")} subtitle={t("subtitle")} />
-
+		<SettingsPage title={t("title")} lead={t("subtitle")}>
+			{deleted === "household" && <PaperSlip role="status" title={t("householdDeleted")} />}
 			<SettingsList>
-				<UserAvatarForm />
-				<UserLanguageForm />
 				<ChangeNameForm />
 				<ChangeEmailForm />
+				<AppearanceForm />
 				<DeleteAccountForm />
 			</SettingsList>
-		</>
+		</SettingsPage>
 	);
 }

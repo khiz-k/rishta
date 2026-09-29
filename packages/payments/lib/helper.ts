@@ -56,7 +56,15 @@ function getActivePlanFromPurchases(purchases?: ResolvedPurchase[]) {
 		};
 	}
 
-	const oneTimePurchase = purchases?.find((purchase) => purchase.type === "ONE_TIME");
+	// Hidden one-time plans (the credit pack) are consumables, never the household's plan.
+	const oneTimePurchase = purchases?.find((purchase) => {
+		if (purchase.type !== "ONE_TIME") {
+			return false;
+		}
+		const planId = resolvePurchasePlanId(purchase);
+		const plan = planId ? config.plans[planId] : undefined;
+		return !plan?.hidden;
+	});
 
 	if (oneTimePurchase) {
 		const resolvedPrice = resolvePurchasePlan(oneTimePurchase);

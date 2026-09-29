@@ -7,8 +7,8 @@ import { ConnectedAccountsBlock } from "@settings/components/ConnectedAccountsBl
 import { PasskeysBlock } from "@settings/components/PasskeysBlock";
 import { SetPasswordForm } from "@settings/components/SetPassword";
 import { TwoFactorBlock } from "@settings/components/TwoFactorBlock";
-import { PageHeader } from "@shared/components/PageHeader";
 import { SettingsList } from "@shared/components/SettingsList";
+import { SettingsPage } from "@shared/components/shell/SettingsNav";
 import { getServerQueryClient } from "@shared/lib/server";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -49,9 +49,7 @@ export default async function AccountSettingsPage() {
 	const t = await getTranslations("settings.account.security");
 
 	return (
-		<>
-			<PageHeader title={t("title")} />
-
+		<SettingsPage title={t("title")}>
 			<SettingsList>
 				{config.enablePasswordLogin &&
 					(userHasPassword ? <ChangePasswordForm /> : <SetPasswordForm />)}
@@ -60,6 +58,6 @@ export default async function AccountSettingsPage() {
 				{config.enableTwoFactor && <TwoFactorBlock />}
 				<ActiveSessionsBlock />
 			</SettingsList>
-		</>
+		</SettingsPage>
 	);
 }

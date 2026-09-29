@@ -11,11 +11,11 @@ const Progress = ({
 	...props
 }: React.ComponentProps<typeof ProgressPrimitive.Root>) => (
 	<ProgressPrimitive.Root
-		className={cn("h-4 relative w-full overflow-hidden rounded-full bg-border", className)}
+		className={cn("h-1 relative w-full overflow-hidden bg-border", className)}
 		{...props}
 	>
 		<ProgressPrimitive.Indicator
-			className="size-full flex-1 rounded-full bg-primary transition-all"
+			className="size-full flex-1 bg-foreground transition-transform motion-reduce:transition-none"
 			style={{ transform: `translateX(-${100 - (value ?? 0)}%)` }}
 		/>
 	</ProgressPrimitive.Root>

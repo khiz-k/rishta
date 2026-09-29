@@ -1,6 +1,6 @@
 import { OrganizationInvitationModal } from "@organizations/components/OrganizationInvitationModal";
 import { auth } from "@repo/auth";
-import { getOrganizationById } from "@repo/database";
+import { getHouseholdSetting } from "@repo/database";
 import { AuthWrapper } from "@shared/components/AuthWrapper";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -23,15 +23,19 @@ export default async function OrganizationInvitationPage({
 		redirect("/");
 	}
 
-	const organization = await getOrganizationById(invitation.organizationId);
+	// An invitation to the person a relative started a page for is a claim, worded as one.
+	const setting = await getHouseholdSetting(invitation.organizationId);
+	const forCandidate =
+		Boolean(setting?.pendingCandidateEmail) &&
+		setting?.pendingCandidateEmail?.toLowerCase() === invitation.email.toLowerCase();
 
 	return (
 		<AuthWrapper>
 			<OrganizationInvitationModal
 				organizationName={invitation.organizationName}
 				organizationSlug={invitation.organizationSlug}
-				logoUrl={organization?.logo || undefined}
 				invitationId={invitationId}
+				forCandidate={forCandidate}
 			/>
 		</AuthWrapper>
 	);

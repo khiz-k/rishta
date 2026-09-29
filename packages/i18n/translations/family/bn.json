@@ -1,0 +1,209 @@
+{
+	"page": {
+		"sections": {
+			"personal": "ব্যক্তিগত",
+			"education": "শিক্ষা ও কাজ",
+			"family": "পরিবার",
+			"lifestyle": "জীবনযাপন",
+			"about": "পরিচয়",
+			"looking_for": "কেমন জীবনসঙ্গী চাই",
+			"sealed": "সিলমোহর করা"
+		},
+		"fields": {
+			"born": "জন্ম",
+			"dateOfBirth": "জন্ম তারিখ",
+			"height": "উচ্চতা",
+			"maritalStatus": "আগে বিয়ে",
+			"hasChildren": "সন্তান",
+			"motherTongue": "মাতৃভাষা",
+			"languages": "ভাষা",
+			"religion": "ধর্ম",
+			"sect": "ঐতিহ্য",
+			"practice": "ধর্মাচরণ",
+			"community": "সম্প্রদায়",
+			"residency": "বসবাসের মর্যাদা",
+			"manglik": "মাঙ্গলিক",
+			"education": "শিক্ষা",
+			"university": "কোথায় পড়াশোনা",
+			"profession": "কাজ",
+			"employer": "কর্মস্থল",
+			"incomeRange": "আয়",
+			"fatherOccupation": "বাবা",
+			"motherOccupation": "মা",
+			"siblings": "ভাইবোন",
+			"familyType": "পরিবার",
+			"familyValues": "পারিবারিক মূল্যবোধ",
+			"nativePlace": "আদি বাড়ি",
+			"aboutFamily": "পরিবার সম্পর্কে",
+			"diet": "খাদ্যাভ্যাস",
+			"smoking": "ধূমপান",
+			"drinking": "মদ্যপান",
+			"fullName": "পুরো নাম",
+			"birthTime": "জন্মের সময়",
+			"birthPlace": "জন্মস্থান",
+			"contactPhone": "ফোন",
+			"location": "বাস করেন",
+			"country": "দেশ",
+			"aboutMe": "পরিচয়",
+			"lookingFor": "কেমন জীবনসঙ্গী চাই"
+		},
+		"values": {
+			"maritalStatus": {
+				"never_married": "অবিবাহিত",
+				"divorced": "বিবাহবিচ্ছিন্ন",
+				"widowed": "বিপত্নীক/বিধবা",
+				"annulled": "বিয়ে বাতিল"
+			},
+			"hasChildren": {
+				"yes": "সন্তান আছে",
+				"no": "সন্তান নেই"
+			},
+			"religion": {
+				"hindu": "হিন্দু",
+				"muslim": "মুসলিম",
+				"sikh": "শিখ",
+				"christian": "খ্রিস্টান",
+				"jain": "জৈন",
+				"buddhist": "বৌদ্ধ",
+				"jewish": "ইহুদি",
+				"parsi": "পারসি",
+				"other": "অন্য ধর্ম",
+				"none": "কোনো ধর্ম নয়"
+			},
+			"practice": {
+				"very": "খুব ধর্মপ্রাণ",
+				"moderately": "মাঝামাঝি ধর্মপ্রাণ",
+				"somewhat": "কিছুটা ধর্মপ্রাণ",
+				"not_practising": "ধর্মাচরণ করেন না"
+			},
+			"residency": {
+				"citizen": "নাগরিক",
+				"permanent_resident": "স্থায়ী বাসিন্দা",
+				"work_visa": "ওয়ার্ক ভিসা",
+				"student_visa": "স্টুডেন্ট ভিসা",
+				"other": "অন্যান্য"
+			},
+			"manglik": {
+				"yes": "মাঙ্গলিক",
+				"no": "মাঙ্গলিক নন",
+				"partial": "আংশিক মাঙ্গলিক",
+				"dont_know": "জানা নেই"
+			},
+			"education": {
+				"high_school": "উচ্চ মাধ্যমিক",
+				"diploma": "ডিপ্লোমা",
+				"bachelors": "স্নাতক",
+				"masters": "স্নাতকোত্তর",
+				"phd": "পিএইচডি",
+				"professional": "পেশাগত ডিগ্রি",
+				"other": "অন্যান্য"
+			},
+			"incomeRange": {
+				"under_50k": "$50,000-এর কম",
+				"50k_75k": "$50,000–75,000",
+				"75k_100k": "$75,000–100,000",
+				"100k_150k": "$100,000–150,000",
+				"150k_plus": "$150,000-এর বেশি",
+				"prefer_not_to_say": "বলতে চান না"
+			},
+			"familyType": {
+				"joint": "যৌথ পরিবার",
+				"nuclear": "একক পরিবার"
+			},
+			"familyValues": {
+				"traditional": "ঐতিহ্যবাহী",
+				"moderate": "মাঝামাঝি",
+				"liberal": "উদার"
+			},
+			"diet": {
+				"veg": "নিরামিষ",
+				"eggetarian": "ডিমসহ নিরামিষ",
+				"vegan": "ভিগান",
+				"jain_veg": "জৈন নিরামিষ",
+				"non_veg": "আমিষ",
+				"halal": "হালাল"
+			},
+			"smoking": {
+				"never": "ধূমপান করেন না",
+				"occasionally": "মাঝে মাঝে",
+				"regularly": "ধূমপান করেন"
+			},
+			"drinking": {
+				"never": "মদ্যপান করেন না",
+				"occasionally": "মাঝে মাঝে",
+				"socially": "সামাজিক অনুষ্ঠানে",
+				"regularly": "নিয়মিত"
+			}
+		},
+		"signer": {
+			"self": "{name} নিজে লিখেছেন",
+			"parent": "{name}-এর বাবা-মা লিখেছেন",
+			"parentConfirmed": "{name}-এর বাবা-মা লিখেছেন, {name} নিশ্চিত করেছেন",
+			"sibling": "{name}-এর ভাই বা বোন লিখেছেন",
+			"siblingConfirmed": "{name}-এর ভাই বা বোন লিখেছেন, {name} নিশ্চিত করেছেন",
+			"relative": "{name}-এর পরিবার লিখেছে",
+			"relativeConfirmed": "{name}-এর পরিবার লিখেছে, {name} নিশ্চিত করেছেন",
+			"friend": "{name}-এর এক বন্ধু লিখেছেন",
+			"friendConfirmed": "এক বন্ধু লিখেছেন, {name} নিশ্চিত করেছেন"
+		},
+		"verified": {
+			"email": "ইমেল যাচাই করা",
+			"phone": "ফোন যাচাই করা",
+			"id": "পরিচয় যাচাই করা"
+		},
+		"ref": "নং {ref} · {date}-এ হালনাগাদ",
+		"photo": {
+			"veiledAlt": "ছবিটি ঢাকা, দুজনে হ্যাঁ বললে খুলবে",
+			"alt": "{name}-এর ছবি",
+			"none": "এই পাতায় ছবি নেই",
+			"veiled": "ঢাকা"
+		},
+		"sealed": {
+			"aria": "সিলমোহর করা। দুজনে হ্যাঁ বললে খুলবে।",
+			"closed": "ছবি, পুরো নাম, কর্মস্থল ও যোগাযোগ দুজনে হ্যাঁ বললে খুলবে।",
+			"empty": "এই পাতায় আর কিছু সিলমোহর করা নেই।"
+		},
+		"printWatermark": "রিশতা থেকে · নং {ref} · গোপনে শেয়ার করা, অন্যকে পাঠাবেন না"
+	},
+	"family": {
+		"link": {
+			"strip": "{name} গোপনে {label}-এর সঙ্গে শেয়ার করেছেন",
+			"until": "{date} পর্যন্ত খোলা · অন্য কাউকে পাঠাবেন না",
+			"languageLabel": "ভাষা",
+			"translated": "অনূদিত।",
+			"showOriginal": "মূল দেখুন",
+			"showTranslation": "অনুবাদ দেখুন",
+			"noTranslation": "এখন অনুবাদ পাওয়া যাচ্ছে না। শিরোনামগুলো আপনার ভাষায়; বাকিটা যেমন লেখা হয়েছে তেমন।",
+			"noteFrom": "{name}-এর বার্তা",
+			"watermark": "{label}-এর জন্য · {name}-এর কাছ থেকে · {date}",
+			"question": "আপনার কী মত?",
+			"reactions": {
+				"proceed": "এগিয়ে যান",
+				"lets_talk": "কথা বলি",
+				"not_for_us": "আমাদের জন্য নয়"
+			},
+			"thanks": "ধন্যবাদ। {name} পাতার পাশে “{reaction}” দেখতে পাবেন।",
+			"canChange": "লিংক বন্ধ হওয়া পর্যন্ত আপনি এটি বদলাতে পারেন।",
+			"notSaved": "এটি সংরক্ষিত হয়নি। আবার চেষ্টা করুন।",
+			"words": "কয়েকটি কথা লিখুন (ঐচ্ছিক)",
+			"send": "{name}-কে পাঠান",
+			"sent": "পাঠানো হয়েছে। {name} পাতার পাশে আপনার কথা দেখতে পাবেন।",
+			"report": "এই পাতা সম্পর্কে অভিযোগ করুন",
+			"reportTitle": "এই পাতায় কী সমস্যা?",
+			"reportCategories": {
+				"scam_money": "টাকা চায় বা প্রতারণা মনে হয়",
+				"harassment": "হয়রানি বা খারাপ কথা",
+				"fake_profile": "পাতাটি ভুয়া মনে হয়",
+				"underage": "ব্যক্তিকে ১৮ বছরের কম মনে হয়",
+				"pressure_to_marry": "বিয়ের চাপ",
+				"hate": "ঘৃণাসূচক কথা",
+				"other": "অন্য কিছু"
+			},
+			"reportSubmit": "অভিযোগ পাঠান",
+			"reportThanks": "ধন্যবাদ। আমাদের দলের একজন এটি পড়বেন।",
+			"closed": "এই লিংকটি বন্ধ হয়ে গেছে। {name}-কে আবার পাঠাতে বলুন।",
+			"closedNoName": "এই লিংকটি বন্ধ হয়ে গেছে। আবার পাঠাতে বলুন।",
+			"error": "পাতাটি খোলা গেল না। এক মিনিট পরে আবার লিংকটি খুলুন।"
+		}
+	}
+}

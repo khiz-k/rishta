@@ -1,3 +1,83 @@
+# Product & design rules (read first)
+
+**Rishta** is a matchmaking app for people who want marriage, not dating, and for the families who
+help them. It is built around the **biodata page**, the one-page marriage profile South Asian
+diaspora families already write and forward.
+
+- Each evening a candidate reads a small **Folio** of 5-7 complete pages, one at a time.
+- They show interest by writing a 40-400 character **note** and pressing their **seal** onto it.
+- When the other person says yes, a match (an **Introduction**) is created at once and **both seals
+  break together**. The sealed sections (clear photos, full name, workplace, contact) open, and three
+  evenings are proposed across both time zones.
+- Family takes part in the margin: pencil notes (Proceed · Let's talk · Not for us), usually through
+  a private, watermarked WhatsApp link (`/f/[token]`) with no account.
+- Only the adult candidate (the household owner) can seal, say yes or close.
+
+Before changing any UI, read **design.md** (the design contract: IA, shell, screens, tokens, type,
+motion, the seal) and **spec.md** (features, data model, API, permissions, seed plan). vision.md
+holds positioning and pricing. The brand is **Rishta**: "Vow" is retired.
+
+Non-negotiable rules. Do not regress to the template look.
+
+1. **Paradigm**: the biodata page is the one object. The Folio is a paginated reader of complete
+   pages, and My Biodata is the same page edited in place. Never build card grids of people, feeds,
+   dashboards, stat tiles, kanbans of people or tables of people.
+2. **Shell**: no sidebar, ever. There is a slim masthead with exactly **Folio · Letters · My
+   Biodata** (text only), which becomes a 56px text-only bottom bar on phones. Settings, Household,
+   Credits and Close my search live behind the square avatar tile. `/b/[handle]`,
+   `/letters/[letterId]` and `/f/[token]` are chrome-free. Product routes live under
+   `app/(authenticated)/(main)/(organizations)/[organizationSlug]/` (household = organization).
+3. **Gestures**: a horizontal swipe only turns pages. Nothing is decided by a swipe, drag, heart or
+   single tap. Interest is sent only through the `SealComposer`.
+4. **Signature**: the seal unlocks at 40 characters and is pressed by a 600ms hold, by holding Enter
+   or Space, or by tap-then-confirm. A suggested first line is never sent verbatim. Accepting a
+   letter creates the `match` in the same transaction. Both seals break together (320ms), then the
+   photos unveil (400ms).
+5. **Type**: Tiro Devanagari Hindi (names, headings, notes, letters) plus Anek Latin (values and UI;
+   wdth 75 caps for labels), with the named script fallbacks (Tiro Gurmukhi, Bangla, Tamil, Telugu;
+   Noto Serif Gujarati; Noto Nastaliq Urdu, RTL). The base is 17px. Never DM Sans, Outfit, Figtree,
+   Inter, Playfair or Cormorant.
+6. **Colour**: tokens only (`tooling/tailwind/theme.css`). The design is light-first: an ivory page
+   on a parchment desk, in ink. Lac seal `#933113` is the only action colour. Accent text uses
+   `--seal-ink`. Marigold (`--rule`) appears only in double rules and the seal rim, never as text.
+   "Lamp" is the warm sepia dark mode and is never the default. No pink, rose, gradients,
+   per-person colours or hard-coded Tailwind palette colours.
+7. **Shape**: radius 0 everywhere. The only circle is the `MonogramSeal`. Pages are flat paper with
+   1px borders, a 2px offset stack edge and hairline sections. No blurred shadows, glows or
+   backdrop blur. Buttons, avatar tile, photos, chips and checkboxes are square; there are no pill
+   switches and no round avatars.
+8. **Motion**: page turn 180ms; seal press 220ms; break 320ms; unveil 400ms. Nothing else moves
+   beyond short fades. No confetti, sounds, springs, staggered reveals, drag tilt or skeleton
+   shimmer. Honour `prefers-reduced-motion`.
+9. **People are never inventory**: no percentages or compatibility scores, bids, ranks,
+   "N people interested", popularity counts, flames or boosts. Fit is 2-6 plain reasons with honest
+   gaps ("Not stated on his page"), computed deterministically on the server. A priority note is
+   flat, costs 1 credit and is always labelled.
+10. **Privacy and consent**:
+    - Non-matches only ever receive server-made photo veils, never the clear image.
+    - The sealed section opens only inside an Introduction.
+    - Blocks hide everything in both directions.
+    - Family never reads messages and never acts for the candidate.
+    - A page a relative drafted is invisible until the adult candidate claims it (18+).
+    - Notification subjects never name anyone.
+11. **Copy**: every string goes through i18n (`packages/i18n/translations/*/saas.json`). The voice
+    is a discreet family friend ("Opens when you both say yes."). No emoji in UI. No "match",
+    "like", "swipe", "boost" or exclamation marks in system copy.
+12. **AI**: visible, editable drafts only (biodata drafting, a first-line suggestion, translation
+    for family, safety flags to the recipient). AI never decides, sends, scores or rates looks, and
+    is never a chatbot or persona. Every AI surface has a working fallback when `OPENAI_API_KEY` is
+    not set.
+
+Banned template-isms: `NavBar` sidebar and `AppWrapper`-as-sidebar, `PageHeader` title/subtitle
+stacks, `Card` grids for people, `StatsTile`, `rounded-full` buttons, full-screen spinners,
+`confirm()` dialogs, the rings logo, the dark default, indigo or rose accents, and the de/es/fr
+locale switcher.
+
+Key files, coding rules and verification commands for this repo are in **claude.md**. The
+template guide below still applies wherever it doesn't conflict with these rules.
+
+---
+
 # Coding Agent Guidelines
 
 > Comprehensive guide for AI coding agents working with this Next.js codebase.

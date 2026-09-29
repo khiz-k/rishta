@@ -173,7 +173,7 @@ export function UserList() {
 							<strong className="block">
 								{row.original.name ?? row.original.email}
 							</strong>
-							<small className="gap-1 flex items-center text-foreground/60">
+							<small className="gap-1 flex items-center text-muted-foreground">
 								<span className="block">
 									{!!row.original.name && row.original.email}
 								</span>
@@ -314,11 +314,11 @@ export function UserList() {
 								<TableCell colSpan={columns.length} className="h-24 text-center">
 									{isLoading ? (
 										<div className="flex h-full items-center justify-center">
-											<Spinner className="mr-2 size-4 text-primary" />
+											<Spinner className="mr-2 size-4 text-seal-ink" />
 											{t("admin.users.loading")}
 										</div>
 									) : (
-										<p>No results.</p>
+										<p>{t("admin.users.empty")}</p>
 									)}
 								</TableCell>
 							</TableRow>

@@ -13,7 +13,8 @@ function localePath(locale: string, path: string): string {
 	return `${prefix}${path}`;
 }
 
-const staticMarketingPages = ["", "/blog", "/changelog"];
+// The changelog is hidden (design.md §15), so it is not listed.
+const staticMarketingPages = ["", "/safety", "/contact", "/blog"];
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 	const postPaths = getUniqueBasePaths(allPosts);

@@ -1,45 +1,29 @@
-"use client";
-
-import { AppWrapper } from "@shared/components/AppWrapper";
+import { getActiveHouseholdSlug } from "@household/lib/server";
+import { AppShell } from "@shared/components/shell/AppShell";
+import { serverHousehold } from "@shared/lib/api-server";
 import { orpc } from "@shared/lib/orpc-query-utils";
-import { useQuery } from "@tanstack/react-query";
-import { usePathname, useRouter } from "next/navigation";
-import { type PropsWithChildren, useEffect } from "react";
+import { getServerQueryClient } from "@shared/lib/server";
+import { dehydrate, HydrationBoundary } from "@tanstack/react-query";
+import type { PropsWithChildren } from "react";
 
-export default function AccountLayout({ children }: PropsWithChildren) {
-	const pathname = usePathname();
-	const router = useRouter();
-
-	const { data: prefs, isLoading: prefsLoading } = useQuery(
-		orpc.preferences.get.queryOptions({}),
-	);
-
-	const { data: profile, isLoading: profileLoading } = useQuery(
-		orpc.profiles.me.queryOptions({}),
-	);
-
-	const isLoading = prefsLoading || profileLoading;
-
-	const isSetupPage = pathname === "/quiz" || pathname === "/profile/edit" || pathname.startsWith("/settings");
-
-	useEffect(() => {
-		if (isLoading || isSetupPage) return;
-
-		if (!prefs?.quizComplete) {
-			router.replace("/quiz");
-			return;
-		}
-
-		if (!profile) {
-			router.replace("/profile/edit");
-			return;
-		}
-	}, [isLoading, isSetupPage, prefs, profile, router]);
-
-	// Show nothing while checking — prevents flash of unauthorized content
-	if (isLoading) {
-		return <AppWrapper><div className="flex items-center justify-center min-h-[60vh]"><div className="size-8 border-2 border-primary border-t-transparent rounded-full animate-spin" /></div></AppWrapper>;
+/**
+ * Account settings and moderation live in the same shell as the household (design.md §4.1):
+ * the masthead points at the active household, and the avatar tile holds everything else.
+ */
+export default async function AccountLayout({ children }: PropsWithChildren) {
+	const slug = await getActiveHouseholdSlug();
+	const household = slug ? (await serverHousehold(slug)).data : null;
+	const queryClient = getServerQueryClient();
+	if (household) {
+		queryClient.setQueryData(
+			orpc.households.get.queryKey({ input: { organizationSlug: household.slug } }),
+			household,
+		);
 	}
 
-	return <AppWrapper>{children}</AppWrapper>;
+	return (
+		<HydrationBoundary state={dehydrate(queryClient)}>
+			<AppShell household={household}>{children}</AppShell>
+		</HydrationBoundary>
+	);
 }

@@ -1,6 +1,5 @@
-import { getSession } from "@auth/lib/server";
+import { getOrganizationList, getSession } from "@auth/lib/server";
 import { OnboardingForm } from "@onboarding/components/OnboardingForm";
-import { config } from "@repo/auth/config";
 import { AuthWrapper } from "@shared/components/AuthWrapper";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
@@ -16,6 +15,10 @@ export async function generateMetadata() {
 	};
 }
 
+/**
+ * Onboarding: the name step, then "Who is this page for?". It runs until the person has both a
+ * name and a household.
+ */
 export default async function OnboardingPage() {
 	const session = await getSession();
 
@@ -23,13 +26,16 @@ export default async function OnboardingPage() {
 		redirect("/login");
 	}
 
-	if (!config.users.enableOnboarding || session.user.onboardingComplete) {
+	const organizations = await getOrganizationList();
+	const hasHousehold = organizations.length > 0;
+
+	if (session.user.onboardingComplete && hasHousehold) {
 		redirect("/");
 	}
 
 	return (
-		<AuthWrapper>
-			<OnboardingForm />
+		<AuthWrapper contentClass="max-w-xl">
+			<OnboardingForm hasHousehold={hasHousehold} />
 		</AuthWrapper>
 	);
 }

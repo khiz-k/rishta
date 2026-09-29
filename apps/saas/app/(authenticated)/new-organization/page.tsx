@@ -1,25 +1,19 @@
-import { getOrganizationList } from "@auth/lib/server";
-import { CreateOrganizationForm } from "@organizations/components/CreateOrganizationForm";
-import { config } from "@repo/auth/config";
+import { WhoIsThisFor } from "@onboarding/components/WhoIsThisFor";
 import { AuthWrapper } from "@shared/components/AuthWrapper";
-import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 
 export const dynamic = "force-dynamic";
 
-export default async function NewOrganizationPage() {
-	const organizations = await getOrganizationList();
+export async function generateMetadata() {
+	const t = await getTranslations("onboarding.who");
+	return { title: t("titleAnother") };
+}
 
-	if (
-		!config.organizations.enable ||
-		(!config.organizations.enableUsersToCreateOrganizations &&
-			(!config.organizations.requireOrganization || organizations.length > 0))
-	) {
-		redirect("/");
-	}
-
+/** "Start a page for someone else": a mother helping a second child, or a sibling. */
+export default function NewHouseholdPage() {
 	return (
-		<AuthWrapper>
-			<CreateOrganizationForm />
+		<AuthWrapper contentClass="max-w-xl">
+			<WhoIsThisFor mode="another" />
 		</AuthWrapper>
 	);
 }

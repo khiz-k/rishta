@@ -1,7 +1,7 @@
 import { getSession } from "@auth/lib/server";
 import { NotificationPreferencesForm } from "@settings/components/NotificationPreferencesForm";
-import { PageHeader } from "@shared/components/PageHeader";
 import { SettingsList } from "@shared/components/SettingsList";
+import { SettingsPage } from "@shared/components/shell/SettingsNav";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 
@@ -23,12 +23,10 @@ export default async function NotificationSettingsPage() {
 	const t = await getTranslations("settings.notificationsPage");
 
 	return (
-		<>
-			<PageHeader title={t("title")} subtitle={t("description")} />
-
+		<SettingsPage title={t("title")} lead={t("description")}>
 			<SettingsList>
 				<NotificationPreferencesForm />
 			</SettingsList>
-		</>
+		</SettingsPage>
 	);
 }

@@ -28,7 +28,7 @@ export const OrganizationLogo = ({
 	return (
 		<Avatar ref={ref} className={className}>
 			<AvatarImage src={logoSrc} />
-			<AvatarFallback className="bg-primary/10 text-primary uppercase" title={name}>
+			<AvatarFallback className="bg-card font-display text-foreground uppercase" title={name}>
 				<Users2Icon className="size-4" />
 			</AvatarFallback>
 		</Avatar>

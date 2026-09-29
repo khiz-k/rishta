@@ -1,6 +1,6 @@
 import { toMerged } from "es-toolkit";
 
-import { config, type Locale } from "../config";
+import { config, type Locale, resolveLocale } from "../config";
 
 export type TranslationScope = "marketing" | "saas" | "mail";
 
@@ -12,9 +12,11 @@ async function importLocaleMessages<T>(
 }
 
 export async function getMessagesForLocale<T = Record<string, unknown>>(
-	locale: Locale,
+	requestedLocale: Locale,
 	scope: TranslationScope,
 ): Promise<T> {
+	// Callers cast cookie and profile values to `Locale`; only ever import a bundle that exists.
+	const locale = resolveLocale(requestedLocale);
 	const localeMessages = await importLocaleMessages<T>(locale, scope);
 
 	const sharedMessages = await importLocaleMessages<Record<string, unknown>>(locale, "shared");

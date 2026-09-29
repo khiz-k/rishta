@@ -1,61 +1,57 @@
 "use client";
 
-import { OrganizationLogo } from "@organizations/components/OrganizationLogo";
 import { organizationListQueryKey } from "@organizations/lib/api";
 import { authClient } from "@repo/auth/client";
 import { Button } from "@repo/ui/components/button";
 import { useRouter } from "@shared/hooks/router";
 import { useQueryClient } from "@tanstack/react-query";
-import { CheckIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useState } from "react";
 
+/**
+ * "Join Priya's household", or, for the person a page was started for, "Your family has started
+ * a page for you" (the candidate then confirms it on Claim your page).
+ */
 export function OrganizationInvitationModal({
 	invitationId,
 	organizationName,
 	organizationSlug,
-	logoUrl,
+	forCandidate,
 }: {
 	invitationId: string;
 	organizationName: string;
 	organizationSlug: string;
-	logoUrl?: string;
+	forCandidate?: boolean;
 }) {
-	const t = useTranslations();
+	const t = useTranslations("organizations.invitationModal");
 	const router = useRouter();
 	const queryClient = useQueryClient();
 	const [submitting, setSubmitting] = useState<false | "accept" | "reject">(false);
+	const [failed, setFailed] = useState(false);
 
 	const onSelectAnswer = async (accept: boolean) => {
 		setSubmitting(accept ? "accept" : "reject");
+		setFailed(false);
 		try {
 			if (accept) {
-				const { error } = await authClient.organization.acceptInvitation({
-					invitationId,
-				});
-
+				const { error } = await authClient.organization.acceptInvitation({ invitationId });
 				if (error) {
 					throw error;
 				}
-
-				await queryClient.invalidateQueries({
-					queryKey: organizationListQueryKey,
-				});
-
-				router.replace(`/${organizationSlug}`);
+				await queryClient.invalidateQueries({ queryKey: organizationListQueryKey });
+				await authClient.organization.setActive({ organizationSlug });
+				router.replace(
+					forCandidate ? `/${organizationSlug}/claim` : `/${organizationSlug}`,
+				);
 			} else {
-				const { error } = await authClient.organization.rejectInvitation({
-					invitationId,
-				});
-
+				const { error } = await authClient.organization.rejectInvitation({ invitationId });
 				if (error) {
 					throw error;
 				}
-
 				router.replace("/");
 			}
 		} catch {
-			// TODO: handle error
+			setFailed(true);
 		} finally {
 			setSubmitting(false);
 		}
@@ -63,41 +59,37 @@ export function OrganizationInvitationModal({
 
 	return (
 		<div>
-			<h1 className="font-bold text-xl md:text-2xl">
-				{t("organizations.invitationModal.title")}
+			<h1 className="font-display text-title-sm">
+				{forCandidate ? t("candidateTitle") : t("title", { name: organizationName })}
 			</h1>
-			<p className="mt-1 mb-6 text-foreground/60">
-				{t("organizations.invitationModal.description", {
-					organizationName,
-				})}
+			<p className="mt-2 mb-6 text-body text-muted-foreground">
+				{forCandidate ? t("candidateDescription") : t("description", { organizationName })}
 			</p>
 
-			<div className="mb-6 gap-3 p-2 flex items-center rounded-lg border">
-				<OrganizationLogo name={organizationName} logoUrl={logoUrl} className="size-12" />
-				<div>
-					<strong className="font-medium text-lg">{organizationName}</strong>
-				</div>
-			</div>
+			{failed && (
+				<p role="alert" className="mb-4 text-body text-destructive">
+					{t("failed")}
+				</p>
+			)}
 
-			<div className="gap-2 flex">
+			<div className="gap-2 sm:flex-row flex flex-col-reverse">
 				<Button
 					className="flex-1"
-					variant="secondary"
-					onClick={() => onSelectAnswer(false)}
+					variant="ghost"
+					onClick={() => void onSelectAnswer(false)}
 					disabled={!!submitting}
 					loading={submitting === "reject"}
 				>
-					<XIcon className="mr-1.5 size-4" />
-					{t("organizations.invitationModal.decline")}
+					{t("decline")}
 				</Button>
 				<Button
 					className="flex-1"
-					onClick={() => onSelectAnswer(true)}
+					variant="secondary"
+					onClick={() => void onSelectAnswer(true)}
 					disabled={!!submitting}
 					loading={submitting === "accept"}
 				>
-					<CheckIcon className="mr-1.5 size-4" />
-					{t("organizations.invitationModal.accept")}
+					{forCandidate ? t("candidateAccept") : t("accept")}
 				</Button>
 			</div>
 		</div>

@@ -1,0 +1,209 @@
+{
+	"page": {
+		"sections": {
+			"personal": "व्यक्तिगत",
+			"education": "शिक्षा और काम",
+			"family": "परिवार",
+			"lifestyle": "जीवनशैली",
+			"about": "परिचय",
+			"looking_for": "कैसा जीवनसाथी चाहिए",
+			"sealed": "मुहरबंद"
+		},
+		"fields": {
+			"born": "जन्म",
+			"dateOfBirth": "जन्म तिथि",
+			"height": "कद",
+			"maritalStatus": "पहले विवाह",
+			"hasChildren": "बच्चे",
+			"motherTongue": "मातृभाषा",
+			"languages": "भाषाएँ",
+			"religion": "धर्म",
+			"sect": "परंपरा",
+			"practice": "धार्मिक आचरण",
+			"community": "समुदाय",
+			"residency": "निवास स्थिति",
+			"manglik": "मांगलिक",
+			"education": "शिक्षा",
+			"university": "पढ़ाई",
+			"profession": "काम",
+			"employer": "कार्यस्थल",
+			"incomeRange": "आय",
+			"fatherOccupation": "पिता",
+			"motherOccupation": "माता",
+			"siblings": "भाई-बहन",
+			"familyType": "परिवार",
+			"familyValues": "पारिवारिक मूल्य",
+			"nativePlace": "मूल स्थान",
+			"aboutFamily": "परिवार के बारे में",
+			"diet": "खान-पान",
+			"smoking": "धूम्रपान",
+			"drinking": "शराब",
+			"fullName": "पूरा नाम",
+			"birthTime": "जन्म का समय",
+			"birthPlace": "जन्म स्थान",
+			"contactPhone": "फ़ोन",
+			"location": "निवास",
+			"country": "देश",
+			"aboutMe": "परिचय",
+			"lookingFor": "कैसा जीवनसाथी चाहिए"
+		},
+		"values": {
+			"maritalStatus": {
+				"never_married": "अविवाहित",
+				"divorced": "तलाकशुदा",
+				"widowed": "विधुर/विधवा",
+				"annulled": "विवाह रद्द"
+			},
+			"hasChildren": {
+				"yes": "बच्चे हैं",
+				"no": "बच्चे नहीं"
+			},
+			"religion": {
+				"hindu": "हिंदू",
+				"muslim": "मुस्लिम",
+				"sikh": "सिख",
+				"christian": "ईसाई",
+				"jain": "जैन",
+				"buddhist": "बौद्ध",
+				"jewish": "यहूदी",
+				"parsi": "पारसी",
+				"other": "अन्य धर्म",
+				"none": "कोई धर्म नहीं"
+			},
+			"practice": {
+				"very": "बहुत धार्मिक",
+				"moderately": "मध्यम धार्मिक",
+				"somewhat": "थोड़ा धार्मिक",
+				"not_practising": "धार्मिक आचरण नहीं"
+			},
+			"residency": {
+				"citizen": "नागरिक",
+				"permanent_resident": "स्थायी निवासी",
+				"work_visa": "वर्क वीज़ा",
+				"student_visa": "स्टूडेंट वीज़ा",
+				"other": "अन्य"
+			},
+			"manglik": {
+				"yes": "मांगलिक",
+				"no": "मांगलिक नहीं",
+				"partial": "आंशिक मांगलिक",
+				"dont_know": "पता नहीं"
+			},
+			"education": {
+				"high_school": "हाई स्कूल",
+				"diploma": "डिप्लोमा",
+				"bachelors": "स्नातक",
+				"masters": "स्नातकोत्तर",
+				"phd": "पीएचडी",
+				"professional": "व्यावसायिक डिग्री",
+				"other": "अन्य"
+			},
+			"incomeRange": {
+				"under_50k": "$50,000 से कम",
+				"50k_75k": "$50,000–75,000",
+				"75k_100k": "$75,000–100,000",
+				"100k_150k": "$100,000–150,000",
+				"150k_plus": "$150,000 से अधिक",
+				"prefer_not_to_say": "बताना नहीं चाहते"
+			},
+			"familyType": {
+				"joint": "संयुक्त परिवार",
+				"nuclear": "एकल परिवार"
+			},
+			"familyValues": {
+				"traditional": "पारंपरिक",
+				"moderate": "मध्यम",
+				"liberal": "उदार"
+			},
+			"diet": {
+				"veg": "शाकाहारी",
+				"eggetarian": "अंडा खाने वाले शाकाहारी",
+				"vegan": "वीगन",
+				"jain_veg": "जैन शाकाहारी",
+				"non_veg": "मांसाहारी",
+				"halal": "हलाल"
+			},
+			"smoking": {
+				"never": "धूम्रपान नहीं करते",
+				"occasionally": "कभी-कभी धूम्रपान",
+				"regularly": "धूम्रपान करते हैं"
+			},
+			"drinking": {
+				"never": "शराब नहीं पीते",
+				"occasionally": "कभी-कभी",
+				"socially": "सामाजिक अवसरों पर",
+				"regularly": "नियमित रूप से"
+			}
+		},
+		"signer": {
+			"self": "{name} ने स्वयं लिखा",
+			"parent": "{name} के माता-पिता ने लिखा",
+			"parentConfirmed": "{name} के माता-पिता ने लिखा, {name} ने पुष्टि की",
+			"sibling": "{name} के भाई या बहन ने लिखा",
+			"siblingConfirmed": "{name} के भाई या बहन ने लिखा, {name} ने पुष्टि की",
+			"relative": "{name} के परिवार ने लिखा",
+			"relativeConfirmed": "{name} के परिवार ने लिखा, {name} ने पुष्टि की",
+			"friend": "{name} के एक मित्र ने लिखा",
+			"friendConfirmed": "एक मित्र ने लिखा, {name} ने पुष्टि की"
+		},
+		"verified": {
+			"email": "ईमेल सत्यापित",
+			"phone": "फ़ोन सत्यापित",
+			"id": "पहचान सत्यापित"
+		},
+		"ref": "क्र. {ref} · {date} को अपडेट",
+		"photo": {
+			"veiledAlt": "फ़ोटो ढकी हुई है, दोनों की हाँ के बाद खुलेगी",
+			"alt": "{name} की फ़ोटो",
+			"none": "इस पृष्ठ पर फ़ोटो नहीं है",
+			"veiled": "ढकी हुई"
+		},
+		"sealed": {
+			"aria": "मुहरबंद। दोनों की हाँ के बाद खुलेगा।",
+			"closed": "फ़ोटो, पूरा नाम, कार्यस्थल और संपर्क दोनों की हाँ के बाद खुलेंगे।",
+			"empty": "इस पृष्ठ पर और कुछ मुहरबंद नहीं है।"
+		},
+		"printWatermark": "रिश्ता से · क्र. {ref} · निजी रूप से साझा, आगे न भेजें"
+	},
+	"family": {
+		"link": {
+			"strip": "{name} ने {label} के साथ निजी रूप से साझा किया",
+			"until": "{date} तक खुला · आगे न भेजें",
+			"languageLabel": "भाषा",
+			"translated": "अनुवादित।",
+			"showOriginal": "मूल देखें",
+			"showTranslation": "अनुवाद देखें",
+			"noTranslation": "अभी अनुवाद उपलब्ध नहीं है। शीर्षक आपकी भाषा में हैं; बाकी जैसा लिखा गया था वैसा है।",
+			"noteFrom": "{name} का संदेश",
+			"watermark": "{label} के लिए · {name} की ओर से · {date}",
+			"question": "आपकी क्या राय है?",
+			"reactions": {
+				"proceed": "आगे बढ़ें",
+				"lets_talk": "बात करते हैं",
+				"not_for_us": "हमारे लिए नहीं"
+			},
+			"thanks": "धन्यवाद। {name} को पृष्ठ के पास “{reaction}” दिखेगा।",
+			"canChange": "लिंक बंद होने तक आप इसे बदल सकते हैं।",
+			"notSaved": "यह सहेजा नहीं गया। कृपया फिर से कोशिश करें।",
+			"words": "कुछ शब्द जोड़ें (वैकल्पिक)",
+			"send": "{name} को भेजें",
+			"sent": "भेज दिया। {name} को आपके शब्द पृष्ठ के पास दिखेंगे।",
+			"report": "इस पृष्ठ की शिकायत करें",
+			"reportTitle": "इस पृष्ठ में क्या गलत है?",
+			"reportCategories": {
+				"scam_money": "पैसे मांगता है या धोखा लगता है",
+				"harassment": "परेशान करने वाली या बुरी बातें",
+				"fake_profile": "पृष्ठ नकली लगता है",
+				"underage": "व्यक्ति 18 साल से कम लगता है",
+				"pressure_to_marry": "शादी का दबाव",
+				"hate": "नफ़रत भरी बातें",
+				"other": "कुछ और"
+			},
+			"reportSubmit": "शिकायत भेजें",
+			"reportThanks": "धन्यवाद। हमारी टीम का एक व्यक्ति इसे पढ़ेगा।",
+			"closed": "यह लिंक बंद हो गया है। {name} से इसे फिर से भेजने को कहें।",
+			"closedNoName": "यह लिंक बंद हो गया है। इसे फिर से भेजने को कहें।",
+			"error": "यह पृष्ठ नहीं खुल सका। कृपया एक मिनट बाद लिंक फिर से खोलें।"
+		}
+	}
+}

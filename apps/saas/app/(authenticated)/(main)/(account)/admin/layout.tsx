@@ -1,16 +1,14 @@
 import { getSession } from "@auth/lib/server";
-import { config } from "@repo/auth/config";
-import { Logo } from "@repo/ui";
-import { SettingsMenu } from "@settings/components/SettingsMenu";
-import { PageHeader } from "@shared/components/PageHeader";
-import { Building2Icon, UsersIcon } from "lucide-react";
+import { getActiveHouseholdSlug } from "@household/lib/server";
+import { SettingsNav } from "@shared/components/shell/SettingsNav";
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
+/** Moderation (platform admins only): reports first, then users and households. */
 export default async function AdminLayout({ children }: PropsWithChildren) {
 	const t = await getTranslations("admin");
-	const session = await getSession();
+	const [session, slug] = await Promise.all([getSession(), getActiveHouseholdSlug()]);
 
 	if (!session) {
 		redirect("/login");
@@ -22,35 +20,12 @@ export default async function AdminLayout({ children }: PropsWithChildren) {
 
 	return (
 		<>
-			<PageHeader title={t("title")} subtitle={t("description")} />
-
-			<SettingsMenu
-				className="mb-6"
-				menuItems={[
-					{
-						avatar: <Logo className="size-8" withLabel={false} />,
-						title: t("title"),
-						items: [
-							{
-								title: t("menu.users"),
-								href: "/admin/users",
-								icon: <UsersIcon className="size-4 opacity-50" />,
-							},
-							...(config.organizations.enable
-								? [
-										{
-											title: t("menu.organizations"),
-											href: "/admin/organizations",
-											icon: <Building2Icon className="size-4 opacity-50" />,
-										},
-									]
-								: []),
-						],
-					},
-				]}
-			/>
-
-			{children}
+			<SettingsNav slug={slug} isAdmin />
+			<div className="px-4 md:px-6 lg:px-10 pt-6 md:pt-10 mx-auto max-w-[1200px]">
+				<h1 className="font-display text-title">{t("title")}</h1>
+				<p className="mt-2 text-body text-muted-foreground">{t("description")}</p>
+				<div className="mt-8">{children}</div>
+			</div>
 		</>
 	);
 }

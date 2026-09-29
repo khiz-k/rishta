@@ -12,6 +12,7 @@ import { z } from "zod";
 
 import { localeMiddleware } from "../../../orpc/middleware/locale-middleware";
 import { protectedProcedure } from "../../../orpc/procedures";
+import { requireBillingAccess } from "../lib/billing-access";
 
 export const createCheckoutLink = protectedProcedure
 	.use(localeMiddleware)
@@ -36,6 +37,11 @@ export const createCheckoutLink = protectedProcedure
 			input: { planId, redirectUrl, type, interval, organizationId },
 			context: { user },
 		}) => {
+			// Billing and credits belong to the candidate and guardians (spec.md §13).
+			if (organizationId) {
+				await requireBillingAccess(organizationId, user.id);
+			}
+
 			const customerId = await getCustomerIdFromEntity(
 				organizationId
 					? {

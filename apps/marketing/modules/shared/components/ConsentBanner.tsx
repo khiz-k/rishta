@@ -2,45 +2,37 @@
 
 import { Button } from "@repo/ui/components/button";
 import { useCookieConsent } from "@shared/hooks/cookie-consent";
-import { CookieIcon } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 
+/** A flat paper slip, bottom left. Two plain answers; declining costs nothing. */
 export function ConsentBanner() {
+	const t = useTranslations("consent");
 	const { userHasConsented, allowCookies, declineCookies } = useCookieConsent();
 	const [mounted, setMounted] = useState(false);
 	useEffect(() => {
 		setMounted(true);
 	}, []);
 
-	if (!mounted) {
-		return null;
-	}
-
-	if (userHasConsented) {
+	if (!mounted || userHasConsented) {
 		return null;
 	}
 
 	return (
-		<div className="left-4 bottom-4 max-w-md fixed z-50">
-			<div className="gap-4 p-4 shadow-xl flex rounded-2xl border bg-card text-card-foreground">
-				<CookieIcon className="size-6 text-5xl mt-1 block shrink-0 text-primary/60" />
-				<div>
-					<p className="text-sm leading-normal">
-						This site doesn't use cookies yet, but we added this banner to demo it to
-						you.
-					</p>
-					<div className="mt-4 gap-2 flex">
-						<Button
-							variant="secondary"
-							className="flex-1"
-							onClick={() => declineCookies()}
-						>
-							Decline
-						</Button>
-						<Button className="flex-1" onClick={() => allowCookies()}>
-							Allow
-						</Button>
-					</div>
+		<div
+			role="region"
+			aria-label={t("label")}
+			className="inset-x-0 bottom-0 sm:left-4 sm:bottom-4 sm:max-w-sm sm:inset-x-auto fixed z-50"
+		>
+			<div className="p-5 border border-border bg-card text-card-foreground">
+				<p className="text-meta">{t("message")}</p>
+				<div className="mt-4 gap-2 flex">
+					<Button variant="outline" className="flex-1" onClick={() => declineCookies()}>
+						{t("decline")}
+					</Button>
+					<Button variant="secondary" className="flex-1" onClick={() => allowCookies()}>
+						{t("allow")}
+					</Button>
 				</div>
 			</div>
 		</div>

@@ -3,11 +3,10 @@ import { type OAuthProvider, oAuthProviders } from "@auth/constants/oauth-provid
 import { useUserAccountsQuery } from "@auth/lib/api";
 import { authClient } from "@repo/auth/client";
 import { Button } from "@repo/ui/components/button";
-import { Skeleton } from "@repo/ui/components/skeleton";
 import { SettingsItem } from "@shared/components/SettingsItem";
-import { CheckCircle2Icon, LinkIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+/** Other ways to sign in, one hairline row each: the provider's name, then Connected or Connect. */
 export function ConnectedAccountsBlock() {
 	const t = useTranslations();
 
@@ -28,43 +27,35 @@ export function ConnectedAccountsBlock() {
 
 	return (
 		<SettingsItem title={t("settings.account.security.connectedAccounts.title")}>
-			<div className="gap-2 grid grid-cols-1">
+			<ul className="border-t border-border">
 				{Object.entries(oAuthProviders).map(([provider, providerData]) => {
 					const isLinked = isProviderLinked(provider as OAuthProvider);
 
 					return (
-						<div
+						<li
 							key={provider}
-							className="gap-2 p-4 flex items-center justify-between rounded-2xl border"
+							className="min-h-11 py-1.5 gap-3 flex items-center justify-between border-b border-border"
 						>
-							<div className="gap-2 flex items-center">
-								<providerData.icon className="size-4 text-primary/50" />
-								<span className="text-sm">{providerData.name}</span>
-							</div>
+							<span className="text-body">{providerData.name}</span>
 							{isPending ? (
-								<Skeleton className="h-10 w-28" />
+								<span aria-hidden="true" className="h-4 w-20 bg-muted" />
 							) : isLinked ? (
-								<Button variant="secondary" disabled className="cursor-default">
-									<CheckCircle2Icon className="mr-1.5 size-4 text-success" />
-									<span>
-										{t("settings.account.security.connectedAccounts.connected")}
-									</span>
-								</Button>
+								<span className="text-meta text-success">
+									{t("settings.account.security.connectedAccounts.connected")}
+								</span>
 							) : (
 								<Button
-									variant="secondary"
-									onClick={() => linkProvider(provider as OAuthProvider)}
+									size="sm"
+									variant="ghost"
+									onClick={() => void linkProvider(provider as OAuthProvider)}
 								>
-									<LinkIcon className="mr-1.5 size-4" />
-									<span>
-										{t("settings.account.security.connectedAccounts.connect")}
-									</span>
+									{t("settings.account.security.connectedAccounts.connect")}
 								</Button>
 							)}
-						</div>
+						</li>
 					);
 				})}
-			</div>
+			</ul>
 		</SettingsItem>
 	);
 }

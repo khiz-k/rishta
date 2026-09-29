@@ -39,9 +39,14 @@ export async function createPurchase(insertedPurchase: z.infer<typeof PurchaseIn
 }
 
 export async function updatePurchase(updatedPurchase: z.infer<typeof PurchaseUpdateSchema>) {
-	const [{ id }] = await db.update(purchase).set(updatedPurchase).returning({ id: purchase.id });
+	const { id, ...patch } = updatedPurchase;
+	const [updated] = await db
+		.update(purchase)
+		.set(patch)
+		.where(eq(purchase.id, id))
+		.returning({ id: purchase.id });
 
-	return getPurchaseById(id);
+	return updated ? getPurchaseById(updated.id) : undefined;
 }
 
 export async function deletePurchaseBySubscriptionId(subscriptionId: string) {

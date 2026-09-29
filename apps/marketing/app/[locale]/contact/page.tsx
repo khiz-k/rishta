@@ -1,4 +1,6 @@
 import { ContactForm } from "@home/components/ContactForm";
+import { LocaleLink } from "@i18n/routing";
+import { LetterHead } from "@shared/components/LetterHead";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 
 export async function generateMetadata(props: { params: Promise<{ locale: string }> }) {
@@ -6,6 +8,7 @@ export async function generateMetadata(props: { params: Promise<{ locale: string
 	const t = await getTranslations({ locale, namespace: "contact" });
 	return {
 		title: t("title"),
+		description: t("description"),
 	};
 }
 
@@ -15,13 +18,22 @@ export default async function ContactPage(props: { params: Promise<{ locale: str
 
 	const t = await getTranslations({ locale, namespace: "contact" });
 	return (
-		<div className="max-w-xl py-16 container">
-			<div className="mb-12 pt-8 text-center">
-				<h1 className="mb-2 font-bold text-5xl">{t("title")}</h1>
-				<p className="text-lg text-balance opacity-50">{t("description")}</p>
-			</div>
+		<div className="letter-column pt-12 md:pt-20">
+			<LetterHead title={t("title")} lead={t("description")}>
+				<p className="mt-4 text-body text-foreground">
+					{t("safetyNote")}{" "}
+					<LocaleLink
+						href="/safety"
+						className="text-seal-ink underline underline-offset-4"
+					>
+						{t("safetyLink")}
+					</LocaleLink>
+				</p>
+			</LetterHead>
 
-			<ContactForm />
+			<div className="max-w-xl">
+				<ContactForm />
+			</div>
 		</div>
 	);
 }

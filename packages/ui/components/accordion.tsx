@@ -23,13 +23,13 @@ const AccordionTrigger = ({
 	<AccordionPrimitive.Header className="flex">
 		<AccordionPrimitive.Trigger
 			className={cn(
-				"py-4 font-medium text-sm flex flex-1 items-center justify-between transition-all hover:underline [&[data-state=open]>svg]:rotate-180",
+				"py-4 font-medium text-sm min-h-11 flex flex-1 items-center justify-between transition-colors hover:underline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&[data-state=open]>svg]:rotate-180",
 				className,
 			)}
 			{...props}
 		>
 			{children}
-			<ChevronDownIcon className="size-4 shrink-0 text-muted-foreground transition-transform duration-200" />
+			<ChevronDownIcon className="size-4 shrink-0 text-muted-foreground transition-transform duration-200 motion-reduce:transition-none" />
 		</AccordionPrimitive.Trigger>
 	</AccordionPrimitive.Header>
 );
@@ -41,7 +41,7 @@ const AccordionContent = ({
 }: React.ComponentProps<typeof AccordionPrimitive.Content>) => (
 	<AccordionPrimitive.Content
 		className={cn(
-			"text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden",
+			"text-sm data-[state=closed]:animate-accordion-up data-[state=open]:animate-accordion-down overflow-hidden motion-reduce:animate-none",
 			className,
 		)}
 		{...props}

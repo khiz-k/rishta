@@ -12,7 +12,12 @@
 			"@admin/*": ["./modules/admin/*"],
 			"@ai/*": ["./modules/ai/*"],
 			"@onboarding/*": ["./modules/onboarding/*"],
-			"@shared/*": ["./modules/shared/*"]
+			"@shared/*": ["./modules/shared/*"],
+			"@biodata/*": ["./modules/biodata/*"],
+			"@folio/*": ["./modules/folio/*"],
+			"@letters/*": ["./modules/letters/*"],
+			"@household/*": ["./modules/household/*"],
+			"@family/*": ["./modules/family/*"]
 		}
 	},
 	"include": ["**/*.ts", "**/*.tsx", "**/*.cjs", "**/*.mjs", ".next/types/**/*.ts"],

@@ -1,12 +1,17 @@
-import { Link, Text } from "@react-email/components";
 import React from "react";
 import { createTranslator } from "use-intl/core";
 
+import LinkFallback from "../components/LinkFallback";
 import PrimaryButton from "../components/PrimaryButton";
-import Wrapper from "../components/Wrapper";
+import Wrapper, { MailHeading, MailText } from "../components/Wrapper";
 import { defaultLocale, defaultTranslations } from "../lib/translations";
 import type { BaseMailProps } from "../types";
 
+/**
+ * A discreet notification: the headline is the subject line ("A letter is waiting for you"),
+ * the message never names anyone unless the reader turned discreet email off, and the button
+ * opens the app.
+ */
 export function Notification({
 	title,
 	message,
@@ -27,18 +32,14 @@ export function Notification({
 	});
 
 	return (
-		<Wrapper>
-			<Text className="font-semibold text-lg">{title}</Text>
-			{message ? <Text>{message}</Text> : null}
+		<Wrapper lang={locale} preview={message ?? title} footer={t("common.footer")}>
+			<MailHeading>{title}</MailHeading>
+			{message ? <MailText>{message}</MailText> : null}
 			{link ? (
 				<>
-					<Text>{t("openInApp")}</Text>
-					<PrimaryButton href={link}>{t("view")} &rarr;</PrimaryButton>
-					<Text className="text-sm text-muted-foreground">
-						{t("common.openLinkInBrowser")}
-						<br />
-						<Link href={link}>{link}</Link>
-					</Text>
+					<MailText>{t("openInApp")}</MailText>
+					<PrimaryButton href={link}>{t("view")}</PrimaryButton>
+					<LinkFallback label={t("common.openLinkInBrowser")} href={link} />
 				</>
 			) : null}
 		</Wrapper>
@@ -48,9 +49,9 @@ export function Notification({
 Notification.PreviewProps = {
 	locale: defaultLocale,
 	translations: defaultTranslations,
-	title: "Example",
-	message: "This is a notification email.",
-	link: "https://example.com",
+	title: "A letter is waiting for you",
+	message: "A new letter is waiting.",
+	link: "https://rishta.local/letters",
 };
 
 export default Notification;

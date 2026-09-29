@@ -28,7 +28,7 @@ describe("generateOrganizationSlug", () => {
 	});
 
 	it("returns a slugified version of the name when slug is available", async () => {
-		vi.mocked(getOrganizationBySlug).mockResolvedValueOnce(null);
+		vi.mocked(getOrganizationBySlug).mockResolvedValueOnce(undefined);
 
 		const result = await call(generateOrganizationSlug, { name: "My Test Organization" }, ctx);
 
@@ -39,11 +39,19 @@ describe("generateOrganizationSlug", () => {
 		const existingOrg = { id: "org-1", name: "Existing Org" };
 		vi.mocked(getOrganizationBySlug)
 			.mockResolvedValueOnce(existingOrg as never)
-			.mockResolvedValueOnce(null);
+			.mockResolvedValueOnce(undefined);
 
 		const result = await call(generateOrganizationSlug, { name: "Existing Org" }, ctx);
 
 		expect(result.slug).toBe("existing-org-abc12");
+	});
+
+	it("never proposes a top-level route word", async () => {
+		vi.mocked(getOrganizationBySlug).mockResolvedValueOnce(undefined);
+
+		const result = await call(generateOrganizationSlug, { name: "Letters" }, ctx);
+
+		expect(result.slug).toBe("letters-abc12");
 	});
 
 	it("throws INTERNAL_SERVER_ERROR when no available slug is found after 3 attempts", async () => {

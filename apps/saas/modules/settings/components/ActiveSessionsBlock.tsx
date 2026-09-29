@@ -4,13 +4,16 @@ import { sessionQueryKey } from "@auth/lib/api";
 import { config } from "@config";
 import { authClient } from "@repo/auth/client";
 import { Button } from "@repo/ui/components/button";
-import { Skeleton } from "@repo/ui/components/skeleton";
 import { toastSuccess } from "@repo/ui/components/toast";
+import { RowsSkeleton } from "@shared/components/PaperSkeleton";
 import { SettingsItem } from "@shared/components/SettingsItem";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { ComputerIcon, XIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 
+/**
+ * Where you're signed in (design.md §5.13): hairline rows in words, this device first in the
+ * wording, and a worded Sign out on each row. No device glyphs and no card per row.
+ */
 export function ActiveSessionsBlock() {
 	const t = useTranslations();
 	const queryClient = useQueryClient();
@@ -66,49 +69,47 @@ export function ActiveSessionsBlock() {
 			title={t("settings.account.security.activeSessions.title")}
 			description={t("settings.account.security.activeSessions.description")}
 		>
-			<div className="gap-2 grid grid-cols-1">
-				{isPending ? (
-					<div className="gap-2 flex">
-						<Skeleton className="size-6 shrink-0" />
-						<div className="flex-1">
-							<Skeleton className="mb-0.5 h-4 w-full" />
-							<Skeleton className="h-8 w-full" />
-						</div>
-						<Skeleton className="size-9 shrink-0" />
-					</div>
-				) : (
-					sessions?.map((session) => (
-						<div
-							key={session.id}
-							className="gap-4 p-4 flex justify-between rounded-2xl border"
-						>
-							<div className="gap-2 flex">
-								<ComputerIcon className="size-6 shrink-0 text-primary/50" />
-								<div>
-									<strong className="text-sm block">
-										{session.id === currentSession?.id
+			{isPending ? (
+				<RowsSkeleton rows={2} />
+			) : (
+				<ul className="border-t border-border">
+					{sessions?.map((session) => {
+						const current = session.id === currentSession?.id;
+						return (
+							<li
+								key={session.id}
+								className="py-2.5 gap-3 flex items-center justify-between border-b border-border"
+							>
+								<span className="min-w-0">
+									<span className="block text-body">
+										{current
 											? t(
 													"settings.account.security.activeSessions.currentSession",
 												)
-											: session.ipAddress}
-									</strong>
-									<small className="text-xs leading-tight block text-foreground/60">
-										{session.userAgent}
-									</small>
-								</div>
-							</div>
-							<Button
-								variant="secondary"
-								size="icon"
-								className="shrink-0"
-								onClick={() => revokeSession(session.token)}
-							>
-								<XIcon className="size-4" />
-							</Button>
-						</div>
-					))
-				)}
-			</div>
+											: session.ipAddress ||
+												t(
+													"settings.account.security.activeSessions.otherDevice",
+												)}
+									</span>
+									{session.userAgent && (
+										<span className="block truncate text-meta text-muted-foreground">
+											{session.userAgent}
+										</span>
+									)}
+								</span>
+								<Button
+									size="sm"
+									variant="ghost"
+									className="shrink-0"
+									onClick={() => void revokeSession(session.token)}
+								>
+									{t("settings.account.security.activeSessions.signOut")}
+								</Button>
+							</li>
+						);
+					})}
+				</ul>
+			)}
 		</SettingsItem>
 	);
 }

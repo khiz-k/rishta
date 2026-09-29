@@ -1,70 +1,57 @@
 "use client";
+
+import { useSession } from "@auth/hooks/use-session";
 import { authClient } from "@repo/auth/client";
-import { Progress } from "@repo/ui/components/progress";
 import { useRouter } from "@shared/hooks/router";
 import { clearCache } from "@shared/lib/cache";
 import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import { useMemo } from "react";
 import { withQuery } from "ufo";
 
 import { OnboardingAccountStep } from "./OnboardingAccountStep";
+import { WhoIsThisFor } from "./WhoIsThisFor";
 
-export function OnboardingForm() {
-	const t = useTranslations();
+/**
+ * Onboarding: your name, then "Who is this page for?". Someone who joined through a family
+ * invitation already has a household and goes straight in.
+ */
+export function OnboardingForm({ hasHousehold }: { hasHousehold: boolean }) {
+	const t = useTranslations("onboarding");
 	const router = useRouter();
+	const { reloadSession } = useSession();
 	const searchParams = useSearchParams();
-
 	const stepSearchParam = searchParams.get("step");
 	const redirectTo = searchParams.get("redirectTo");
-	const onboardingStep = stepSearchParam ? Number.parseInt(stepSearchParam, 10) : 1;
+	const step = stepSearchParam === "2" ? 2 : 1;
 
-	// oxlint-disable-next-line no-unused-vars -- used for redirecting to the next step
-	const setStep = (step: number) => {
-		router.replace(
-			withQuery(window.location.search ?? "", {
-				step,
-			}),
-		);
+	const onAccountDone = async () => {
+		// The name signs the page ("Me" becomes Priya), so the session must carry it first.
+		await reloadSession().catch(() => undefined);
+		if (hasHousehold) {
+			await authClient.updateUser({ onboardingComplete: true });
+			await clearCache();
+			router.replace(redirectTo ?? "/");
+			return;
+		}
+		router.replace(withQuery(window.location.pathname, { step: 2 }));
 	};
-
-	const onCompleted = async () => {
-		await authClient.updateUser({
-			onboardingComplete: true,
-		});
-
-		await clearCache();
-		router.replace(redirectTo ?? "/");
-	};
-
-	const steps = useMemo(() => {
-		const allSteps: { component: React.ReactNode }[] = [
-			{
-				component: <OnboardingAccountStep onCompleted={() => onCompleted()} />,
-			},
-		];
-
-		return allSteps;
-	}, []); // oxlint-disable-line eslint-plugin-react-hooks/exhaustive-deps
 
 	return (
 		<div>
-			<h1 className="font-bold text-xl md:text-2xl">{t("onboarding.title")}</h1>
-			<p className="mt-2 mb-6 text-foreground/60">{t("onboarding.message")}</p>
-
-			{steps.length > 1 && (
-				<div className="mb-6 gap-3 flex items-center">
-					<Progress value={(onboardingStep / steps.length) * 100} className="h-2" />
-					<span className="text-xs shrink-0 text-foreground/60">
-						{t("onboarding.step", {
-							step: onboardingStep,
-							total: steps.length,
-						})}
-					</span>
+			<p className="label-caps text-muted-foreground">
+				{t("step", { step, total: hasHousehold ? 1 : 2 })}
+			</p>
+			{step === 1 ? (
+				<div className="mt-3">
+					<h1 className="font-display text-title">{t("title")}</h1>
+					<p className="mt-2 mb-6 text-body text-muted-foreground">{t("message")}</p>
+					<OnboardingAccountStep onCompleted={() => void onAccountDone()} />
+				</div>
+			) : (
+				<div className="mt-3">
+					<WhoIsThisFor mode="onboarding" completeOnboarding />
 				</div>
 			)}
-
-			{steps[onboardingStep - 1].component}
 		</div>
 	);
 }

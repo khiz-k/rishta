@@ -1,55 +1,125 @@
+/*
+ * Rishta design tokens (design.md §7). Paper: an ivory page on a parchment desk, in ink.
+ * Lac seal is the only action colour; marigold appears only in rules and on the seal rim.
+ * "Lamp" (.dark) is the warm sepia mode for night reading. It is never the default.
+ */
 @layer base {
 	:root {
-		--border: #e7e5e4;
-		--input: #e7e5e4;
-		--ring: #be185d;
-		--background: #fafaf9;
-		--foreground: #1c1917;
-		--primary: #9f1239;
+		/* Paper: an ivory page on a parchment desk */
+		--background: #f5efe3; /* the desk */
+		--foreground: #1f1b16; /* ink */
+		--card: #fffbf3; /* the page */
+		--card-foreground: #1f1b16;
+		--popover: #fffbf3;
+		--popover-foreground: #1f1b16;
+		--primary: #933113; /* lac seal: the only action colour */
 		--primary-foreground: #ffffff;
-		--secondary: #be185d;
-		--secondary-foreground: #ffffff;
-		--destructive: #ef4444;
+		--secondary: #1f1b16; /* ink buttons (the template default variant) */
+		--secondary-foreground: #fffbf3;
+		--muted: #ede4d3;
+		--muted-foreground: #5e554a;
+		--accent: #efe6d6; /* hover and pressed paper */
+		--accent-foreground: #1f1b16;
+		--border: #cdbfa6; /* hairline rules, page edges */
+		--input: #8a7b63; /* field boundaries, dotted editable underline (>= 3:1) */
+		--ring: #1f1b16; /* focus: ink */
+		/* Status colours stay apart under deuteranopia, protanopia and tritanopia (quality rule A4):
+		 * destructive is the darkest and warning the lightest, so lightness separates them from
+		 * the lac seal and mehndi green when hue cannot. */
+		--destructive: #6e172b;
 		--destructive-foreground: #ffffff;
-		--success: #22c55e;
+		--success: #4f6233; /* mehndi green: "accepted", "booked" */
 		--success-foreground: #ffffff;
-		--muted: #f5f5f4;
-		--muted-foreground: #78716c;
-		--accent: #fff1f2;
-		--accent-foreground: #1c1917;
-		--popover: #ffffff;
-		--popover-foreground: #1c1917;
-		--card: #ffffff;
-		--card-foreground: #1c1917;
-		--highlight: #be185d;
-		--highlight-foreground: #ffffff;
-		--radius: 0.75rem;
+		--highlight: #c98a17; /* marigold: fills and rules only, never text */
+		--highlight-foreground: #1f1b16;
+		--radius: 0rem;
+
+		/* New for Rishta */
+		--warning: #915709;
+		--warning-foreground: #ffffff;
+		--seal: #933113; /* the monogram disc */
+		--seal-ink: #933113; /* accent-coloured TEXT (links, counts, PRIORITY NOTE) */
+		--seal-rim: #c98a17;
+		--rule: #c98a17; /* the double marigold rule */
+		--pencil: #5e554a; /* pencil notes, prompts (paired with Tiro italic) */
+		--sealed: #efe6d6; /* the sealed lower third */
+		--veil: #d9cdb7; /* photo placeholder under the blur */
+		--scrim: rgb(31 27 22 / 0.32); /* flat sheet scrim, no backdrop blur */
+
+		/* Layout */
+		--page-width: 620px;
+		--margin-width: 280px;
+		--masthead-height: 48px;
+		--topline-height: 44px;
+		--bar-height: 56px;
+		--page-pad-x: 20px; /* 48px at >= 768px */
+		--stack-offset: 2px;
+
+		/* Motion */
+		--dur-turn: 180ms;
+		--dur-press: 220ms;
+		--dur-break: 320ms;
+		--dur-unblur: 400ms;
+		--dur-hold: 600ms;
+		--dur-sheet: 240ms;
+		--ease-paper: cubic-bezier(0.2, 0, 0, 1);
+		--ease-press: cubic-bezier(0.2, 0.8, 0.2, 1);
+		--ease-break: cubic-bezier(0.4, 0, 0.2, 1);
+		--ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
+
+		/* Type (the families come from next/font variables; see design.md §8) */
+		--font-size-base: 1.0625rem; /* 17px, rem-based so it follows user zoom */
 	}
 
+	@media (min-width: 768px) {
+		:root {
+			--page-pad-x: 48px;
+		}
+	}
+
+	/* Lamp: warm sepia, follows the phone at night. Never the default. Never on /f/. */
 	.dark {
-		--border: #292524;
-		--input: #3a3532;
-		--ring: #f43f5e;
-		--background: #0c0a09;
-		--foreground: #fafaf9;
-		--primary: #f43f5e;
-		--primary-foreground: #0c0a09;
-		--secondary: #e11d48;
-		--secondary-foreground: #0c0a09;
-		--destructive: #ef4444;
-		--destructive-foreground: #ffffff;
-		--success: #22c55e;
-		--success-foreground: #ffffff;
-		--muted: #1c1917;
-		--muted-foreground: #a8a29e;
-		--accent: #1a1012;
-		--accent-foreground: #fafaf9;
-		--popover: #1c1917;
-		--popover-foreground: #fafaf9;
-		--card: #1c1917;
-		--card-foreground: #fafaf9;
-		--highlight: #f43f5e;
-		--highlight-foreground: #0c0a09;
+		--background: #1a1612;
+		--foreground: #efe6d6;
+		--card: #25201a;
+		--card-foreground: #efe6d6;
+		--popover: #25201a;
+		--popover-foreground: #efe6d6;
+		--primary: #b8401c; /* deeper seal red for lamplight: fills only */
+		--primary-foreground: #ffffff;
+		--secondary: #efe6d6;
+		--secondary-foreground: #1a1612;
+		--muted: #2e2821;
+		--muted-foreground: #968f84;
+		--accent: #2b251e;
+		--accent-foreground: #efe6d6;
+		--border: #37322c;
+		--input: #756c60;
+		--ring: #efe6d6;
+		/* Lamp keeps the status colours apart by lightness too: sage and the seal sit lowest,
+		 * destructive above them and warning highest (all at least 4.5:1 on the lamp page). */
+		--destructive: #e89592;
+		--destructive-foreground: #1a1612;
+		--success: #83a177;
+		--success-foreground: #1a1612;
+		--highlight: #a87a2e;
+		--highlight-foreground: #1a1612;
+
+		--warning: #e1bb81;
+		--warning-foreground: #1a1612;
+		--seal: #b8401c;
+		--seal-ink: #d9774f; /* #b8401c is 2.91:1 on the Lamp page, so text uses this */
+		--seal-rim: #a87a2e;
+		--rule: #a87a2e;
+		--pencil: #a39c90;
+		--sealed: #2b251e;
+		--veil: #3a332b;
+		--scrim: rgb(0 0 0 / 0.45);
+	}
+
+	/* The family link is always Paper, whatever the reader's phone prefers. */
+	.paper-only {
+		color-scheme: light;
 	}
 }
 
@@ -77,6 +147,21 @@
 	--color-ring: var(--ring);
 	--color-highlight: var(--highlight);
 	--color-highlight-foreground: var(--highlight-foreground);
+
+	/* Rishta */
+	--color-warning: var(--warning);
+	--color-warning-foreground: var(--warning-foreground);
+	--color-seal: var(--seal);
+	--color-seal-ink: var(--seal-ink);
+	--color-seal-rim: var(--seal-rim);
+	--color-rule: var(--rule);
+	--color-pencil: var(--pencil);
+	--color-sealed: var(--sealed);
+	--color-veil: var(--veil);
+	--color-scrim: var(--scrim);
+
+	/* Radius 0 everywhere. The one curve is the monogram seal (rounded-full, used there only). */
+	--radius-xs: 0px;
 	--radius-sm: calc(var(--radius) * 0.6);
 	--radius-md: calc(var(--radius) * 0.8);
 	--radius-lg: var(--radius);
@@ -85,10 +170,171 @@
 	--radius-3xl: calc(var(--radius) * 2.2);
 	--radius-4xl: calc(var(--radius) * 2.6);
 
-	--font-display: var(--font-display);
+	/* Flat paper: no blurred shadows and no backdrop blur anywhere. */
+	--shadow-2xs: none;
+	--shadow-xs: none;
+	--shadow-sm: none;
+	--shadow-md: none;
+	--shadow-lg: none;
+	--shadow-xl: none;
+	--shadow-2xl: none;
+	--blur-xs: 0px;
+	--blur-sm: 0px;
+	--blur-md: 0px;
+	--blur-lg: 0px;
+	--blur-xl: 0px;
+
+	/*
+	 * Tiro Devanagari Hindi for names, headings and letters; Anek Latin for values and UI.
+	 * Script fallbacks are named so a page in Gurmukhi, Bangla, Tamil, Telugu, Gujarati or
+	 * Urdu is typeset as carefully as the Hindi one. Only glyphs actually rendered download.
+	 */
+	--font-display:
+		var(--font-tiro, "Tiro Devanagari Hindi"), var(--font-tiro-pa, "Tiro Gurmukhi"),
+		var(--font-tiro-bn, "Tiro Bangla"), var(--font-tiro-ta, "Tiro Tamil"),
+		var(--font-tiro-te, "Tiro Telugu"), var(--font-noto-serif-gu, "Noto Serif Gujarati"),
+		var(--font-nastaliq, "Noto Nastaliq Urdu"), Georgia, serif;
+	--font-sans:
+		var(--font-anek, "Anek Latin"), var(--font-anek-devanagari, "Anek Devanagari"),
+		var(--font-anek-pa, "Anek Gurmukhi"), var(--font-anek-gu, "Anek Gujarati"),
+		var(--font-anek-bn, "Anek Bangla"), var(--font-anek-ta, "Anek Tamil"),
+		var(--font-anek-te, "Anek Telugu"), var(--font-nastaliq, "Noto Nastaliq Urdu"),
+		ui-sans-serif, system-ui, sans-serif;
+	--font-urdu: var(--font-nastaliq, "Noto Nastaliq Urdu"), var(--font-anek, "Anek Latin"), serif;
+
+	/* The scale (17px base). Sizes are rem so they respect zoom and Android font scaling. */
+	--text-label: 0.75rem;
+	--text-label--line-height: 1rem;
+	--text-ref: 0.8125rem;
+	--text-ref--line-height: 1rem;
+	--text-meta: 0.875rem;
+	--text-meta--line-height: 1.25rem;
+	--text-ui: 0.9375rem;
+	--text-ui--line-height: 1.25rem;
+	--text-button: 1rem;
+	--text-button--line-height: 1.25rem;
+	--text-body: 1.0625rem;
+	--text-body--line-height: 1.625rem;
+	--text-letter: 1.125rem;
+	--text-letter--line-height: 1.75rem;
+	--text-section: 1.25rem;
+	--text-section--line-height: 1.625rem;
+	--text-wordmark: 1.375rem;
+	--text-wordmark--line-height: 1.5rem;
+	--text-title-sm: 1.625rem;
+	--text-title-sm--line-height: 2rem;
+	--text-name-sm: 1.875rem;
+	--text-name-sm--line-height: 2.25rem;
+	--text-title: 2.125rem;
+	--text-title--line-height: 2.5rem;
+	--text-family-name: 2.75rem;
+	--text-family-name--line-height: 3.25rem;
+	--text-family-value: 1.375rem;
+	--text-family-value--line-height: 2rem;
+	--text-family-button: 1.25rem;
+	--text-family-button--line-height: 1.5rem;
+
+	--ease-paper: cubic-bezier(0.2, 0, 0, 1);
+	--ease-press: cubic-bezier(0.2, 0.8, 0.2, 1);
+	--ease-break: cubic-bezier(0.4, 0, 0.2, 1);
+	--ease-sheet: cubic-bezier(0.32, 0.72, 0, 1);
 
 	--animation-accordion-down: accordion-down 0.2s ease-out;
 	--animation-accordion-up: accordion-up 0.2s ease-out;
-	@keyframes accordion-down { from { height: 0; } to { height: var(--radix-accordion-content-height); } }
-	@keyframes accordion-up { from { height: var(--radix-accordion-content-height); } to { height: 0; } }
+	@keyframes accordion-down {
+		from {
+			height: 0;
+		}
+		to {
+			height: var(--radix-accordion-content-height);
+		}
+	}
+	@keyframes accordion-up {
+		from {
+			height: var(--radix-accordion-content-height);
+		}
+		to {
+			height: 0;
+		}
+	}
+}
+
+/* ─── Paper vocabulary (design.md §9) ─────────────────────────────────────────────────── */
+
+/* Condensed caps for field labels: Anek wdth 75, 12/16, 600, +0.08em. */
+@utility label-caps {
+	font-family: var(--font-sans);
+	font-size: var(--text-label);
+	line-height: var(--text-label--line-height);
+	font-stretch: 75%;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+/* Masthead links: 13/16, wdth 75, 600, +0.08em. */
+@utility nav-caps {
+	font-family: var(--font-sans);
+	font-size: var(--text-ref);
+	line-height: var(--text-ref--line-height);
+	font-stretch: 75%;
+	font-weight: 600;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+}
+
+/* Buttons and the bottom bar: wdth 87.5, 600, sentence case. */
+@utility ui-semi {
+	font-stretch: 87.5%;
+	font-weight: 600;
+}
+
+@utility tabular {
+	font-variant-numeric: tabular-nums;
+}
+
+/* The double marigold rule: 1px + 2px gap + 1px. Decorative only. */
+@utility double-rule {
+	height: 4px;
+	border-top: 1px solid var(--rule);
+	border-bottom: 1px solid var(--rule);
+}
+
+/* A section head followed by a hairline that fills the line. */
+@utility hairline-after {
+	display: flex;
+	align-items: baseline;
+	gap: 0.75rem;
+	&::after {
+		content: "";
+		flex: 1 1 auto;
+		border-bottom: 1px solid var(--border);
+		transform: translateY(-0.3em);
+	}
+}
+
+/* The page's own padding: 20px on phones, 48px from 768px. */
+@utility page-pad {
+	padding-inline: var(--page-pad-x);
+}
+
+/* The dotted underline of an editable value (>= 3:1 against the page). */
+@utility editable-underline {
+	text-decoration-line: underline;
+	text-decoration-style: dotted;
+	text-decoration-color: var(--input);
+	text-decoration-thickness: 1px;
+	text-underline-offset: 0.3em;
+}
+
+/* Pencil: prompts and family notes, always Tiro italic in --pencil. */
+@utility pencil {
+	font-family: var(--font-display);
+	font-style: italic;
+	color: var(--pencil);
+}
+
+/* Bars sit above the phone's home indicator. */
+@utility pb-safe {
+	padding-bottom: env(safe-area-inset-bottom);
 }

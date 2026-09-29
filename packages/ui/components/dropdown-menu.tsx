@@ -28,7 +28,7 @@ const DropdownMenuSubTrigger = ({
 }) => (
 	<DropdownMenuPrimitive.SubTrigger
 		className={cn(
-			"px-3 py-1.5 text-sm flex cursor-default items-center rounded-lg outline-hidden select-none focus:bg-accent data-[state=open]:bg-accent",
+			"min-h-11 px-3 py-2 flex cursor-default items-center text-ui outline-hidden select-none focus:bg-accent data-highlighted:outline-2 data-highlighted:-outline-offset-2 data-highlighted:outline-ring data-highlighted:outline-solid data-[state=open]:bg-accent",
 			inset ? "pl-8" : "",
 			className,
 		)}
@@ -45,7 +45,7 @@ const DropdownMenuSubContent = ({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.SubContent>) => (
 	<DropdownMenuPrimitive.SubContent
 		className={cn(
-			"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 p-1 shadow-lg shadow-black/3 data-[state=closed]:animate-out data-[state=open]:animate-in z-50 min-w-[8rem] overflow-hidden rounded-lg border bg-popover text-popover-foreground",
+			"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 p-1 data-[state=closed]:animate-out data-[state=open]:animate-in z-50 min-w-[8rem] overflow-hidden border border-border bg-popover text-popover-foreground",
 			className,
 		)}
 		{...props}
@@ -61,8 +61,8 @@ const DropdownMenuContent = ({
 		<DropdownMenuPrimitive.Content
 			sideOffset={sideOffset}
 			className={cn(
-				"p-2 shadow-xl shadow-black/3 z-50 min-w-[8rem] overflow-hidden rounded-2xl border bg-popover text-popover-foreground",
-				"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 data-[state=closed]:animate-out data-[state=open]:animate-in",
+				"p-1 z-50 min-w-[14rem] overflow-hidden border border-border bg-popover text-popover-foreground",
+				"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:animate-out data-[state=open]:animate-in data-[state=closed]:duration-[120ms] data-[state=open]:duration-[180ms]",
 				className,
 			)}
 			{...props}
@@ -79,7 +79,7 @@ const DropdownMenuItem = ({
 }) => (
 	<DropdownMenuPrimitive.Item
 		className={cn(
-			"px-3 py-2 text-sm relative flex cursor-default items-center rounded-md outline-hidden transition-colors select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
+			"min-h-11 px-3 py-2 relative flex cursor-default items-center text-ui outline-hidden transition-colors select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:outline-2 data-highlighted:-outline-offset-2 data-highlighted:outline-ring data-highlighted:outline-solid",
 			inset ? "pl-8" : "",
 			className,
 		)}
@@ -95,13 +95,13 @@ const DropdownMenuCheckboxItem = ({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.CheckboxItem>) => (
 	<DropdownMenuPrimitive.CheckboxItem
 		className={cn(
-			"py-3 pr-3 pl-8 text-sm relative flex cursor-default items-center rounded-md outline-hidden transition-colors select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
+			"min-h-11 py-2 pr-3 pl-9 relative flex cursor-default items-center text-ui outline-hidden transition-colors select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:outline-2 data-highlighted:-outline-offset-2 data-highlighted:outline-ring data-highlighted:outline-solid",
 			className,
 		)}
 		checked={checked}
 		{...props}
 	>
-		<span className="left-2 size-3.5 absolute flex items-center justify-center">
+		<span className="left-3 size-4 absolute flex items-center justify-center">
 			<DropdownMenuPrimitive.ItemIndicator>
 				<CheckIcon className="size-4" />
 			</DropdownMenuPrimitive.ItemIndicator>
@@ -117,12 +117,12 @@ const DropdownMenuRadioItem = ({
 }: React.ComponentProps<typeof DropdownMenuPrimitive.RadioItem>) => (
 	<DropdownMenuPrimitive.RadioItem
 		className={cn(
-			"py-2 pr-8 pl-3 text-sm data-[state=checked]:font-semibold relative flex cursor-default items-center rounded-md outline-hidden transition-colors select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50",
+			"min-h-11 py-2 pr-9 pl-3 relative flex cursor-default items-center text-ui outline-hidden transition-colors select-none focus:bg-accent focus:text-accent-foreground data-disabled:pointer-events-none data-disabled:opacity-50 data-highlighted:outline-2 data-highlighted:-outline-offset-2 data-highlighted:outline-ring data-highlighted:outline-solid data-[state=checked]:text-foreground",
 			className,
 		)}
 		{...props}
 	>
-		<span className="right-2 size-3.5 absolute flex items-center justify-center">
+		<span className="right-3 size-4 absolute flex items-center justify-center">
 			<DropdownMenuPrimitive.ItemIndicator>
 				<CheckIcon className="size-4" />
 			</DropdownMenuPrimitive.ItemIndicator>
@@ -139,7 +139,11 @@ const DropdownMenuLabel = ({
 	inset?: boolean;
 }) => (
 	<DropdownMenuPrimitive.Label
-		className={cn("px-3 py-2 font-semibold text-sm", inset ? "pl-8" : "", className)}
+		className={cn(
+			"px-3 pt-2 pb-1 label-caps text-muted-foreground",
+			inset ? "pl-9" : "",
+			className,
+		)}
 		{...props}
 	/>
 );
@@ -149,14 +153,17 @@ const DropdownMenuSeparator = ({
 	...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Separator>) => (
 	<DropdownMenuPrimitive.Separator
-		className={cn("-mx-2 my-1.5 h-px bg-border", className)}
+		className={cn("-mx-1 my-1 h-px bg-border", className)}
 		{...props}
 	/>
 );
 
 const DropdownMenuShortcut = ({ className, ...props }: React.HTMLAttributes<HTMLSpanElement>) => {
 	return (
-		<span className={cn("text-xs tracking-widest ml-auto opacity-60", className)} {...props} />
+		<span
+			className={cn("text-xs tracking-widest ml-auto text-muted-foreground", className)}
+			{...props}
+		/>
 	);
 };
 

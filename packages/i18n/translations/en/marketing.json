@@ -1,154 +1,243 @@
 {
+	"metadata": {
+		"title": "Read the page. Seal it with a note.",
+		"description": "A private, respectful way to be introduced for marriage, built on the biodata families already write. A small folio each evening, a note you write and seal, and both seals break when you both say yes.",
+		"shareTitle": "Read the page. Seal it with a note.",
+		"shareLine": "A private, respectful way to be introduced for marriage.",
+		"shareAlt": "Rishta: read the page, seal it with a note."
+	},
+	"home": {
+		"dateline": "A letter from the founders · September 2026",
+		"title": "Read the page. Seal it with a note.",
+		"leadNote": "Free to begin. Nothing about you is visible to anyone until you publish your page.",
+		"begin": "Begin a page",
+		"signIn": "Sign in",
+		"salutation": "Dear family,",
+		"why": {
+			"heading": "Why we wrote",
+			"p1": "Every family we know keeps a folder of biodatas. They arrive as PDFs and photographs, forwarded from an aunt to a cousin to a WhatsApp group of forty people, and nobody is quite sure who has seen whose photo.",
+			"p2": "The alternatives were no kinder. Dating apps ask you to judge a person in two seconds, with a swipe, and call it a match. The big matrimony sites read like classifieds: long filter forms, credits to reveal a phone number, and a quiet ranking of who is popular.",
+			"p3": "Marriage deserves more care than that, and so do the people looking for it."
+		},
+		"made": {
+			"heading": "What we made",
+			"intro": "So we built Rishta around the page itself. Three things are different.",
+			"folio": {
+				"title": "A small folio each evening.",
+				"body": "Five to seven complete pages, chosen against the things you won't compromise on. You read them one at a time, top to bottom, the way a biodata is meant to be read. Turning a page never answers it.",
+				"figure": "Friday folio",
+				"count": "3 of 7",
+				"caption": "A page on its stack, with three pages still to read. The folio shows where you are, not how many people there are."
+			},
+			"note": {
+				"title": "A note you write and seal.",
+				"body": "To show interest you write a real sentence, at least forty characters, and press your seal onto it. There is no like button, and nothing is decided by a swipe.",
+				"figure": "Dear Arjun, your page says you cook for your parents on Sundays. Mine keep asking when I'll learn my grandmother's dal. Perhaps we could compare notes.",
+				"hint": "Press and hold to seal and send.",
+				"caption": "A note of three sentences with a pressed seal beside it."
+			},
+			"seals": {
+				"title": "Both seals break when you both say yes.",
+				"body": "Photos, full names, workplaces and contact stay sealed until then. When the answer is yes, both seals break at once, the sealed sections open to each other, and three evenings are proposed for a first call, in both time zones.",
+				"figure": "Three evenings that suit you both",
+				"slot": "Thursday · 8:00 pm Edison · 7:00 pm Dallas",
+				"caption": "Two broken seals, and the first of three proposed evenings shown in both cities' times."
+			}
+		},
+		"sample": {
+			"heading": "A page, read slowly",
+			"intro": "Here is a page as it would arrive in your folio. Read it the way you would at home, top to bottom. Arjun is invented; everything else works exactly like this.",
+			"languageLabel": "Set this page in",
+			"setIn": "The sample page is now set in {language}.",
+			"whyLabel": "Why this page",
+			"reasons": {
+				"timeline": "You both hope to marry within a year.",
+				"diet": "He's vegetarian, as you are.",
+				"community": "Community: not stated on his page."
+			},
+			"margin": {
+				"reasons": "No percentages, just the reasons, gaps included.",
+				"invocation": "An invocation, if your family writes one: ॐ, ੴ, the Bismillah, a cross, a khanda, or none at all.",
+				"signer": "Written by his mother, confirmed by him. Until he confirmed it, nobody outside the family could see it.",
+				"family": "Families read this section first, so it sits where they expect it.",
+				"sealed": "This part stays sealed until you both say yes."
+			},
+			"footnote": "An invented sample, set by hand in each language. On Rishta, a family link can show any page in the language your family reads, always marked as a translation.",
+			"pageLabel": "Sample biodata page"
+		},
+		"parents": {
+			"heading": "For parents",
+			"p1": "Most of you will meet Rishta through a link your son or daughter sends on WhatsApp. It opens without an account, in your language, at a size you can read without your glasses.",
+			"p2": "Under the page are three square buttons: Proceed, Let's talk and Not for us. What you choose appears in pencil beside the page, for your child to see. You advise; they decide. Only the person whose marriage it is can write a note or say yes.",
+			"figureCaption": "A family link, as a mother reads it in Hindi. It expires, it carries her name as a watermark, and it asks her not to forward it."
+		},
+		"safety": {
+			"heading": "Safety and privacy",
+			"p1": "Photos are veiled until you both say yes, and the veil is made on our servers, so a stranger never receives the clear picture. You can read pages privately, and nobody is told you looked. A page a relative writes stays invisible until the adult it describes confirms it. Every report is read by a person, and we never tell anyone who reported them.",
+			"disclosure": "Rishta does not conduct criminal background checks on its members.",
+			"sameForEveryone": "The same service and prices apply to everyone, whatever their gender or nationality.",
+			"more": "How we keep members safe"
+		},
+		"pricing": {
+			"heading": "What it costs",
+			"paragraph": "Reading your folio and sealing three notes a day is free. Premium is {monthly} a month, or {yearly} a year, for families who want seven pages each evening, ten notes a day and room for the whole household, and the first {trialDays} days cost nothing. Credits are {credits} for five. When you're engaged, we close your page kindly. That is the point.",
+			"ledgerLabel": "The plans, at a glance",
+			"premiumMonthly": "{monthly} a month",
+			"premiumYearly": "or {yearly} a year",
+			"trial": "{days}-day free trial",
+			"creditsPrice": "{amount} for five",
+			"never": "Safety is never sold. Veils, private reading, reports and blocks are free on every plan, and you can cancel Premium online at any time."
+		},
+		"signoff": {
+			"label": "Signature",
+			"closing": "With respect,",
+			"signature": "The founders of Rishta",
+			"ps": "P.S. Rishta aaya hai.",
+			"gloss": "A proposal has arrived.",
+			"psLine": "We hope one arrives for you."
+		}
+	},
+	"safety": {
+		"metaTitle": "Safety",
+		"dateline": "Safety and privacy",
+		"title": "How we keep members safe",
+		"lead": "Rishta is built so that nothing about you is exposed before you say yes. This page explains what stays sealed, who may read what, and what to do if something feels wrong.",
+		"disclosure": {
+			"background": "Rishta does not conduct criminal background checks on its members.",
+			"same": "The same service and prices apply to everyone, regardless of gender or nationality.",
+			"verify": "We verify email addresses. Phone and ID verification are not offered yet."
+		},
+		"private": {
+			"heading": "What stays private",
+			"items": {
+				"veils": "Photos are veiled until you both say yes. The veil is a small, blurred copy made on our servers, so someone you haven't said yes to never receives the clear picture.",
+				"sealed": "Your full name, workplace, phone number and exact date of birth sit in the sealed section of your page. It opens only inside an Introduction, after both of you have said yes.",
+				"reading": "You can read pages privately. When private reading is on, nobody is told you read their page. It is free on every plan.",
+				"blocks": "Blocking works in both directions. The other person's page, letters, messages and family links disappear for you, and yours for them.",
+				"links": "A family link shows one page, carries the name of the person it was shared with as a watermark, and expires. You can close it at any time."
+			}
+		},
+		"consent": {
+			"heading": "Consent",
+			"items": {
+				"adult": "Rishta is only for adults. A page can be confirmed or published only by someone who is 18 or older.",
+				"claim": "A parent or sibling can start a page, but it stays invisible outside the household until the person it describes reads it and confirms it. They can also decline it, kindly.",
+				"family": "Family members read pages and leave pencil notes. They never read your letters, and they can never write, send or accept a note for you."
+			}
+		},
+		"notes": {
+			"heading": "Notes and screening",
+			"items": {
+				"sentence": "Every note is at least forty characters, written to one person, and pressed with a seal. There are no likes and no one-tap requests.",
+				"contact": "Phone numbers, email addresses and messaging handles can't be sent in a note. Contact opens only when both of you say yes.",
+				"flags": "Notes are checked for common signs of trouble, such as a request for money or a push to move to WhatsApp before you've spoken. When something looks wrong, the reader sees a quiet safety note beside it.",
+				"limits": "Daily limits keep anyone from writing to everyone, and nobody is ever shown how many people wrote to them."
+			}
+		},
+		"tips": {
+			"heading": "Before you meet",
+			"items": {
+				"money": "Never send money, gifts or financial details to someone you haven't met, however urgent the story sounds.",
+				"platform": "Keep talking on Rishta until you've had a call. Be careful with anyone who asks to move to another app straight away.",
+				"call": "Have a video call before you meet. Rishta proposes evenings that suit both of your time zones.",
+				"meet": "Meet in a public place, arrange your own way there and back, and tell someone in your family where you'll be.",
+				"family": "Trust your family's instincts, and your own. It is always all right to close a conversation."
+			}
+		},
+		"reporting": {
+			"heading": "Reporting",
+			"promise": "Tell us what happened. We read every report, and we won't tell them you reported.",
+			"how": "You can report from any page, letter, message or family link. Choose what went wrong, add a few words if you like, and choose whether to block them as well.",
+			"after": "A person on our team reviews each report. We may pause a page while we look into it, and we remove people who put others at risk."
+		},
+		"emergency": "If you are in danger, contact your local emergency services first."
+	},
 	"blog": {
-		"description": "Read the latest news from our company",
-		"title": "My awesome blog",
-		"back": "Back to blog"
+		"title": "Notes",
+		"description": "Occasional letters from the people who make Rishta.",
+		"back": "All notes",
+		"from": "From {name}",
+		"read": "Read the note",
+		"readTitle": "Read the note: {title}",
+		"empty": "No notes yet."
 	},
 	"changelog": {
-		"description": "Stay up to date with the latest changes in our product.",
-		"title": "Changelog"
+		"title": "What's changed",
+		"description": "Changes to Rishta, in plain words.",
+		"entries": [
+			{
+				"date": "2026-09-27",
+				"title": "Rishta, rebuilt around the page",
+				"changes": [
+					"The Folio: five to seven complete pages each evening, read one at a time.",
+					"Letters: a note you write and seal. Both seals break when you both say yes.",
+					"Family links in Hindi, Urdu, Punjabi, Gujarati, Bengali, Tamil and Telugu.",
+					"Households: parents and siblings help in the margin; only the candidate decides."
+				]
+			},
+			{
+				"date": "2026-04-25",
+				"title": "Rishta begins",
+				"changes": ["The first version of Rishta, for the South Asian diaspora."]
+			}
+		]
 	},
 	"contact": {
-		"description": "We are here to help you. Please use the form below to get in touch with us.",
+		"title": "Write to us",
+		"description": "We read every message, and a person will answer.",
+		"safetyNote": "If you're worried about a member, please use Report on their page or letter instead, so we can act on it quickly.",
+		"safetyLink": "How reporting works",
 		"form": {
 			"email": "Email",
 			"message": "Message",
 			"name": "Name",
 			"notifications": {
-				"error": "We are sorry, but we were unable to send your message. Please try again later.",
-				"success": "Your message has been sent successfully. We will get back to you as soon as possible."
+				"error": "Your message didn't send. Please try again in a moment.",
+				"success": "Thank you. Your message is with us, and we'll write back by email."
 			},
-			"submit": "Send message"
-		},
-		"title": "Contact us"
-	},
-	"documentation": {
-		"title": "Documentation"
-	},
-	"faq": {
-		"description": "Do you have any questions? We have got you covered.",
-		"title": "Frequently asked questions",
-		"items": {
-			"refundPolicy": {
-				"question": "What is the refund policy?",
-				"answer": "We offer a 30-day money-back guarantee if you're not happy with our product."
-			},
-			"cancelSubscription": {
-				"question": "How do I cancel my subscription?",
-				"answer": "You can cancel your subscription by visiting the billing page."
-			},
-			"changePlan": {
-				"question": "Can I change my plan?",
-				"answer": "Yes, you can change your plan at any time by visiting the billing page."
-			},
-			"freeTrial": {
-				"question": "Do you offer a free trial?",
-				"answer": "Yes, we offer a 14-day free trial."
+			"submit": "Send message",
+			"errors": {
+				"name": "Add your name.",
+				"email": "That email address doesn't look right.",
+				"message": "Write a little more, at least 10 characters."
 			}
 		}
 	},
-	"home": {
-		"hero": {
-			"new": "New:",
-			"featureBadge": "Amazing feature of your SaaS",
-			"title": "Your revolutionary SaaS built with Next.js",
-			"subtitle": "Talk your way to fluency. AI-powered language learning through conversation.",
-			"getStarted": "Get started",
-			"documentation": "Documentation",
-			"imageAlt": "Our application",
-			"builtWith": "Built & shipped with these awesome tools"
-		},
-		"features": {
-			"badge": "Incredible features",
-			"title": "Features your clients will love",
-			"description": "In this section you can showcase all the features of your SaaS provides and how they can benefit your clients.",
-			"feature1": {
-				"title": "Feature 1",
-				"subtitle": "Do more with our amazing SaaS.",
-				"description": "This is a brilliant feature. And below you can see some reasons why. This is basically just a dummy text.",
-				"benefit1": {
-					"title": "Benefit 1",
-					"description": "This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text."
-				},
-				"benefit2": {
-					"title": "Benefit 2",
-					"description": "This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text."
-				},
-				"benefit3": {
-					"title": "Benefit 3",
-					"description": "This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text."
-				}
-			},
-			"feature2": {
-				"title": "Feature 2",
-				"subtitle": "Your SaaS can also do this.",
-				"description": "Another dummy text for another feature.",
-				"benefit1": {
-					"title": "Benefit 1",
-					"description": "This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text."
-				},
-				"benefit2": {
-					"title": "Benefit 2",
-					"description": "This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text."
-				},
-				"benefit3": {
-					"title": "Benefit 3",
-					"description": "This is an awesome benefit. And below you can see some reasons why. This is basically just a dummy text."
-				}
-			}
-		}
+	"legal": {
+		"dateline": "Rishta"
 	},
-	"newsletter": {
-		"email": "Email",
-		"hints": {
-			"error": {
-				"message": "Could not subscribe to newsletter. Please try again later."
-			},
-			"success": {
-				"message": "Thank you for subscribing to our newsletter. We will keep you posted.",
-				"title": "Subscribed"
-			}
-		},
-		"submit": "Subscribe",
-		"subtitle": "Be among the first to get access to Rishta.nextjs.",
-		"title": "Get early access"
+	"consent": {
+		"label": "Cookies",
+		"message": "May we count visits to these pages with privacy-friendly analytics? There is no advertising, and nothing about you is shared.",
+		"decline": "No, thank you",
+		"allow": "Allow"
 	},
 	"notFound": {
 		"code": "404",
-		"title": "Page not found",
-		"goToDashboard": "Go to dashboard",
-		"goToHomepage": "Go to homepage"
+		"title": "This page isn't in the folio.",
+		"message": "It may have moved, or the link was mistyped.",
+		"goToHomepage": "Back to the letter"
 	},
 	"common": {
+		"skipToContent": "Skip to the letter",
 		"footer": {
-			"blog": "Blog",
-			"features": "Features",
-			"pricing": "Pricing",
-			"privacyPolicy": "Privacy policy",
-			"termsAndConditions": "Terms and conditions",
-			"builtWith": "Built with Rishta"
+			"label": "Rishta",
+			"safety": "Safety",
+			"privacyPolicy": "Privacy",
+			"termsAndConditions": "Terms",
+			"contact": "Contact",
+			"notes": "Notes",
+			"disclosure": "Rishta does not conduct criminal background checks on its members.",
+			"sameForEveryone": "The same service and prices apply to everyone, whatever their gender or nationality."
 		},
 		"menu": {
-			"blog": "Blog",
-			"changelog": "Changelog",
-			"contact": "Contact",
-			"dashboard": "Dashboard",
-			"docs": "Docs",
-			"faq": "FAQ",
-			"login": "Login",
-			"pricing": "Pricing"
+			"label": "Account",
+			"home": "Rishta, home",
+			"login": "Sign in",
+			"begin": "Begin a page"
 		},
 		"aria": {
-			"menu": "Menu",
 			"language": "Language"
-		},
-		"tableOfContents": {
-			"title": "On this page"
-		},
-		"colorMode": {
-			"system": "System",
-			"light": "Light",
-			"dark": "Dark"
 		}
 	}
 }

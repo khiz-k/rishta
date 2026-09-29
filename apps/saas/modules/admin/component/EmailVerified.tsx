@@ -20,7 +20,7 @@ export function EmailVerified({ verified, className }: { verified: boolean; clas
 				</TooltipContent>
 				<TooltipTrigger className={cn(className)}>
 					{verified ? (
-						<CheckIcon className="size-3 text-primary" />
+						<CheckIcon className="size-3 text-seal-ink" />
 					) : (
 						<ClockIcon className="size-3" />
 					)}

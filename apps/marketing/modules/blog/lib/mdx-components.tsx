@@ -25,42 +25,58 @@ export const mdxComponents = {
 				{...(props as ImageProps)}
 				sizes="100vw"
 				style={{ width: "100%", height: "auto" }}
-				className="shadow rounded-lg"
+				className="border border-border"
 				loading="lazy"
 			/>
 		) : null,
 	h1: ({ children, ...rest }) => (
-		<h1 id={slugifyHeadline(children as string)} className="mb-6 font-bold text-4xl" {...rest}>
+		<h1
+			id={slugifyHeadline(children as string)}
+			className="mb-6 font-display text-title"
+			{...rest}
+		>
 			{children}
 		</h1>
 	),
 	h2: ({ children, ...rest }) => (
-		<h2 id={slugifyHeadline(children as string)} className="mb-4 font-bold text-2xl" {...rest}>
+		<h2
+			id={slugifyHeadline(children as string)}
+			className="mb-4 font-display text-title-sm"
+			{...rest}
+		>
 			{children}
 		</h2>
 	),
 	h3: ({ children, ...rest }) => (
-		<h3 id={slugifyHeadline(children as string)} className="mb-4 font-bold text-xl" {...rest}>
+		<h3
+			id={slugifyHeadline(children as string)}
+			className="mb-4 font-display text-section"
+			{...rest}
+		>
 			{children}
 		</h3>
 	),
 	h4: ({ children, ...rest }) => (
-		<h4 id={slugifyHeadline(children as string)} className="mb-4 font-bold text-lg" {...rest}>
+		<h4
+			id={slugifyHeadline(children as string)}
+			className="mb-4 font-display text-body"
+			{...rest}
+		>
 			{children}
 		</h4>
 	),
 	h5: ({ children, ...rest }) => (
-		<h5 id={slugifyHeadline(children as string)} className="mb-4 font-bold text-base" {...rest}>
+		<h5 id={slugifyHeadline(children as string)} className="mb-4 label-caps" {...rest}>
 			{children}
 		</h5>
 	),
 	h6: ({ children, ...rest }) => (
-		<h6 id={slugifyHeadline(children as string)} className="mb-4 font-bold text-sm" {...rest}>
+		<h6 id={slugifyHeadline(children as string)} className="mb-4 label-caps" {...rest}>
 			{children}
 		</h6>
 	),
 	p: ({ children, ...rest }) => (
-		<p className="mb-6 leading-relaxed text-foreground/60" {...rest}>
+		<p className="mb-6 text-foreground" {...rest}>
 			{children}
 		</p>
 	),

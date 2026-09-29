@@ -18,7 +18,8 @@
 		"react-hook-form": "catalog:",
 		"recharts": "catalog:",
 		"sonner": "catalog:",
-		"tailwind-merge": "catalog:"
+		"tailwind-merge": "catalog:",
+		"vaul": "^1.1.2"
 	},
 	"devDependencies": {
 		"@repo/tsconfig": "workspace:*",

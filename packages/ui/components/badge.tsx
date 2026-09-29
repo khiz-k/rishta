@@ -4,24 +4,29 @@ import type React from "react";
 
 import { cn } from "../lib";
 
+/**
+ * A disclosed label in condensed caps with a 1px border (PRIORITY NOTE, a status word).
+ * Square, never a pill, and colour is never the only signal: the words carry the meaning.
+ */
 export const badge = cva(
 	[
-		"inline-block",
-		"rounded-full",
-		"px-3",
-		"py-1",
-		"text-xs",
-		"uppercase",
-		"font-semibold",
-		"leading-tight",
+		"inline-flex",
+		"items-center",
+		"gap-1",
+		"border",
+		"px-1.5",
+		"py-0.5",
+		"label-caps",
+		"whitespace-nowrap",
 	],
 	{
 		variants: {
 			status: {
-				success: ["bg-emerald-500/10", "text-emerald-500"],
-				info: ["bg-primary/10", "text-primary"],
-				warning: ["bg-amber-500/10", "text-amber-500"],
-				error: ["bg-rose-500/10", "text-rose-500"],
+				success: ["border-success", "text-success"],
+				info: ["border-seal-ink", "text-seal-ink"],
+				warning: ["border-warning", "text-warning"],
+				error: ["border-destructive", "text-destructive"],
+				neutral: ["border-border", "text-muted-foreground"],
 			},
 		},
 		defaultVariants: {

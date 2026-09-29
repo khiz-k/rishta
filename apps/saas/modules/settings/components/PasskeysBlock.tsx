@@ -2,13 +2,13 @@
 import { userPasskeyQueryKey, useUserPasskeysQuery } from "@auth/lib/api";
 import { authClient } from "@repo/auth/client";
 import { Button } from "@repo/ui/components/button";
-import { Skeleton } from "@repo/ui/components/skeleton";
 import { toastError, toastPromise, toastSuccess } from "@repo/ui/components/toast";
+import { RowsSkeleton } from "@shared/components/PaperSkeleton";
 import { SettingsItem } from "@shared/components/SettingsItem";
 import { useQueryClient } from "@tanstack/react-query";
-import { KeyIcon, PlusIcon, TrashIcon } from "lucide-react";
 import { useFormatter, useTranslations } from "next-intl";
 
+/** Passkeys as hairline rows with a worded Remove, the same way the household lists its links. */
 export function PasskeysBlock() {
 	const t = useTranslations();
 	const queryClient = useQueryClient();
@@ -74,46 +74,46 @@ export function PasskeysBlock() {
 			title={t("settings.account.security.passkeys.title")}
 			description={t("settings.account.security.passkeys.description")}
 		>
-			<div className="gap-2 grid grid-cols-1">
+			<div className="gap-4 flex flex-col items-start">
 				{isPending ? (
-					<div className="gap-2 flex">
-						<Skeleton className="size-6 shrink-0" />
-						<div className="flex-1">
-							<Skeleton className="mb-0.5 h-4 w-full" />
-							<Skeleton className="h-8 w-full" />
-						</div>
-						<Skeleton className="size-9 shrink-0" />
-					</div>
-				) : (
-					passkeys?.map((passkey) => (
-						<div key={passkey.id} className="gap-2 flex">
-							<KeyIcon className="size-6 shrink-0 text-primary/50" />
-							<div className="flex-1">
-								<strong className="text-sm block">
-									{passkey.deviceType} {passkey.name}
-								</strong>
-								<small className="text-xs leading-tight block text-foreground/60">
-									{formatter.dateTime(new Date(passkey.createdAt))}
-								</small>
-							</div>
-							<Button
-								variant="secondary"
-								size="icon"
-								className="shrink-0"
-								onClick={() => deletePasskey(passkey.id)}
+					<RowsSkeleton rows={1} className="w-full" />
+				) : passkeys?.length ? (
+					<ul className="w-full border-t border-border">
+						{passkeys.map((passkey) => (
+							<li
+								key={passkey.id}
+								className="py-2.5 gap-3 flex items-center justify-between border-b border-border"
 							>
-								<TrashIcon className="size-4" />
-							</Button>
-						</div>
-					))
-				)}
+								<span className="min-w-0">
+									<span className="block text-body">
+										{[passkey.name, passkey.deviceType]
+											.filter(Boolean)
+											.join(" · ")}
+									</span>
+									<span className="block text-meta text-muted-foreground">
+										{t("settings.account.security.passkeys.added", {
+											date: formatter.dateTime(new Date(passkey.createdAt), {
+												dateStyle: "medium",
+											}),
+										})}
+									</span>
+								</span>
+								<Button
+									size="sm"
+									variant="ghost"
+									className="shrink-0"
+									onClick={() => deletePasskey(passkey.id)}
+								>
+									{t("settings.account.security.passkeys.remove")}
+								</Button>
+							</li>
+						))}
+					</ul>
+				) : null}
 
-				<div className="flex justify-start">
-					<Button variant="secondary" onClick={addPasskey}>
-						<PlusIcon className="mr-1.5 size-4" />
-						{t("settings.account.security.passkeys.addPasskey")}
-					</Button>
-				</div>
+				<Button variant="secondary" onClick={() => void addPasskey()}>
+					{t("settings.account.security.passkeys.addPasskey")}
+				</Button>
 			</div>
 		</SettingsItem>
 	);

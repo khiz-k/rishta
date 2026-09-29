@@ -6,6 +6,7 @@ import * as React from "react";
 import { cn } from "../lib";
 import { buttonVariants } from "./button";
 
+/** The square confirm step that replaces every window.confirm(). */
 const AlertDialog = AlertDialogPrimitive.Root;
 
 const AlertDialogTrigger = AlertDialogPrimitive.Trigger;
@@ -18,7 +19,7 @@ const AlertDialogOverlay = ({
 }: React.ComponentProps<typeof AlertDialogPrimitive.Overlay>) => (
 	<AlertDialogPrimitive.Overlay
 		className={cn(
-			"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 inset-0 bg-black/80 data-[state=closed]:animate-out data-[state=open]:animate-in fixed z-50",
+			"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 inset-0 data-[state=closed]:animate-out data-[state=open]:animate-in fixed z-50 bg-scrim",
 			className,
 		)}
 		{...props}
@@ -33,7 +34,8 @@ const AlertDialogContent = ({
 		<AlertDialogOverlay />
 		<AlertDialogPrimitive.Content
 			className={cn(
-				"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[state=closed]:slide-out-to-left-1/2 data-[state=closed]:slide-out-to-top-[48%] data-[state=open]:slide-in-from-left-1/2 data-[state=open]:slide-in-from-top-[48%] max-w-lg gap-4 p-6 shadow-lg data-[state=closed]:animate-out data-[state=open]:animate-in sm:rounded-lg fixed top-[50%] left-[50%] z-50 grid w-full translate-x-[-50%] translate-y-[-50%] border bg-background duration-200",
+				"data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 max-w-md gap-4 px-5 pt-6 pb-5 md:px-7 data-[state=closed]:animate-out data-[state=open]:animate-in fixed top-1/2 left-1/2 z-50 grid w-[calc(100%-1.5rem)] -translate-x-1/2 -translate-y-1/2 border border-border bg-popover text-popover-foreground data-[state=closed]:duration-[120ms] data-[state=open]:duration-[180ms]",
+				"before:inset-x-0 before:top-0 before:absolute before:double-rule before:content-['']",
 				className,
 			)}
 			{...props}
@@ -42,12 +44,12 @@ const AlertDialogContent = ({
 );
 
 const AlertDialogHeader = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
-	<div className={cn("space-y-2 sm:text-left flex flex-col text-center", className)} {...props} />
+	<div className={cn("gap-2 flex flex-col text-left", className)} {...props} />
 );
 
 const AlertDialogFooter = ({ className, ...props }: React.HTMLAttributes<HTMLDivElement>) => (
 	<div
-		className={cn("sm:flex-row sm:justify-end sm:space-x-2 flex flex-col-reverse", className)}
+		className={cn("gap-2 sm:flex-row sm:justify-end flex flex-col-reverse", className)}
 		{...props}
 	/>
 );
@@ -56,7 +58,7 @@ const AlertDialogTitle = ({
 	className,
 	...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Title>) => (
-	<AlertDialogPrimitive.Title className={cn("font-semibold text-lg", className)} {...props} />
+	<AlertDialogPrimitive.Title className={cn("font-display text-section", className)} {...props} />
 );
 
 const AlertDialogDescription = ({
@@ -64,7 +66,7 @@ const AlertDialogDescription = ({
 	...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Description>) => (
 	<AlertDialogPrimitive.Description
-		className={cn("text-sm text-muted-foreground", className)}
+		className={cn("text-body text-muted-foreground", className)}
 		{...props}
 	/>
 );
@@ -81,7 +83,7 @@ const AlertDialogCancel = ({
 	...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Cancel>) => (
 	<AlertDialogPrimitive.Cancel
-		className={cn(buttonVariants({ variant: "outline" }), "mt-2 sm:mt-0", className)}
+		className={cn(buttonVariants({ variant: "ghost" }), className)}
 		{...props}
 	/>
 );

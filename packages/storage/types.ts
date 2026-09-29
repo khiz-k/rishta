@@ -3,6 +3,10 @@ export interface StorageBucketNamesConfig {
 	 * Bucket used for user and organization avatar uploads.
 	 */
 	avatars: string;
+	/**
+	 * Private bucket for biodata photos and their veil derivatives.
+	 */
+	biodataPhotos: string;
 }
 
 export interface StorageConfig {
@@ -23,8 +27,19 @@ export type GetSignedUploadUrlHandler = (
 	path: string,
 	options: {
 		bucket: keyof StorageBucketNamesConfig;
+		/**
+		 * Content type the upload must declare. Defaults to `image/jpeg`.
+		 */
+		contentType?: string;
 	},
 ) => Promise<string>;
+
+export type DeleteObjectHandler = (
+	path: string,
+	options: {
+		bucket: keyof StorageBucketNamesConfig;
+	},
+) => Promise<void>;
 
 export type GetSignedUrlHander = (
 	path: string,

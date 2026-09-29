@@ -9,4 +9,33 @@
 	:root {
 		--sidebar-border: var(--border);
 	}
+
+	body {
+		font-family: var(--font-sans);
+		font-size: var(--font-size-base);
+		font-weight: 420;
+		/* Tiro has one weight: never a faux bold. */
+		font-synthesis: none;
+	}
+
+	:focus-visible {
+		outline: 2px solid var(--ring);
+		outline-offset: 2px;
+	}
+}
+
+/* Headings in Tiro, one weight; accent text in seal ink, never the fill red. */
+h1,
+h2,
+h3,
+h4,
+.prose :where(h1, h2, h3, h4) {
+	font-family: var(--font-display);
+	font-weight: 400;
+	letter-spacing: -0.005em;
+}
+
+.prose {
+	--tw-prose-links: var(--seal-ink);
+	--tw-prose-quote-borders: var(--rule);
 }

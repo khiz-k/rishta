@@ -1,5 +1,7 @@
 "use client";
 
+import { contactSchema, type ContactValues } from "@home/lib/contact-schema";
+import { sendContactMessage } from "@home/lib/send-contact-message";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Alert, AlertTitle } from "@repo/ui/components/alert";
 import { Button } from "@repo/ui/components/button";
@@ -16,35 +18,39 @@ import { Textarea } from "@repo/ui/components/textarea";
 import { MailCheckIcon, MailIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
 
 export function ContactForm() {
 	const t = useTranslations();
 
-	const form = useForm({
+	const form = useForm<ContactValues>({
 		resolver: zodResolver(
-			z.object({
-				name: z.string().min(1),
-				email: z.email(),
-				message: z.string().min(10),
+			contactSchema({
+				name: t("contact.form.errors.name"),
+				email: t("contact.form.errors.email"),
+				message: t("contact.form.errors.message"),
 			}),
 		),
 		defaultValues: {
 			name: "",
 			email: "",
 			message: "",
+			website: "",
 		},
 	});
 
+	// The message goes to a person; if it can't be delivered, the form says so and keeps it.
 	const onSubmit = form.handleSubmit(async (values) => {
-		try {
-			// TODO: Insert your contact form submission logic here to integrate with your CRM or email service
-			console.log("Submitting contact form for values:", values);
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-		} catch {
+		const failed = () =>
 			form.setError("root", {
 				message: t("contact.form.notifications.error"),
 			});
+		try {
+			const { ok } = await sendContactMessage(values);
+			if (!ok) {
+				failed();
+			}
+		} catch {
+			failed();
 		}
 	});
 
@@ -72,7 +78,7 @@ export function ContactForm() {
 								<FormItem>
 									<FormLabel>{t("contact.form.name")}</FormLabel>
 									<FormControl>
-										<Input {...field} />
+										<Input autoComplete="name" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -86,7 +92,7 @@ export function ContactForm() {
 								<FormItem>
 									<FormLabel>{t("contact.form.email")}</FormLabel>
 									<FormControl>
-										<Input {...field} />
+										<Input type="email" autoComplete="email" {...field} />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
@@ -105,6 +111,15 @@ export function ContactForm() {
 									<FormMessage />
 								</FormItem>
 							)}
+						/>
+
+						<input
+							type="text"
+							tabIndex={-1}
+							autoComplete="off"
+							aria-hidden="true"
+							className="sr-only"
+							{...form.register("website")}
 						/>
 
 						<Button

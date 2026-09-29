@@ -1,40 +1,41 @@
 {
 	"admin": {
 		"menu": {
-			"organizations": "Organizations",
+			"organizations": "Households",
 			"users": "Users"
 		},
 		"organizations": {
-			"backToList": "Back to organizations",
+			"backToList": "Back to households",
 			"confirmDelete": {
 				"confirm": "Delete",
-				"message": "Are you sure you want to delete this organization? This action cannot be undone.",
-				"title": "Delete organization"
+				"message": "Delete this household? Its page, letters and pencil notes are removed. This cannot be undone.",
+				"title": "Delete household"
 			},
 			"create": "Create",
 			"delete": "Delete",
 			"deleteOrganization": {
-				"deleted": "Organization has been deleted successfully!",
-				"deleting": "Deleting organization...",
-				"notDeleted": "Organization could not be deleted. Please try again."
+				"deleted": "The household has been deleted.",
+				"deleting": "Deleting the household…",
+				"notDeleted": "The household couldn't be deleted. Try again."
 			},
 			"edit": "Edit",
 			"form": {
-				"createTitle": "Create an organization",
-				"name": "Organization name",
+				"createTitle": "Create a household",
+				"name": "Household name",
 				"notifications": {
-					"error": "Could not save the organization. Please try again later.",
-					"success": "Organization has been saved."
+					"error": "The household couldn't be saved. Try again later.",
+					"success": "The household has been saved."
 				},
 				"save": "Save",
-				"updateTitle": "Edit organization"
+				"updateTitle": "Edit household"
 			},
-			"loading": "Loading organizations...",
+			"loading": "Opening households…",
 			"membersCount": "{count} {count, plural, one {member} other {members}}",
-			"search": "Search for an organization...",
-			"title": "Manage organizations"
+			"search": "Search for a household…",
+			"title": "Households",
+			"empty": "No households match."
 		},
-		"title": "Administration",
+		"title": "Moderation",
 		"users": {
 			"confirmDelete": {
 				"confirm": "Delete",
@@ -43,7 +44,7 @@
 			},
 			"delete": "Delete",
 			"deleteUser": {
-				"deleted": "User has been deleted successfully!",
+				"deleted": "The user has been deleted.",
 				"deleting": "Deleting user...",
 				"notDeleted": "User could not be deleted. Please try again."
 			},
@@ -55,7 +56,7 @@
 			"impersonation": {
 				"impersonating": "Impersonating as {name}..."
 			},
-			"loading": "Loading users...",
+			"loading": "Opening users…",
 			"resendVerificationMail": {
 				"error": "Could not resend verification mail. Please try again.",
 				"submitting": "Resending verification mail...",
@@ -63,379 +64,339 @@
 				"title": "Resend verification mail"
 			},
 			"search": "Search for name or email...",
-			"title": "Manage users",
+			"title": "Users",
 			"assignAdminRole": "Assign admin role",
-			"removeAdminRole": "Remove admin role"
+			"removeAdminRole": "Remove admin role",
+			"empty": "No users match."
 		},
-		"description": "Manage your application."
-	},
-	"app": {
-		"menu": {
-			"accountSettings": "Account settings",
-			"admin": "Admin",
-			"aiChatbot": "AI Chatbot",
-			"navigationTitle": "Menu",
-			"openNavigation": "Open navigation",
-			"organizationSettings": "Organization settings",
-			"start": "Dashboard"
-		},
-		"userMenu": {
-			"accountSettings": "Account settings",
-			"colorMode": "Color mode",
-			"documentation": "Documentation",
-			"home": "Home",
-			"logout": "Logout"
-		},
-		"notifications": {
-			"title": "Notifications",
-			"empty": "No notifications yet.",
-			"markAllRead": "Mark all as read",
-			"fallbackTitle": "Notification",
-			"aria": {
-				"open": "Open notifications"
-			}
+		"description": "Reports are read by a person. The reporter is never revealed.",
+		"reports": {
+			"title": "Reports",
+			"filter": "Status",
+			"status": {
+				"open": "Open",
+				"reviewing": "Reviewing",
+				"actioned": "Actioned",
+				"dismissed": "Dismissed"
+			},
+			"context": {
+				"page": "a page",
+				"letter": "a letter",
+				"message": "a message",
+				"family_link": "a family link"
+			},
+			"filed": "Filed {date} about {context}",
+			"fromFamilyLink": "from a family link",
+			"about": "About",
+			"note": "Moderator note",
+			"pausePage": "Pause the reported page",
+			"actions": {
+				"review": "Start reviewing",
+				"action": "Action",
+				"dismiss": "Dismiss"
+			},
+			"failed": "That didn't save. Try again.",
+			"error": "Reports didn't load.",
+			"tryAgain": "Try again",
+			"empty": "Nothing here.",
+			"more": "Older reports"
 		}
 	},
 	"auth": {
 		"errors": {
-			"invalidEmailOrPassword": "The credentials you entered are invalid. Please check them and try again.",
-			"unknown": "Something went wrong. Please try again.",
-			"userNotFound": "This user does not exists",
-			"failedToCreateUser": "Could not create user. Please try again.",
-			"failedToCreateSession": "Could not create a session. Please try again.",
-			"failedToUpdateUser": "Could not update user. Please try again.",
-			"failedToGetSession": "Could not get the session.",
-			"invalidPassword": "The entered password is incorrect.",
-			"invalidEmail": "The entered email is invalid.",
-			"invalidToken": "The token you entered is invalid or has expired.",
-			"credentialAccountNotFound": "Account not found.",
-			"emailCanNotBeUpdated": "Email could not be updated. Please try again.",
-			"emailNotVerified": "Please verify your email first before logging in.",
-			"failedToGetUserInfo": "Could not load user information.",
-			"idTokenNotSupported": "ID token is not supported.",
-			"passwordTooLong": "Password is too long.",
-			"passwordTooShort": "Password is too short.",
-			"providerNotFound": "This provider is not suppported.",
-			"socialAccountAlreadyLinked": "This account is already linked to a user.",
-			"userEmailNotFound": "Email not found.",
-			"userAlreadyExists": "This user already exists.",
-			"userAlreadyExistsUseAnotherEmail": "User already exists. Use another email.",
-			"invalidInvitation": "The invitation is invalid or expired.",
-			"sessionExpired": "The session has expired.",
-			"failedToUnlinkLastAccount": "Failed to unlink account",
-			"accountNotFound": "Account not found"
+			"invalidEmailOrPassword": "That email and password don't match. Check them, or email yourself a sign-in link.",
+			"unknown": "That didn't go through. Check your connection and try again.",
+			"userNotFound": "There's no Rishta account with that email.",
+			"failedToCreateUser": "Your account wasn't made. Try again in a moment.",
+			"failedToCreateSession": "You weren't signed in. Try again in a moment.",
+			"failedToUpdateUser": "That change didn't save. Try again.",
+			"failedToGetSession": "Your sign-in didn't hold. Please sign in again.",
+			"invalidPassword": "That password isn't right.",
+			"invalidEmail": "That email address doesn't look right.",
+			"invalidToken": "That code or link has expired, or was mistyped. Ask for a new one.",
+			"credentialAccountNotFound": "This account has no password. Email yourself a sign-in link instead.",
+			"emailCanNotBeUpdated": "Your email address didn't change. Try again.",
+			"emailNotVerified": "Confirm your email address first. The link is in your inbox.",
+			"failedToGetUserInfo": "Your account details didn't load. Try again.",
+			"idTokenNotSupported": "That way of signing in isn't supported.",
+			"passwordTooLong": "That password is too long.",
+			"passwordTooShort": "That password is too short. Use at least 8 characters.",
+			"providerNotFound": "That sign-in option isn't available.",
+			"socialAccountAlreadyLinked": "That account is already connected to another Rishta account.",
+			"userEmailNotFound": "There's no Rishta account with that email.",
+			"userAlreadyExists": "There's already an account with that email. Sign in instead.",
+			"userAlreadyExistsUseAnotherEmail": "That email already has an account. Sign in, or use another address.",
+			"invalidInvitation": "This invitation has closed. Ask for it to be sent again.",
+			"sessionExpired": "You've been signed out. Sign in again to carry on.",
+			"failedToUnlinkLastAccount": "This is your only way to sign in, so it stays connected.",
+			"accountNotFound": "That account isn't connected."
 		},
 		"forgotPassword": {
-			"backToSignin": "Back to signin",
+			"backToSignin": "Back to sign in",
 			"email": "Email",
 			"hints": {
 				"linkNotSent": {
-					"message": "We are sorry, but we were unable to send you a link to reset your password. Please try again later.",
-					"title": "Link not sent"
+					"message": "We couldn’t send the link just now. Please try again in a moment.",
+					"title": "The link didn’t send"
 				},
 				"linkSent": {
-					"message": "We have sent you a link to continue. Please check your inbox.",
-					"title": "Link sent"
+					"message": "If an account uses that email, a link to choose a new password is on its way.",
+					"title": "Sealed and sent"
 				}
 			},
-			"message": "Please enter your email address and we will send you a link to reset your password.",
-			"submit": "Send link",
-			"title": "Forgot your password?"
+			"message": "Tell us the email you signed up with, and we’ll send a link to choose a new one.",
+			"submit": "Send the link",
+			"title": "Forgotten your password?",
+			"overline": "Your password",
+			"marginNote": "We will never ask for your password by email, by phone or on WhatsApp."
 		},
 		"login": {
 			"continueWith": "Or continue with",
-			"createAnAccount": "Create an account",
-			"dontHaveAnAccount": "Don't have an account yet?",
-			"forgotPassword": "Forgot password?",
+			"createAnAccount": "Begin a page",
+			"dontHaveAnAccount": "New to Rishta?",
+			"forgotPassword": "Forgotten your password?",
 			"hints": {
-				"invalidCredentials": "The email or password you entered are invalid. Please try again.",
 				"linkSent": {
-					"message": "We have sent you a link to continue. Please check your inbox.",
-					"title": "Link sent"
+					"message": "We’ve emailed you a link to sign in. It works once, on this device.",
+					"title": "Sealed and sent"
 				}
 			},
-			"loginWithPasskey": "Login with passkey",
+			"loginWithPasskey": "Sign in with a passkey",
 			"modes": {
-				"magicLink": "Magic link",
+				"magicLink": "Email me a link",
 				"password": "Password"
 			},
 			"submit": "Sign in",
-			"subtitle": "Please enter your credentials to sign in.",
+			"subtitle": "Your folio, your letters and your page are where you left them.",
 			"title": "Welcome back",
-			"sendMagicLink": "Send magic link"
+			"sendMagicLink": "Email me a sign-in link",
+			"overline": "Sign in",
+			"showPassword": "Show",
+			"hidePassword": "Hide",
+			"marginNote": "Opened a family link? You don’t need an account to read the page or to answer it."
 		},
 		"resetPassword": {
-			"backToSignin": "Back to signin",
+			"backToSignin": "Back to sign in",
 			"hints": {
-				"error": "We are sorry, but we were unable to reset your password. Please try again.",
-				"success": "Your password has been reset successfully."
+				"error": "We couldn’t change your password. The link may have expired; ask for a new one.",
+				"success": "Your password has been changed."
 			},
-			"message": "Please enter a new password.",
+			"message": "Use one you don’t use anywhere else.",
 			"newPassword": "New password",
-			"submit": "Reset password",
-			"title": "Reset your password"
+			"submit": "Save the new password",
+			"title": "Choose a new password",
+			"overline": "Your password"
 		},
 		"signup": {
-			"alreadyHaveAccount": "Already have an account?",
+			"alreadyHaveAccount": "Already on Rishta?",
 			"email": "Email",
 			"hints": {
-				"signupFailed": "We are sorry, but we were unable to create your account. Please try again later.",
-				"verifyEmail": "We have sent you a link to verify your email. Please check your inbox."
+				"signupFailed": "We couldn’t create your account just now. Please try again in a moment.",
+				"verifyEmail": "We’ve sent a link to your email. Open it to confirm your address, then come back to begin your page.",
+				"verifyEmailTitle": "Sealed and sent"
 			},
-			"message": "We are happy that you want to join us. Please fill in the form below to create your account.",
-			"name": "Name",
+			"message": "An account for you, or for someone in your family you’re helping. Nothing is visible to anyone until a page is published.",
+			"name": "Your name",
 			"password": "Password",
 			"signIn": "Sign in",
-			"submit": "Create account",
-			"title": "Create an account"
+			"submit": "Create my account",
+			"title": "Begin a page",
+			"overline": "Begin a page",
+			"nameHint": "Your own name, even if the page is for someone else.",
+			"marginNote": "Writing a page for your son or daughter? Sign up as yourself. They’ll confirm the page before anyone can see it."
 		},
 		"verify": {
-			"title": "Verify your account",
-			"code": "One-time password",
-			"submit": "Verify",
-			"backToSignin": "Back to login",
-			"message": "Enter the one-time password from your authenticator app to continue."
+			"title": "Enter your code",
+			"code": "Six-digit code",
+			"submit": "Continue",
+			"backToSignin": "Back to sign in",
+			"message": "Open your authenticator app and enter the six-digit code for Rishta.",
+			"overline": "One more step"
 		}
-	},
-	"choosePlan": {
-		"title": "Choose your plan",
-		"description": "To continue, please select a plan."
-	},
-	"documentation": {
-		"title": "Documentation"
 	},
 	"notFound": {
 		"code": "404",
-		"title": "Page not found",
-		"goToDashboard": "Go to dashboard",
-		"goToHomepage": "Go to homepage"
+		"title": "This page isn't here.",
+		"goToDashboard": "Back to the folio",
+		"goToHomepage": "Go to homepage",
+		"body": "It may have been moved, or closed by its family."
 	},
 	"onboarding": {
 		"account": {
 			"avatar": "Avatar",
 			"avatarDescription": "Click the circle or drop an image to it to upload your avatar.",
-			"name": "Name"
+			"name": "Your name",
+			"nameHint": "Your full name is sealed on the page; other families see your first name."
 		},
 		"continue": "Continue",
-		"message": "Just a few quick steps to get you started.",
+		"message": "First, your name: it signs your notes and your pencil notes.",
 		"notifications": {
-			"accountSetupFailed": "We are sorry, but we were unable to set up your account. Please try again later."
+			"accountSetupFailed": "Your name didn't save. Try again in a moment."
 		},
-		"pricing": {
-			"planSelected": "Your plan has been selected successfully.",
-			"skip": "Skip for now"
-		},
-		"step": "Step {step} / {total}",
-		"title": "Set up your account"
+		"step": "Step {step} of {total}",
+		"title": "Welcome to Rishta",
+		"who": {
+			"title": "Who is this page for?",
+			"titleAnother": "Start a page for someone else",
+			"lead": "One page per person. Family can help write it; only the person it's for can confirm it and write notes.",
+			"relations": {
+				"self": "Me",
+				"son": "My son",
+				"daughter": "My daughter",
+				"brother": "My brother",
+				"sister": "My sister",
+				"relative": "Someone else in my family"
+			},
+			"chooseOne": "Choose who the page is for.",
+			"theirFirstName": "Their first name",
+			"firstNameNeeded": "Add their first name.",
+			"theirEmail": "Their email",
+			"emailHint": "So they can confirm the page. You can add it later.",
+			"emailInvalid": "Check the email address.",
+			"theyConfirm": "They'll confirm the page before anyone can see it.",
+			"continue": "Continue",
+			"fallbackName": "Me"
+		}
 	},
 	"organizations": {
-		"createForm": {
-			"name": "Organization name",
-			"notifications": {
-				"error": "We are sorry, but we were unable to create your organization. Please try again later.",
-				"success": "Your organization has been created. You can now invite members."
-			},
-			"submit": "Create organization",
-			"subtitle": "Enter a name for your organization to get started. You can change the name later in the organization settings.",
-			"title": "Create an organization"
-		},
 		"invitationAlert": {
-			"description": "You need to sign in or create an account to join the organization.",
-			"title": "You have been invited to join an organization."
+			"description": "Sign in or create an account to join the household.",
+			"title": "You've been invited to join a household."
 		},
 		"invitationModal": {
-			"accept": "Accept",
-			"decline": "Decline",
-			"description": "You have been invited to join the organization {organizationName}. Do you want to accept the invitation and join the organization?",
-			"title": "Join the organization"
-		},
-		"organizationSelect": {
-			"createNewOrganization": "Create new organization",
-			"organizations": "Organizations",
-			"personalAccount": "Personal account"
-		},
-		"organizationsGrid": {
-			"createNewOrganization": "Create new organization",
-			"title": "Your organizations"
+			"accept": "Join the household",
+			"decline": "Not now",
+			"description": "You'll read {organizationName}'s folio, keep pages and leave pencil notes. Only {organizationName} can write to anyone or answer a letter.",
+			"title": "Join {name}'s household",
+			"candidateTitle": "Your family has started a page for you",
+			"candidateDescription": "Nothing about you is visible to anyone until you read it and confirm it.",
+			"candidateAccept": "Read my page",
+			"failed": "That didn't go through. The invitation may have closed; ask for it to be sent again."
 		},
 		"roles": {
-			"admin": "Admin",
-			"member": "Member",
-			"owner": "Owner"
+			"admin": "Guardian",
+			"member": "Family",
+			"owner": "Candidate"
 		},
 		"settings": {
-			"changeName": {
-				"title": "Organization name"
-			},
-			"deleteOrganization": {
-				"confirmation": "Are you sure you want to delete your organization?",
-				"description": "Permanently delete your organization. Once you delete your organization, there is no going back. To confirm, please enter your password below:",
-				"submit": "Delete organization",
-				"title": "Delete organization"
-			},
-			"logo": {
-				"description": "Upload a logo for your organization.",
-				"title": "Organization logo"
-			},
 			"members": {
-				"activeMembers": "Active members",
-				"description": "See all active members and the pending invites of your organization.",
+				"activeMembers": "In the household",
+				"description": "Everyone in the household, and the invitations still open.",
 				"invitations": {
-					"empty": "You have not invited any members yet.",
-					"expiresAt": "Expires at {date}",
+					"empty": "No invitations are open.",
+					"expiresAt": "Open until {date}",
 					"invitationStatus": {
 						"accepted": "Accepted",
-						"canceled": "Canceled",
-						"pending": "Pending",
-						"rejected": "Rejected"
+						"canceled": "Cancelled",
+						"pending": "Open",
+						"rejected": "Declined"
 					},
-					"revoke": "Revoke invitation",
-					"resend": "Resend invitation"
+					"revoke": "Cancel the invitation"
 				},
 				"inviteMember": {
-					"description": "To invite a new member, send them an invitation.",
+					"description": "They'll read the folio, keep pages and pencil notes. They can never send a note or answer one.",
 					"email": "Email",
 					"notifications": {
 						"error": {
-							"description": "We were unable to invite the member. Please try again later.",
-							"title": "Could not invite member"
+							"title": "The invitation wasn't sent. Try again."
 						},
 						"success": {
-							"description": "The member has been invited.",
-							"title": "Member invited"
+							"title": "The invitation is on its way."
 						}
 					},
 					"role": "Role",
-					"submit": "Invite",
-					"title": "Invite member"
+					"submit": "Send invitation",
+					"title": "Invite someone"
 				},
-				"leaveOrganization": "Leave organization",
+				"leaveOrganization": "Leave the household",
 				"notifications": {
 					"removeMember": {
 						"error": {
-							"description": "Could not remove the member from your organization. Please try again."
+							"description": "They couldn't be removed from the household. Try again."
 						},
 						"loading": {
-							"description": "Removing member from organization..."
+							"description": "Removing them from the household…"
 						},
 						"success": {
-							"description": "The member has been successfully removed from your organization."
+							"description": "They've been removed from the household."
 						}
 					},
 					"revokeInvitation": {
 						"error": {
-							"description": "The invitation could not be revoked. Please try again later."
+							"description": "The invitation wasn't cancelled. Try again."
 						},
 						"loading": {
-							"description": "Revoking invitation..."
+							"description": "Cancelling the invitation…"
 						},
 						"success": {
-							"description": "The invitation has been revoked."
+							"description": "The invitation is cancelled."
 						}
 					},
 					"updateMembership": {
 						"error": {
-							"description": "Could not update organization membership. Please try again."
+							"description": "Their role couldn't be changed. Try again."
 						},
 						"loading": {
-							"description": "Updating membership..."
+							"description": "Changing their role…"
 						},
 						"success": {
-							"description": "Membership was updated successfully"
-						}
-					},
-					"resendInvitation": {
-						"loading": {
-							"description": "Resending invitation..."
-						},
-						"success": {
-							"description": "Invitation sent"
-						},
-						"error": {
-							"description": "Could not sent invitation. Please try again."
+							"description": "Their role is changed."
 						}
 					}
 				},
-				"pendingInvitations": "Pending invitations",
-				"removeMember": "Remove member",
-				"title": "Members"
-			},
-			"notifications": {
-				"organizationDeleted": "Your organization has been deleted.",
-				"organizationNameNotUpdated": "We were unable to update your organization name. Please try again later.",
-				"organizationNameUpdated": "Your organization name has been updated.",
-				"organizationNotDeleted": "We were unable to delete your organization. Please try again later."
-			},
-			"subtitle": "Manage the settings of the organization.",
-			"title": "Organization",
-			"dangerZone": {
-				"title": "Danger zone"
+				"pendingInvitations": "Open invitations",
+				"removeMember": "Remove from the household",
+				"title": "Household",
+				"empty": "No one has joined this household yet."
 			}
-		},
-		"start": {
-			"subtitle": "Welcome to the start page of this organization!"
 		}
 	},
 	"settings": {
 		"account": {
-			"avatar": {
-				"description": "To change your avatar click the picture in this block and select a file from your computer to upload.",
-				"notifications": {
-					"error": "Could not update avatar",
-					"success": "Avatar was updated successfully"
-				},
-				"title": "Your avatar"
-			},
 			"changeEmail": {
-				"description": "To change your email, enter the new email and hit save. You will have to confirm the new email before it will become active.",
+				"description": "Letters and answers are sent here. A new address takes over once you confirm it from the email we send.",
 				"notifications": {
-					"error": "Could not update email",
-					"success": "Email was updated successfully"
+					"error": "Your email address didn't change. Try again.",
+					"success": "Check your inbox to confirm the change."
 				},
 				"title": "Your email"
 			},
 			"changeName": {
 				"notifications": {
-					"error": "Could not update name",
-					"success": "Name was updated successfully"
+					"error": "Your name didn't save. Try again.",
+					"success": "Your name is saved."
 				},
 				"title": "Your name"
 			},
 			"deleteAccount": {
-				"confirmation": "Are you sure you want to delete your account?",
-				"description": "Permanently delete your account. Once you delete your account, there is no going back. To confirm, please enter your password below:",
+				"confirmation": "Delete your account? This can't be undone.",
+				"description": "This removes your account for good. If you only want to stop searching, use Close my search instead.",
 				"notifications": {
-					"error": "Could not delete account",
-					"success": "Account was deleted successfully"
+					"error": "Your account wasn't deleted. Try again.",
+					"success": "Your account is deleted."
 				},
 				"submit": "Delete account",
 				"title": "Delete account"
 			},
-			"language": {
-				"description": "To change the language of the app for your account, select a language from the list and click save.",
-				"notifications": {
-					"error": "Could not update language",
-					"success": "Language was updated successfully"
-				},
-				"title": "Your language"
-			},
 			"security": {
 				"activeSessions": {
-					"description": "These are all the active sessions of your account. Click the X to end a specifc session.",
-					"title": "Active sessions",
+					"description": "Everywhere you're signed in. Sign out of anything you don't recognise.",
+					"title": "Where you're signed in",
 					"notifications": {
 						"revokeSession": {
-							"success": "Session revoked"
+							"success": "Signed out there."
 						}
 					},
-					"currentSession": "Current session"
+					"currentSession": "This device",
+					"otherDevice": "Another device",
+					"signOut": "Sign out"
 				},
 				"changePassword": {
 					"currentPassword": "Current password",
 					"newPassword": "New password",
 					"notifications": {
-						"error": "Could not update password",
-						"success": "Password was updated successfully"
+						"error": "Your password didn't change. Check the current one and try again.",
+						"success": "Your new password is saved."
 					},
 					"title": "Your password"
 				},
@@ -447,112 +408,106 @@
 				},
 				"passkeys": {
 					"addPasskey": "Add passkey",
-					"description": "Use passkeys as a secure alternative to passwords.",
+					"description": "Sign in with your phone's or computer's lock instead of a password.",
+					"added": "Added {date}",
+					"remove": "Remove",
 					"notifications": {
 						"addPasskey": {
 							"error": {
-								"title": "Could not add passkey"
+								"title": "The passkey wasn't added. Try again."
 							},
 							"success": {
-								"title": "Passkey added"
+								"title": "Passkey added."
 							}
 						},
 						"deletePasskey": {
 							"error": {
-								"title": "Could not delete passkey"
+								"title": "The passkey wasn't removed. Try again."
 							},
 							"loading": {
-								"title": "Deleting passkey..."
+								"title": "Removing the passkey…"
 							},
 							"success": {
-								"title": "Passkey deleted"
+								"title": "Passkey removed."
 							}
 						}
 					},
 					"title": "Passkeys"
 				},
 				"setPassword": {
-					"description": "You have not set a password yet. To set one, you need to go through the password reset flow. Click the button below to send an email to reset your password and follow the instructions in the email.",
+					"description": "You sign in without a password today. To add one, we'll email you a link to choose it.",
 					"notifications": {
-						"error": "Could not send link to set password. Please try again.",
-						"success": "Check your inbox for the link to set your password."
+						"error": "The link didn't send. Try again in a moment.",
+						"success": "The link is in your inbox. It works once."
 					},
-					"submit": "Set password",
+					"submit": "Email me the link",
 					"title": "Your password"
 				},
 				"title": "Security",
 				"twoFactor": {
 					"title": "Two-factor authentication",
-					"description": "Add an extra layer of security to your account.",
+					"description": "A six-digit code from an authenticator app, asked for each time you sign in with your password.",
 					"dialog": {
 						"password": {
 							"title": "Verify with password",
-							"description": "Please verify your account by entering your password:",
-							"label": "Your password:"
+							"description": "Enter your password to carry on.",
+							"label": "Your password"
 						},
 						"totpUrl": {
-							"description": "Use your preferred authenticator app and scan the QR code with it or enter the secret below manually to set up two-factor authentication.",
-							"code": "Enter 6-digit code to verify the setup:",
+							"description": "Scan this code with your authenticator app, or type the key under it into the app.",
+							"code": "The six-digit code it shows",
 							"title": "Enable two-factor authentication"
 						}
 					},
-					"enable": "Enable two-factor authentication",
+					"enable": "Turn on two-factor authentication",
 					"notifications": {
 						"verify": {
 							"success": {
-								"title": "Two-factor authentication has been enabled successfully."
+								"title": "Two-factor authentication is on."
 							}
 						},
 						"enable": {
 							"error": {
-								"title": "Could not verify your account with the provided password. Please try again."
+								"title": "That password isn't right. Try again."
 							}
 						},
 						"disable": {
 							"success": {
-								"title": "Two-factor authentication has been disabled successfully."
+								"title": "Two-factor authentication is off."
 							}
 						}
 					},
-					"disable": "Disable two-factor authentication",
-					"enabled": "You have two-factor authentication enabled for your account."
+					"disable": "Turn off two-factor authentication",
+					"enabled": "Two-factor authentication is on. You'll be asked for a code each time you sign in with your password."
 				}
 			},
-			"subtitle": "Manage the settings of your personal account.",
-			"title": "Account settings"
+			"subtitle": "Your name, email, appearance and account.",
+			"title": "Your account",
+			"householdDeleted": "Your household's pages, letters and links are deleted. You can delete your account below."
 		},
 		"billing": {
 			"createCustomerPortal": {
 				"label": "Manage billing",
 				"notifications": {
 					"error": {
-						"title": "Could not create a customer portal session. Please try again."
+						"title": "Billing didn't open. Try again in a moment."
 					}
 				}
-			},
-			"activePlan": {
-				"status": {
-					"active": "Active",
-					"canceled": "Canceled",
-					"expired": "Expired",
-					"incomplete": "Incomplete",
-					"past_due": "Past due",
-					"paused": "Paused",
-					"trialing": "Trialing",
-					"unpaid": "Unpaid"
-				},
-				"title": "Your plan"
-			},
-			"changePlan": {
-				"description": "Choose a plan to subscribe to.",
-				"title": "Change your plan"
-			},
-			"title": "Billing"
+			}
 		},
 		"notificationsPage": {
 			"title": "Notifications",
-			"description": "Choose how you receive notifications. Disabled options are stored; everything is enabled by default.",
+			"description": "Everything arrives in Letters, quietly. Choose what also reaches you by email.",
 			"groups": {
+				"letters": {
+					"title": "Letters and introductions"
+				},
+				"family": {
+					"title": "Family"
+				},
+				"folio": {
+					"title": "Folio"
+				},
 				"general": {
 					"title": "General"
 				}
@@ -560,36 +515,56 @@
 			"types": {
 				"APP_UPDATE": {
 					"label": "App updates"
+				},
+				"LETTER_RECEIVED": {
+					"label": "A letter is waiting for you"
+				},
+				"LETTER_ANSWERED": {
+					"label": "Your letter has an answer"
+				},
+				"CALL_PROPOSED": {
+					"label": "A time has been proposed"
+				},
+				"CALL_BOOKED": {
+					"label": "A call is booked"
+				},
+				"INTRODUCTION_CLOSED": {
+					"label": "A conversation has closed"
+				},
+				"FAMILY_REACTION": {
+					"label": "A pencil note from your family"
+				},
+				"CLAIM_REQUESTED": {
+					"label": "Someone started a page for you"
+				},
+				"PAGE_CLAIMED": {
+					"label": "A page you started was confirmed"
+				},
+				"CLAIM_DECLINED": {
+					"label": "A page you started was declined"
+				},
+				"FOLIO_READY": {
+					"label": "Your evening folio is ready"
 				}
 			},
 			"columns": {
 				"type": "Notification",
 				"inApp": "In-app",
 				"email": "Email"
-			}
-		},
-		"menu": {
-			"account": {
-				"billing": "Billing",
-				"dangerZone": "Danger zone",
-				"general": "General",
-				"notifications": "Notifications",
-				"security": "Security",
-				"title": "Account"
 			},
-			"organization": {
-				"billing": "Billing",
-				"general": "General",
-				"members": "Members",
-				"title": "Organization",
-				"dangerZone": "Danger zone"
-			}
+			"emailTitle": "Email me when",
+			"emailLead": "While discreet email is on in your household settings, subjects never name anyone.",
+			"error": "Your email choices didn't open."
 		},
-		"save": "Save"
-	},
-	"start": {
-		"subtitle": "See the latest stats of your awesome business.",
-		"welcome": "Welcome {name}!"
+		"save": "Save",
+		"appearance": {
+			"title": "Appearance",
+			"description": "Paper by day; Lamp is a warm sepia for reading at night.",
+			"light": "Paper",
+			"dark": "Lamp",
+			"system": "Follow my phone",
+			"note": "Family links always open in Paper."
+		}
 	},
 	"common": {
 		"confirmation": {
@@ -600,21 +575,1516 @@
 			"continue": "Continue",
 			"verify": "Verify"
 		},
-		"colorMode": {
-			"system": "System",
-			"light": "Light",
-			"dark": "Dark"
-		},
 		"passwordCriteria": {
 			"minLength": "Min. 8 characters",
 			"upperAndLowercase": "Upper & lowercase",
 			"number": "Number",
 			"specialCharacter": "Special character"
+		},
+		"close": "Close",
+		"back": "Back",
+		"save": "Save",
+		"saving": "Saving",
+		"saved": "Saved",
+		"notSaved": "Not saved.",
+		"tryAgain": "Try again",
+		"cancel": "Cancel",
+		"edit": "Edit",
+		"done": "Done",
+		"loading": "Opening…",
+		"genericError": "Something didn't go through. Check your connection and try again.",
+		"password": {
+			"show": "Show password",
+			"hide": "Hide password",
+			"generate": "Suggest a strong password"
 		}
 	},
 	"checkoutReturn": {
-		"title": "Processing your purchase",
-		"description": "Please wait while we confirm your payment.",
-		"loading": "Confirming your purchase, please wait..."
+		"title": "Back from checkout",
+		"description": "We're adding your purchase to the household's Credits & plan.",
+		"loading": "Waiting for the payment to come through…"
+	},
+	"shell": {
+		"skipToContent": "Skip to the page",
+		"nav": {
+			"label": "Rishta",
+			"folio": "Folio",
+			"letters": "Letters",
+			"biodata": "My Biodata",
+			"folioShort": "Folio",
+			"lettersShort": "Letters",
+			"biodataShort": "My Biodata",
+			"lettersWaiting": "{count, plural, one {# letter waits for you} other {# letters wait for you}}"
+		},
+		"avatar": {
+			"open": "Menu for {name}",
+			"searchingFor": "Searching for",
+			"settings": "Settings",
+			"household": "Household",
+			"credits": "Credits & plan",
+			"closeSearch": "Close my search",
+			"startForSomeoneElse": "Start a page for someone else",
+			"admin": "Moderation",
+			"appearance": "Appearance",
+			"paper": "Paper",
+			"lamp": "Lamp",
+			"followPhone": "Follow my phone",
+			"signOut": "Sign out"
+		},
+		"back": "← Back",
+		"backToFolio": "← Folio",
+		"backToLetters": "← Letters",
+		"backLabel": "Back",
+		"backToLettersLabel": "Letters",
+		"pageRef": "No. {ref}"
+	},
+	"page": {
+		"sections": {
+			"personal": "Personal",
+			"education": "Education & work",
+			"family": "Family",
+			"lifestyle": "Lifestyle",
+			"about": "About",
+			"looking_for": "Looking for",
+			"sealed": "Sealed"
+		},
+		"fields": {
+			"born": "Born",
+			"dateOfBirth": "Date of birth",
+			"height": "Height",
+			"maritalStatus": "Married before",
+			"hasChildren": "Children",
+			"motherTongue": "Mother tongue",
+			"languages": "Languages",
+			"religion": "Faith",
+			"sect": "Tradition",
+			"practice": "Practice",
+			"community": "Community",
+			"residency": "Residency",
+			"manglik": "Manglik",
+			"education": "Education",
+			"university": "Studied at",
+			"profession": "Work",
+			"employer": "Works at",
+			"incomeRange": "Income",
+			"fatherOccupation": "Father",
+			"motherOccupation": "Mother",
+			"siblings": "Siblings",
+			"familyType": "Family",
+			"familyValues": "Family values",
+			"nativePlace": "Native place",
+			"aboutFamily": "About the family",
+			"diet": "Diet",
+			"smoking": "Smoking",
+			"drinking": "Drinking",
+			"fullName": "Full name",
+			"birthTime": "Birth time",
+			"birthPlace": "Birth place",
+			"contactPhone": "Phone",
+			"location": "Lives in",
+			"country": "Country",
+			"aboutMe": "About",
+			"lookingFor": "Looking for",
+			"familyContactName": "Family contact",
+			"familyContactPhone": "Family phone",
+			"displayName": "Name on the page",
+			"gender": "Gender",
+			"invocation": "Invocation",
+			"invocationText": "Invocation words",
+			"pageLanguage": "Page written in",
+			"createdBy": "Written by",
+			"timeZone": "Time zone"
+		},
+		"values": {
+			"gender": {
+				"male": "Man",
+				"female": "Woman"
+			},
+			"maritalStatus": {
+				"never_married": "Never married",
+				"divorced": "Divorced",
+				"widowed": "Widowed",
+				"annulled": "Annulled"
+			},
+			"hasChildren": {
+				"yes": "Has children",
+				"no": "No children"
+			},
+			"religion": {
+				"hindu": "Hindu",
+				"muslim": "Muslim",
+				"sikh": "Sikh",
+				"christian": "Christian",
+				"jain": "Jain",
+				"buddhist": "Buddhist",
+				"jewish": "Jewish",
+				"parsi": "Parsi",
+				"other": "Another faith",
+				"none": "No religion"
+			},
+			"practice": {
+				"very": "Very practising",
+				"moderately": "Moderately practising",
+				"somewhat": "Somewhat practising",
+				"not_practising": "Not practising"
+			},
+			"residency": {
+				"citizen": "Citizen",
+				"permanent_resident": "Permanent resident",
+				"work_visa": "Work visa",
+				"student_visa": "Student visa",
+				"other": "Other"
+			},
+			"manglik": {
+				"yes": "Manglik",
+				"no": "Not manglik",
+				"partial": "Anshik (partial)",
+				"dont_know": "Not known"
+			},
+			"education": {
+				"high_school": "High school",
+				"diploma": "Diploma",
+				"bachelors": "Bachelor's degree",
+				"masters": "Master's degree",
+				"phd": "Doctorate",
+				"professional": "Professional degree",
+				"other": "Other"
+			},
+			"incomeRange": {
+				"under_50k": "Under $50,000",
+				"50k_75k": "$50,000–75,000",
+				"75k_100k": "$75,000–100,000",
+				"100k_150k": "$100,000–150,000",
+				"150k_plus": "Over $150,000",
+				"prefer_not_to_say": "Prefers not to say"
+			},
+			"familyType": {
+				"joint": "Joint family",
+				"nuclear": "Nuclear family"
+			},
+			"familyValues": {
+				"traditional": "Traditional",
+				"moderate": "Moderate",
+				"liberal": "Liberal"
+			},
+			"diet": {
+				"veg": "Vegetarian",
+				"eggetarian": "Eggetarian",
+				"vegan": "Vegan",
+				"jain_veg": "Jain vegetarian",
+				"non_veg": "Non-vegetarian",
+				"halal": "Halal"
+			},
+			"smoking": {
+				"never": "Doesn't smoke",
+				"occasionally": "Smokes occasionally",
+				"regularly": "Smokes"
+			},
+			"drinking": {
+				"never": "Doesn't drink",
+				"occasionally": "Drinks occasionally",
+				"socially": "Drinks socially",
+				"regularly": "Drinks regularly"
+			}
+		},
+		"signer": {
+			"self": "Page written by {name}",
+			"parent": "Written by {name}'s parent",
+			"parentConfirmed": "Written by {name}'s parent, confirmed by {name}",
+			"sibling": "Written by {name}'s sibling",
+			"siblingConfirmed": "Written by {name}'s sibling, confirmed by {name}",
+			"relative": "Written by {name}'s family",
+			"relativeConfirmed": "Written by {name}'s family, confirmed by {name}",
+			"friend": "Written by a friend of {name}",
+			"friendConfirmed": "Written by a friend, confirmed by {name}"
+		},
+		"verified": {
+			"email": "Verified email",
+			"phone": "Verified phone",
+			"id": "Verified ID"
+		},
+		"ref": "No. {ref} · updated {date}",
+		"seenBefore": "You've seen this page before",
+		"photo": {
+			"veiledAlt": "Photo, veiled until you both say yes",
+			"alt": "Photo of {name}",
+			"none": "No photo on this page",
+			"veiled": "Veiled"
+		},
+		"sealed": {
+			"aria": "Sealed. Opens when you both say yes.",
+			"closed": "Photos, full name, workplace and contact open when you both say yes.",
+			"empty": "Nothing else was sealed on this page."
+		},
+		"printWatermark": "From Rishta · No. {ref} · shared privately, not for forwarding"
+	},
+	"why": {
+		"none": "No reasons to show yet. They appear once your Looking for page is complete.",
+		"verdict": {
+			"fits": "Fits",
+			"gap": "A gap",
+			"unknown": "Not stated"
+		},
+		"timeline": {
+			"3_months": "within three months",
+			"6_months": "within six months",
+			"1_year": "within a year",
+			"2_years_plus": "in two years or more"
+		},
+		"fits": {
+			"timelineSame": "You both hope to marry {when}.",
+			"timelineNear": "{name} hopes to marry {theirs}; you, {mine}.",
+			"religionValue": "{value}, which you listed.",
+			"religion": "Faith: one you listed.",
+			"dietSame": "{name} is {diet}, as you are.",
+			"diet": "{name} is {diet}, which you listed.",
+			"age": "{name} is {age}, within the ages you gave.",
+			"maritalStatus": "{status}, which you listed.",
+			"locationPlace": "{name} lives in a place you listed.",
+			"locationTheyRelocate": "{name} is open to relocating; you're in {city}.",
+			"locationTheyRelocateNoCity": "{name} is open to relocating.",
+			"locationYouRelocate": "You're open to relocating.",
+			"locationSameCity": "You both live in {city}.",
+			"locationSameCountry": "You live in the same country, and one of you is open to moving.",
+			"residency": "Residency: as you asked.",
+			"educationValue": "{value}, which you listed.",
+			"education": "Education: a level you listed.",
+			"communityValue": "{value}, which you listed.",
+			"community": "Community: one you listed.",
+			"language": "You both speak {language}.",
+			"height": "{height}, within the heights you gave."
+		},
+		"gap": {
+			"timeline": "{name} hopes to marry {theirs}; you, {mine}.",
+			"religionValue": "{value}: not a faith you listed.",
+			"religion": "Faith: not one you listed.",
+			"diet": "Diet differs: you're {mine}, {name} is {theirs}.",
+			"age": "{name} is {age}, outside the ages you gave.",
+			"maritalStatus": "{status}: not one you listed.",
+			"locationDifferentCountry": "Neither of you mentioned relocating, and you live in different countries.",
+			"locationDifferentCity": "You live in different cities, and neither of you mentioned relocating.",
+			"residency": "Residency: not what you asked for.",
+			"educationValue": "{value}: not a level you listed.",
+			"education": "Education: not a level you listed.",
+			"communityValue": "{value}: not a community you listed.",
+			"community": "Community: not one you listed.",
+			"height": "{height}, outside the heights you gave."
+		},
+		"unknown": {
+			"timeline": "Timeline: not stated on {name}'s page.",
+			"religion": "Faith: not stated on {name}'s page.",
+			"age": "Age: not stated on {name}'s page.",
+			"location": "Where: not stated on {name}'s page.",
+			"residency": "Residency: not stated on {name}'s page.",
+			"education": "Education: not stated on {name}'s page.",
+			"community": "Community: not stated on {name}'s page.",
+			"height": "Height: not stated on {name}'s page."
+		}
+	},
+	"household": {
+		"pencil": {
+			"signed": "{name}",
+			"signedViaLink": "{name} (via link)",
+			"reaction": {
+				"proceed": "Proceed",
+				"lets_talk": "Let's talk",
+				"not_for_us": "Not for us"
+			},
+			"remove": "Remove this pencil note",
+			"empty": "No pencil notes yet.",
+			"notSaved": "Not saved. Try again.",
+			"prompt": "What do you think?",
+			"wordsLabel": "A few words (optional)",
+			"wordsPlaceholder": "Ask about the hospital.",
+			"chooseOrWrite": "Choose a reaction or add a few words.",
+			"submit": "Pencil it in",
+			"privateToYou": "Only you see your own pencil notes."
+		},
+		"settings": {
+			"title": "Household settings",
+			"lead": "How the folio arrives, and what the family link and emails look like.",
+			"readOnly": "Only {name} changes the household's settings.",
+			"evening": {
+				"title": "The evening folio",
+				"description": "Today's pages are released at this hour in your time zone.",
+				"timeZone": "Time zone",
+				"hour": "Released at"
+			},
+			"family": {
+				"title": "Family",
+				"description": "The language a family link opens in, unless you choose another.",
+				"language": "Family language"
+			},
+			"privacy": {
+				"title": "Privacy"
+			},
+			"readIncognito": {
+				"label": "Read pages privately",
+				"help": "The people whose pages you read aren't told. Free, as a safety feature."
+			},
+			"familyLinksAllowed": {
+				"label": "Let other families share our page by link",
+				"help": "When this is off, our page shows \"This family prefers their page isn't shared by link\" instead."
+			},
+			"discreetEmails": {
+				"label": "Discreet emails",
+				"help": "Emails never name anyone and simply say \"Open Rishta to read it.\""
+			},
+			"keyboardShortcuts": {
+				"label": "Single-key shortcuts",
+				"help": "K keep, P pass, W write a note, Y why this page, F show my family. The arrow keys always turn pages."
+			},
+			"save": "Save settings",
+			"saved": "Saved"
+		},
+		"members": {
+			"title": "Household",
+			"lead": "The candidate holds the seal. Family reads, keeps pages and pencils notes; they can never write to anyone for the candidate.",
+			"seats": "{used} of {limit} seats",
+			"justYou": "It's just you. Invite family to read your folio and leave pencil notes. They can never write to anyone for you.",
+			"you": "(you)",
+			"editLabel": "Change what they're called",
+			"addLabel": "Add what they're called, like Ammi",
+			"labelPlaceholder": "Ammi",
+			"saveLabel": "Save",
+			"roles": {
+				"candidate": "The candidate · holds the seal",
+				"drafter": "Drafting the page",
+				"guardian": "Guardian",
+				"family": "Family"
+			},
+			"guardianCan": "Reads the folio · keeps pages · pencils notes",
+			"roleFor": "Role for {name}",
+			"roleFailed": "The role didn't change. Try again.",
+			"remove": "Remove",
+			"removeFailed": "They weren't removed. Try again.",
+			"removeTitle": "Remove {name} from the household?",
+			"removeBody": "{name} will no longer read the folio or pencil notes. Their notes stay in the margin.",
+			"keep": "Keep them",
+			"invite": {
+				"title": "Invite someone",
+				"description": "A parent, a sibling or an aunt. They read, keep pages and pencil notes.",
+				"email": "Email",
+				"role": "Role",
+				"emailInvalid": "Enter an email address.",
+				"submit": "Send invitation",
+				"never": "They can never send a note or answer one.",
+				"failed": "The invitation wasn't sent. Try again.",
+				"pending": "invited · open until {date}",
+				"cancel": "Cancel",
+				"cancelFailed": "The invitation wasn't cancelled. Try again."
+			},
+			"candidate": {
+				"title": "Invite {name} to confirm the page",
+				"description": "Nothing is visible to anyone until {name} signs in and confirms it.",
+				"send": "Send the invitation",
+				"resend": "Send it again",
+				"pending": "Waiting for {email} to confirm."
+			},
+			"sees": {
+				"title": "What your household can see",
+				"description": "{name} decides. Messages are never shown to family.",
+				"familyReadsFolio": "Read my folio and kept pages",
+				"familyEditsPage": "Edit my page",
+				"familySeesIntroductions": "See who I'm introduced to (never my messages)",
+				"save": "Save",
+				"saved": "Saved"
+			},
+			"links": {
+				"title": "Family links you've shared",
+				"description": "Each one is private, watermarked and closes by itself.",
+				"empty": "No family links open.",
+				"line": "For {label} · {page}'s page",
+				"until": "open until {date}",
+				"opened": "{count, plural, =0 {not opened yet} one {opened once} other {opened # times}}",
+				"reaction": {
+					"proceed": "Proceed",
+					"lets_talk": "Let's talk",
+					"not_for_us": "Not for us"
+				},
+				"close": "Close the link"
+			}
+		}
+	},
+	"family": {
+		"languages": {
+			"en": "English",
+			"hi": "हिन्दी",
+			"ur": "اردو",
+			"pa": "ਪੰਜਾਬੀ",
+			"gu": "ગુજરાતી",
+			"bn": "বাংলা",
+			"ta": "தமிழ்",
+			"te": "తెలుగు"
+		},
+		"dialog": {
+			"title": "Show my family",
+			"description": "A private link to {name}'s page for someone without an account. It expires, carries their name as a watermark, and never shows the sealed section.",
+			"readyTitle": "Your link for {label} is ready",
+			"readyBody": "It stays open until {until}. They can tap Proceed, Let's talk or Not for us, and it appears as a pencil note beside the page.",
+			"share": "Share",
+			"whatsapp": "Send on WhatsApp",
+			"copy": "Copy link",
+			"copied": "Copied",
+			"privacy": "The photo stays veiled and the sealed section stays closed on a family link.",
+			"forWhom": "Who it's for",
+			"forWhomPlaceholder": "Ammi",
+			"forWhomRequired": "Add who it's for, like Ammi or Nani.",
+			"language": "In their language",
+			"openFor": "Open for",
+			"days": "{count, plural, one {# day} other {# days}}",
+			"includeNote": "Include {name}'s note",
+			"create": "Make the link",
+			"watermarkNote": "Watermarked with their name.",
+			"limit": "You have three family links open. Close one in Household settings, or go Premium for more.",
+			"notAllowed": "This family prefers their page isn't shared by link.",
+			"failed": "The link wasn't made. Try again."
+		},
+		"link": {
+			"strip": "Shared privately with {label} by {name}",
+			"until": "Open until {date} · not for forwarding",
+			"languageLabel": "Language",
+			"translated": "Translated.",
+			"showOriginal": "Show the original",
+			"showTranslation": "Show the translation",
+			"noTranslation": "A translation isn't available right now. The labels are in your language; the words are as written.",
+			"noteFrom": "{name}'s note",
+			"watermark": "For {label} · from {name} · {date}",
+			"question": "What do you think?",
+			"reactions": {
+				"proceed": "Proceed",
+				"lets_talk": "Let's talk",
+				"not_for_us": "Not for us"
+			},
+			"thanks": "Thank you. {name} will see “{reaction}” beside the page.",
+			"canChange": "You can change it until the link closes.",
+			"notSaved": "That wasn't saved. Please try again.",
+			"words": "Add a few words (optional)",
+			"send": "Send to {name}",
+			"sent": "Sent. {name} will see your words beside the page.",
+			"report": "Report this page",
+			"reportTitle": "What is wrong with this page?",
+			"reportCategories": {
+				"scam_money": "It asks for money or seems like a scam",
+				"harassment": "Harassment or unkind words",
+				"fake_profile": "The page seems fake",
+				"underage": "The person seems to be under 18",
+				"pressure_to_marry": "Pressure to marry",
+				"hate": "Hateful words",
+				"other": "Something else"
+			},
+			"reportSubmit": "Send the report",
+			"reportThanks": "Thank you. A person on our team will read it.",
+			"closed": "This link has closed. Ask {name} to send it again.",
+			"closedNoName": "This link has closed. Ask for it to be sent again.",
+			"error": "This page couldn't open. Please try the link again in a minute."
+		}
+	},
+	"report": {
+		"title": "Report {name}",
+		"description": "Tell us what happened. We read every report, and we won't tell them you reported.",
+		"thanksTitle": "Thank you for telling us",
+		"thanks": "A person on our team will read this. We won't tell them you reported.",
+		"thanksBlocked": "A person on our team will read this. {name} is blocked: their page, letters and messages are gone for both of you.",
+		"done": "Done",
+		"whatHappened": "What happened",
+		"categories": {
+			"scam_money": "Asked for money or seems like a scam",
+			"harassment": "Harassment or unkind messages",
+			"fake_profile": "The page seems fake",
+			"underage": "Seems to be under 18",
+			"pressure_to_marry": "Pressure to marry",
+			"hate": "Hateful words",
+			"other": "Something else"
+		},
+		"details": "Anything else we should know (optional)",
+		"alsoBlock": "Also block {name}",
+		"submit": "Send the report",
+		"failed": "The report wasn't sent. Try again.",
+		"block": {
+			"title": "Block {name}?",
+			"description": "{name}'s page, letters and messages disappear for both of you, and neither of you appears in the other's folio again.",
+			"reason": "A reason, for your records (optional)",
+			"failed": "That didn't go through. Try again.",
+			"cancel": "Not now",
+			"confirm": "Block {name}"
+		}
+	},
+	"composer": {
+		"title": "A note to {name}",
+		"close": "Close the note. Your words are kept.",
+		"salutation": "Dear {name},",
+		"placeholder": "Write one to three sentences about {name}'s page.",
+		"suggestion": {
+			"lead": "A first line, if you'd like one:",
+			"use": "Use it",
+			"finding": "Looking for a first line in your two pages…"
+		},
+		"counter": {
+			"more": "{count, plural, one {# more character and you can seal it.} other {# more characters and you can seal it.}}",
+			"ready": "{count} of {max} · ready to seal"
+		},
+		"lock": {
+			"contact": "Contact details open when you both say yes. Remove them to seal.",
+			"suggestion": "Make the line your own before sealing."
+		},
+		"announce": {
+			"sent": "Sealed. Your note is on its way."
+		},
+		"priority": {
+			"label": "Send as a priority note (1 credit)",
+			"explain": "{name} will see it labelled Priority note at the top of their letters for two days.",
+			"noCredits": "You have no credits.",
+			"buy": "Buy credits",
+			"chosen": "Priority note · 1 credit"
+		},
+		"blocker": {
+			"dailyLimit": "You've sealed today's notes. Tomorrow evening you can write again, or use a credit now.",
+			"useCredit": "Use 1 credit and seal",
+			"alreadyWroteToYou": "{name} has already written to you. Read the letter; that is where you can say yes.",
+			"readTheirLetter": "Read the letter",
+			"alreadyWrote": "You've already written to {name}.",
+			"openLetter": "Open your letter",
+			"pageClosed": "This page has closed. Your note wasn't sent, and your words are kept.",
+			"notAFit": "{name}'s page has a non-negotiable your page doesn't meet, so a note can't be sent.",
+			"unpublished": "Publish your page to write notes.",
+			"openMyPage": "Open My Biodata"
+		},
+		"error": {
+			"network": "The note wasn't sent. Your words are saved; press the seal again."
+		},
+		"signer": "— {name} · written by {name}",
+		"seal": {
+			"label": "Seal and send your note",
+			"sent": "Sealed and sent.",
+			"sealing": "Sealing…",
+			"hint": "Press and hold to seal and send. Or press once and confirm.",
+			"hintReduced": "Press once and confirm to seal and send, or press and hold.",
+			"confirmLabel": "Confirm sending",
+			"confirm": "Seal and send this note to {name}?",
+			"confirmSend": "Seal and send",
+			"keepWriting": "Keep writing"
+		}
+	},
+	"folio": {
+		"previous": "Previous page",
+		"next": "Next page",
+		"title": "{weekday} folio",
+		"titleFallback": "Folio",
+		"counter": "{position} of {total}",
+		"endLabel": "The end",
+		"announce": "Page {position} of {total}, {name}",
+		"announceEnd": "The end of today's folio",
+		"closedPage": "This page has been closed by its family.",
+		"actionFailed": "That didn't go through. Try again.",
+		"sealed": "Sealed and sent. {name} will read it with your page.",
+		"tookBack": "Your note is taken back.",
+		"roleDescription": "page stack",
+		"marginLabel": "The margin",
+		"keptBy": "Kept by {name}",
+		"railSummary": "Kept {kept} · Wrote {wrote}",
+		"actions": {
+			"label": "Answer this page",
+			"keep": "Keep",
+			"kept": "Kept ✓",
+			"keepFor": "Keep for {name}",
+			"keptFor": "Kept for {name} ✓",
+			"unkeep": "Unkeep",
+			"pass": "Pass",
+			"write": "Write a note",
+			"takeBack": "Take back my note",
+			"takeBackShort": "Take back",
+			"pencil": "Pencil a note",
+			"family": "Show my family",
+			"familyShort": "Family",
+			"publishFirst": "Publish your page to write notes.",
+			"noFamilyLinks": "This family prefers their page isn't shared by link.",
+			"readTheirLetter": "Read {name}'s letter",
+			"readLetterShort": "Read the letter",
+			"publishShort": "Publish to write"
+		},
+		"why": {
+			"title": "Why this page",
+			"handle": "Why this page: {reason}",
+			"footnote": "These come from your Looking for page and theirs. Nobody sees a score, and {name} never sees this list.",
+			"edit": "Edit what I'm looking for",
+			"pencilTitle": "Pencil notes"
+		},
+		"pass": {
+			"slip": "Passed quietly.",
+			"undo": "Undo",
+			"undoShort": "Undo pass",
+			"addReason": "Add a private reason",
+			"reasonKept": "Kept private. Only you will ever see it.",
+			"private": "Your reason is never shown to anyone.",
+			"passedBefore": "You passed this page quietly.",
+			"reasons": {
+				"timeline": "Timeline",
+				"distance": "Distance",
+				"family": "Family",
+				"faith": "Faith",
+				"lifestyle": "Lifestyle",
+				"feeling": "Not the right feeling",
+				"other": "Other"
+			}
+		},
+		"wrote": {
+			"today": "You wrote to {name} today",
+			"on": "You wrote to {name} on {date}",
+			"state": {
+				"waiting_for_you": "Waiting for your answer",
+				"waiting_for_them": "Waiting for an answer",
+				"introduced": "Introduced",
+				"call_booked": "Call booked",
+				"families": "Families introduced",
+				"introduction_closed": "The introduction has closed",
+				"declined_by_you": "You answered: not this time",
+				"declined_by_them": "Answered: not this time",
+				"withdrawn_by_you": "You took back your note",
+				"withdrawn_by_them": "The note was taken back",
+				"expired": "No answer came. The letter has closed.",
+				"closed": "This letter has closed"
+			}
+		},
+		"takeBack": {
+			"title": "Take back your note to {name}?",
+			"body": "It leaves {name}'s letters at once. You can't write to {name} again after taking it back.",
+			"cancel": "Keep it sealed",
+			"confirm": "Take it back"
+		},
+		"end": {
+			"title": "That's today's folio. The next arrives tomorrow evening.",
+			"titleTonight": "That's today's folio. The next arrives this evening at {time}.",
+			"summary": "You kept {kept, plural, one {# page} other {# pages}} · wrote to {wrote}",
+			"passed": "Passed pages",
+			"undo": "Undo",
+			"passedNote": "A page you pass quietly may return once, later, if you undo it."
+		},
+		"empty": {
+			"title": "No new pages meet your non-negotiables today.",
+			"body": "Your next folio arrives tomorrow evening.",
+			"link": "Look again at what you're looking for"
+		},
+		"first": "Your first folio arrives this evening at {time}.",
+		"firstNote": "It will hold five pages, one at a time. Until then, your page is out in other families' folios.",
+		"locked": {
+			"awaitingClaim": "The folio opens when {name} confirms the page.",
+			"unpublishedYou": "The folio opens once your page is published.",
+			"unpublished": "The folio opens once {name} publishes the page.",
+			"pausedYou": "Your page is paused, so no new folios arrive.",
+			"paused": "{name}'s search is paused for now.",
+			"closed": "{name}'s search is closed.",
+			"resume": "Resume my page",
+			"openPage": "Open the page",
+			"pausedNote": "Your letters and introductions stay open while you're paused."
+		},
+		"error": "The folio didn't open. Check your connection and try again.",
+		"errorCached": "The folio didn't refresh. These pages are still here to read.",
+		"tryAgain": "Try again",
+		"private": "{name} keeps the folio private for now.",
+		"keptLink": "Kept pages →"
+	},
+	"kept": {
+		"title": "Kept pages",
+		"counter": "Kept · {position} of {total}",
+		"private": "{name} keeps the kept pages private for now.",
+		"error": "Kept pages didn't open. Check your connection and try again.",
+		"tryAgain": "Try again",
+		"empty": "No kept pages yet. Keep a page from your folio to read it again or show your family.",
+		"backToFolio": "Back to today's folio"
+	},
+	"letters": {
+		"title": "Letters",
+		"choose": "Choose a letter to read it beside its page.",
+		"aLetter": "A letter",
+		"introductionContext": "Introduction",
+		"backToLetters": "Back to letters",
+		"tryAgain": "Try again",
+		"marginLabel": "Beside the letter",
+		"whyTitle": "Why this page for you",
+		"pencilTitle": "Pencil notes",
+		"whyForYou": "Why this page for you",
+		"whyForYouHandle": "Why this page for you: {reason}",
+		"sealedOn": "Sealed {date}",
+		"priority": "Priority note",
+		"takeCare": "Take care",
+		"familyReacted": "Your family pencilled a note",
+		"private": "{name}'s letters are private to {name}.",
+		"privateNote": "Only {name} can read letters, answer them or write one. You can keep pages and pencil notes in the folio.",
+		"error": "Letters didn't open. Check your connection and try again.",
+		"empty": "No letters yet. When someone writes to you, their note arrives here with their page.",
+		"noIntroductions": "No introductions yet.",
+		"nothingWaiting": "You're not keeping anyone waiting.",
+		"stageLinesNote": "{name} shares how introductions are going. Notes and messages stay private.",
+		"boxes": {
+			"waiting": "Waiting for your answer",
+			"introductions": "Introductions",
+			"sent": "Your sealed notes",
+			"closed": "Closed",
+			"closedCount": "Closed ({count})"
+		},
+		"state": {
+			"waitingToday": "Waiting · today",
+			"waitingDays": "Waiting · {count, plural, one {# day} other {# days}}",
+			"sealedToday": "Sealed today",
+			"sealedDays": "Sealed {count, plural, one {# day ago} other {# days ago}}",
+			"sealsBroke": "The seals are broken",
+			"newWords": "{count, plural, one {# new letter} other {# new letters}}",
+			"chooseTime": "Choose a time",
+			"introduced": "Introduced",
+			"callBooked": "Call {when}",
+			"callBookedNoTime": "Call booked",
+			"families": "Families introduced",
+			"closedKindly": "Closed kindly on {date}",
+			"declinedByYou": "You answered: not this time",
+			"declinedKindly": "Answered kindly: not this time",
+			"closedQuietly": "This letter has closed",
+			"withdrawnByYou": "You took back your note",
+			"withdrawnByThem": "The note was taken back",
+			"expired": "No answer came. Closed.",
+			"closed": "Closed"
+		},
+		"note": {
+			"priority": "Priority note",
+			"salutation": "Dear {name},",
+			"signer": "— {name} · written by {name}",
+			"sealOf": "{name}'s seal"
+		},
+		"safety": {
+			"takeCare": "Take care:",
+			"reason": {
+				"money": "this note mentions money. Nobody on Rishta should ever ask you for money.",
+				"off_platform": "this note asks you to move to WhatsApp or another app before you've spoken.",
+				"visa": "this note talks about visas or papers very early.",
+				"harassment": "this note has words that may be unkind."
+			},
+			"sealedPromise": "Rishta keeps contact sealed until you both say yes.",
+			"report": "Report",
+			"block": "Block"
+		},
+		"yes": {
+			"title": "Say yes to {name}?",
+			"body": "Both seals break, and your sealed section opens to {name}: photos, full name, workplace and contact. Three evenings for a first call are proposed at once.",
+			"confirm": "Yes, break the seals",
+			"notYet": "Not yet"
+		},
+		"decline": {
+			"title": "Decline {name} kindly",
+			"description": "{name} will read this note. You can change the words.",
+			"defaultNote": "Thank you for writing. I don't think we're right for each other, and I wish you well in your search.",
+			"noteLabel": "Your note",
+			"send": "Send this note",
+			"quiet": "Let it close quietly",
+			"final": "Either way is final: {name} can't write to you again."
+		},
+		"status": {
+			"waitingForThem": "Waiting for {name}'s answer.",
+			"declinedKindly": "{name} has answered: not this time. {name} wished you well.",
+			"closedQuietly": "This letter has closed.",
+			"withdrawnByThem": "{name} took back the note.",
+			"withdrawnByYou": "You took back this note.",
+			"declinedByYou": "You answered: not this time.",
+			"expired": "No answer came in thirty days. The letter has closed.",
+			"closed": "This letter has closed."
+		},
+		"errors": {
+			"withdrawn": "{name} took back the note before you answered.",
+			"expired": "This letter closed after thirty days without an answer.",
+			"pageClosed": "This page has been closed by its family. The letter has closed.",
+			"notPending": "This letter has already been answered.",
+			"generic": "That didn't go through. Check your connection and try again.",
+			"missing": "This letter isn't here. It may have closed.",
+			"load": "The letter didn't open. Check your connection and try again."
+		},
+		"actions": {
+			"decline": "Decline kindly",
+			"family": "Show my family",
+			"yes": "Say yes",
+			"takeBack": "Take back my note",
+			"report": "Report",
+			"block": "Block {name}"
+		},
+		"takeBack": {
+			"title": "Take back your note to {name}?",
+			"body": "It leaves {name}'s letters at once. You can't write to {name} again after taking it back.",
+			"cancel": "Keep it sealed",
+			"confirm": "Take it back"
+		}
+	},
+	"intro": {
+		"heading": "An introduction · {date}",
+		"title": "An introduction to {name}",
+		"yourSeal": "Your seal",
+		"theirSeal": "{name}'s seal",
+		"announceOpen": "Both seals are broken. {name}'s sealed section is open to you.",
+		"closed": {
+			"byYou": "You closed this introduction on {date}.",
+			"byThem": "{name} has decided not to continue, and wished you well."
+		},
+		"stage": {
+			"introduced": "Choose a time for a first call",
+			"call_booked": "A first call is booked",
+			"families": "Families introduced",
+			"closed": "Closed"
+		},
+		"quietNudge": "It's been a week. Propose a call, or close kindly.",
+		"nowOpen": "Now open to each other",
+		"photoAlt": "Photo of {name}",
+		"noPhoto": "No photo",
+		"contact": {
+			"email": "Email",
+			"phone": "Phone",
+			"family": "Family contact"
+		},
+		"share": {
+			"phone": "Share my phone number",
+			"phoneNote": "Only if you'd like to. {name} sees it once you share it.",
+			"phoneShared": "Your phone number is shared with {name}.",
+			"familyLead": "When you're both ready, share a family contact. You'll both see them once you've both shared.",
+			"family": "Share our family contact",
+			"familyBoth": "Both families' contacts are shared.",
+			"familyYours": "You've shared your family contact. {name}'s appears when they share theirs.",
+			"noPhone": "Add a phone number to the sealed section of your page first.",
+			"noFamily": "Add a family contact to the sealed section of your page first.",
+			"failed": "That didn't go through. Try again.",
+			"openPage": "Open My Biodata"
+		},
+		"readPage": "Read {name}'s whole page",
+		"closeKindly": "Close kindly",
+		"report": "Report",
+		"block": "Block",
+		"times": {
+			"title": "Three evenings that suit you both",
+			"booked": "Booked: {day}, {you} · {them}.",
+			"calendar": "Add it to your calendar",
+			"none": "No times proposed yet.",
+			"proposeOthers": "Propose three others",
+			"proposeAnother": "Propose a different time",
+			"waitingForThem": "You proposed three evenings. Waiting for {name} to choose one.",
+			"theyProposed": "{name} proposed three evenings. Tick the one that works.",
+			"theyTicked": "{name} ticked this",
+			"update": "Update what works",
+			"theseWork": "These work for me",
+			"saved": "Saved. The first evening you both tick is booked.",
+			"notOpen": "These times have changed. The newest proposal is shown.",
+			"failed": "That didn't go through. Try again.",
+			"pickDay": "Choose a day",
+			"eveningForBoth": "Evening for you both",
+			"bracketNote": "A hairline marks evenings (6–10 pm) for you both.",
+			"yourThree": "Your times ({count} of 3)",
+			"remove": "Remove",
+			"sendThree": "Propose these three",
+			"cancel": "Cancel",
+			"invalid": "Choose three different half-hours in the next three weeks."
+		},
+		"letters": {
+			"title": "Correspondence",
+			"earlier": "Earlier letters",
+			"error": "The letters didn't load.",
+			"tryAgain": "Try again",
+			"empty": "Nothing written yet. A line about a good time to talk is a kind start.",
+			"you": "You",
+			"read": "Read",
+			"closedNote": "This introduction has closed. The letters stay here for you both to read.",
+			"writeTo": "Write to {name}…",
+			"notSent": "Not sent.",
+			"send": "Send"
+		},
+		"close": {
+			"title": "Close kindly with {name}",
+			"description": "Choose a closing note and make it yours. It's final, and the letters stay readable to you both.",
+			"choose": "Why you're closing",
+			"reasons": {
+				"not_a_fit": "We're not right for each other",
+				"engaged_elsewhere": "I've found someone",
+				"other": "I need to step back"
+			},
+			"notes": {
+				"not_a_fit": "Thank you for our conversations. I don't think we're right for each other, and I wish you well in your search.",
+				"engaged_elsewhere": "Thank you for your time and kindness. I've found someone, and I wish you every happiness in your search.",
+				"other": "Thank you for your time. I need to step back for now, and I wish you well."
+			},
+			"noteLabel": "Your closing note",
+			"tooShort": "A closing note is at least a short sentence.",
+			"preview": "What {name} will see",
+			"previewLine": "{name} has decided not to continue, and wished you well.",
+			"failed": "That didn't go through. Try again.",
+			"submit": "Close kindly",
+			"notNow": "Not now"
+		}
+	},
+	"biodata": {
+		"title": "My Biodata",
+		"error": "Your page didn't open. Check your connection and try again.",
+		"tryAgain": "Try again",
+		"marginLeft": "Preview and export",
+		"marginRight": "The margin",
+		"marginButton": "Margin",
+		"tapToEdit": "Tap any value to edit it where it sits.",
+		"readOnly": "Only {name}, and a guardian {name} allows, can edit this page.",
+		"editingLabel": "Your page, open for editing",
+		"invocationLabel": "Invocation",
+		"writtenByLabel": "Written by",
+		"languageLabel": "Written in",
+		"sealedNote": "These open only inside an introduction, when you both say yes.",
+		"sealedAlso": "Also sealed on your page: {fields}.",
+		"nonNegotiables": "Your non-negotiables are on the Looking for page",
+		"authors": {
+			"self": "Me",
+			"parent": "A parent",
+			"sibling": "A brother or sister",
+			"relative": "Family",
+			"friend": "A friend"
+		},
+		"invocations": {
+			"none": "No invocation line",
+			"om": "ॐ",
+			"shri_ganesh": "॥ श्री गणेशाय नमः ॥",
+			"bismillah": "بسم الله الرحمن الرحيم",
+			"ik_onkar": "ੴ",
+			"cross": "A cross",
+			"khanda": "A khanda",
+			"custom": "My own words"
+		},
+		"prompts": {
+			"displayName": "Add the name for the page",
+			"gender": "Choose",
+			"dateOfBirth": "Add date of birth",
+			"height": "Add height",
+			"maritalStatus": "Choose",
+			"hasChildren": "Add whether there are children",
+			"motherTongue": "Add mother tongue",
+			"languages": "Add languages spoken",
+			"religion": "Add faith",
+			"sect": "Add a tradition, if any",
+			"practice": "Add how practising",
+			"community": "Add community (optional)",
+			"location": "Add the city you live in",
+			"country": "Add country (two letters, like US)",
+			"timeZone": "Add time zone",
+			"residency": "Add residency",
+			"manglik": "Add if known",
+			"education": "Add education",
+			"university": "Add where you studied",
+			"profession": "Add your work",
+			"employer": "Add where you work",
+			"incomeRange": "Add an income range",
+			"fatherOccupation": "Add father's occupation",
+			"motherOccupation": "Add mother's occupation",
+			"siblings": "Add brothers and sisters",
+			"familyType": "Add family type",
+			"familyValues": "Add family values",
+			"nativePlace": "Add native place",
+			"aboutFamily": "Write a few lines about the family",
+			"diet": "Choose",
+			"smoking": "Choose",
+			"drinking": "Choose",
+			"aboutMe": "Write a few lines about yourself",
+			"lookingFor": "Write a few lines about who you hope to meet",
+			"fullName": "Add full name",
+			"contactPhone": "Add a phone number (+1…)",
+			"birthTime": "Add birth time",
+			"birthPlace": "Add birth place",
+			"familyContactName": "Add a family contact's name",
+			"familyContactPhone": "Add their phone number",
+			"invocation": "+ Add an invocation line (optional)",
+			"invocationText": "Add the words",
+			"pageLanguage": "Choose",
+			"createdBy": "Choose"
+		},
+		"editor": {
+			"leaveEmpty": "Leave empty",
+			"edit": "Edit {label}",
+			"notStated": "Not stated",
+			"saved": "Saved",
+			"save": "Save",
+			"cancel": "Cancel",
+			"notSaved": "Not saved. Try again.",
+			"listHint": "Separate with commas.",
+			"invalid": {
+				"required": "This one is needed for the page.",
+				"phone": "Use the international format, like +17325550199.",
+				"country": "Use a two-letter country code, like US or GB.",
+				"date": "Use a full date.",
+				"time": "Use a time, like 06:45.",
+				"height": "Give the height in centimetres, between 120 and 230.",
+				"generic": "Check this value and try again."
+			}
+		},
+		"visibility": {
+			"page": "Shown",
+			"sealed": "Sealed",
+			"matching_only": "Matching only",
+			"label": "Who sees this",
+			"change": "Visibility: {value}. Change",
+			"help": {
+				"page": "Shown on your page to anyone your folio reaches.",
+				"sealed": "Opens only inside an introduction, when you both say yes.",
+				"matching_only": "Used only to choose pages for your folio. Never shown on your page."
+			},
+			"consent": "Faith, community and residency are sensitive. You choose whether they are shown, sealed, or used only for matching.",
+			"failed": "That didn't save. Try again."
+		},
+		"photos": {
+			"title": "Photos",
+			"description": "Up to five. Each has its own visibility; clear after you both say yes is the default.",
+			"empty": "No photos yet. A page reads well without one; families often add one later.",
+			"yourPhoto": "Your photo {number}",
+			"first": "First photo",
+			"number": "Photo {number}",
+			"whoSees": "Who sees it clearly",
+			"visibility": {
+				"everyone": "Clear to everyone",
+				"after_note": "Clear after a note",
+				"after_yes": "Clear after you both say yes (recommended)"
+			},
+			"makeFirst": "Make it the first",
+			"remove": "Remove",
+			"add": "Add a photo",
+			"adding": "Adding…",
+			"exif": "Location and camera details are removed before the photo leaves your phone.",
+			"limit": "Five photos is the most a page holds.",
+			"uploadFailed": "The photo wasn't added. Check your connection and try again.",
+			"failed": "That didn't go through. Try again.",
+			"manage": "Photos: add or change",
+			"none": "No photo on this page",
+			"addPrompt": "+ Add photos",
+			"countLabel": "{count, plural, one {# photo} other {# photos}}"
+		},
+		"help": {
+			"title": "Help me write",
+			"titleNoAi": "Three questions to start you off",
+			"lead": "Answer three short questions and choose a tone. A draft appears in pencil; nothing is saved until you choose it.",
+			"leadNoAi": "Answer three short questions. We'll set your own words into a first draft you can change.",
+			"questions": {
+				"family": "Tell us about your family",
+				"everyday": "What does an ordinary week look like?",
+				"hopes": "What do you hope for in a marriage?"
+			},
+			"placeholders": {
+				"family": "My parents run a pharmacy in Jalandhar; my brother is at university.",
+				"everyday": "Long shifts, Sunday cooking, cricket with my cousins.",
+				"hopes": "A partner who is kind to my parents and honest with me."
+			},
+			"tone": "Tone",
+			"tones": {
+				"warm": "Warm",
+				"simple": "Simple",
+				"formal": "Formal"
+			},
+			"which": "Draft",
+			"sections": {
+				"aboutMe": "About me",
+				"aboutFamily": "About my family",
+				"lookingFor": "Looking for"
+			},
+			"submit": "Draft in pencil",
+			"drafting": "Drafting in pencil…",
+			"draftLabel": "A draft, in pencil",
+			"use": "Use this draft",
+			"discard": "Try again",
+			"neverSaves": "It isn't saved unless you use it. You can edit every word afterwards.",
+			"omitted": "We left out words about complexion."
+		},
+		"seeAs": {
+			"title": "See it as",
+			"self": "You (editing)",
+			"stranger": "A stranger",
+			"introduced": "After you both say yes",
+			"family_link": "On a family link",
+			"showing": {
+				"self": "Editing your page.",
+				"stranger": "This is your page as a stranger reads it: photos veiled, the sealed section closed.",
+				"introduced": "This is your page once you both say yes: the sealed section open.",
+				"family_link": "This is your page on a family link: larger type, the photo veiled."
+			},
+			"backToEditing": "Back to editing"
+		},
+		"export": {
+			"title": "Export",
+			"print": "Print or save as PDF",
+			"printNote": "A4, print-true, with the reference number.",
+			"watermark": "From Rishta · No. {ref} · shared privately, not for forwarding",
+			"image": "WhatsApp image",
+			"as": {
+				"stranger": "Exports show your page as a stranger reads it: photos veiled, the sealed section closed.",
+				"introduced": "Exports show your page as it reads once you both say yes, with the sealed section open. Send them only to people you trust."
+			}
+		},
+		"readers": {
+			"title": "Readers",
+			"thisWeek": "{count, plural, =0 {No one this week} one {# this week} other {# this week}}"
+		},
+		"completeness": {
+			"title": "Completeness",
+			"written": "written",
+			"notYet": "not yet",
+			"complete": "✓",
+			"count": "{filled} of {total}"
+		},
+		"status": {
+			"title": "Publish",
+			"awaitingClaim": "Nothing about {name} is visible to anyone until {name} confirms this page.",
+			"inviteCandidate": "Invite {name} to confirm it",
+			"draftMissing": "Your page is private until you publish it. Still needed: {missing}.",
+			"draftReady": "Your page is private until you publish it.",
+			"publish": "Publish my page",
+			"draftForFamily": "The page is private until {name} publishes it.",
+			"paused": "Your page is paused, so nobody new sees it.",
+			"resume": "Resume my page",
+			"closed": "Your search is closed. Your page isn't in any folio.",
+			"live": "Your page is live.",
+			"pause": "Pause my page",
+			"private": "Private until you publish it."
+		},
+		"missing": {
+			"displayName": "a name",
+			"gender": "gender",
+			"dateOfBirth": "date of birth",
+			"religion": "faith",
+			"lookingFor": "what you're looking for"
+		},
+		"image": {
+			"title": "A WhatsApp image of your page",
+			"preparing": "Setting your page as an image…",
+			"note": "It carries your reference number and a line asking people not to forward it. Photographs are never drawn on it.",
+			"share": "Share",
+			"download": "Download image",
+			"failed": "The image couldn't be made on this device.",
+			"tryAgain": "Try again",
+			"shareFailed": "It couldn't be shared from here. Download it and send it from WhatsApp.",
+			"alt": "{name}'s page as an image",
+			"shareTitle": "Biodata · No. {ref}"
+		}
+	},
+	"lookingFor": {
+		"title": "Looking for",
+		"lead": "Your non-negotiables, honestly. Mark what is a dealbreaker; everything else is a nice-to-have.",
+		"readOnly": "{name} keeps what they're looking for. You can read it here.",
+		"margin": "Loosening this adds pages to tomorrow's folio, not today's.",
+		"saving": "Saving…",
+		"saved": "Saved",
+		"notSaved": "Not saved.",
+		"tryAgain": "Try again",
+		"backToPage": "Back to My Biodata",
+		"controls": {
+			"remove": "Remove {item}",
+			"add": "Add",
+			"less": "Fewer: {label}",
+			"more": "More: {label}",
+			"dealbreakerFor": "Dealbreaker or nice to have: {label}",
+			"dealbreaker": "Dealbreaker",
+			"niceToHave": "Nice to have"
+		},
+		"values": {
+			"question": "What matters most",
+			"lead": "You have 12 points. You can't max everything.",
+			"rows": {
+				"personality": "Personality & character",
+				"financial": "Financial stability",
+				"looks": "Physical attraction"
+			},
+			"valueText": "{count} of 10, {left} points left",
+			"left": "{count, plural, =0 {0 points left} one {# point left} other {# points left}}",
+			"refused": "That's more than your 12 points. Take a point from another row first."
+		},
+		"timeline": {
+			"question": "When do you hope to marry?",
+			"options": {
+				"3_months": "Within 3 months",
+				"6_months": "Within 6 months",
+				"1_year": "Within a year",
+				"2_years_plus": "In two years or more; no rush"
+			}
+		},
+		"seeking": {
+			"question": "I'd like to meet",
+			"options": {
+				"male": "a man",
+				"female": "a woman"
+			}
+		},
+		"where": {
+			"relocation": "Would you move for the right person?",
+			"relocationOptions": {
+				"open": "Yes, anywhere",
+				"within_country": "Within my country",
+				"not_open": "I'd rather not move"
+			},
+			"residency": "Residency",
+			"residencyHint": "Used only for matching; it is never shown on anyone's page.",
+			"residencyOptions": {
+				"citizen_or_pr": "A citizen or permanent resident",
+				"open": "It doesn't matter"
+			},
+			"places": "Places you'd like",
+			"placesHint": "Cities or regions. Leave it empty if anywhere is fine.",
+			"placesPlaceholder": "Toronto, New Jersey"
+		},
+		"age": {
+			"question": "Ages",
+			"youngest": "Youngest",
+			"oldest": "Oldest",
+			"to": "to"
+		},
+		"marital": {
+			"question": "Married before"
+		},
+		"community": {
+			"question": "Community",
+			"hint": "Optional and self-described. Leave it empty to see everyone.",
+			"placeholder": "Punjabi"
+		},
+		"education": {
+			"question": "Education"
+		},
+		"faith": {
+			"question": "Faith",
+			"hint": "Choose the faiths you'd welcome. Leave it empty if any faith is fine."
+		},
+		"diet": {
+			"question": "Diet"
+		},
+		"languages": {
+			"question": "Languages",
+			"hint": "A shared language shows as a reason, never as a gap.",
+			"placeholder": "Punjabi"
+		}
+	},
+	"begin": {
+		"title": "Before we begin",
+		"titleDrafting": "Draft what {name} is looking for",
+		"contextLine": "Step {step} of {total}",
+		"stepLine": "Step {step} of {total} · {name}",
+		"steps": {
+			"timeline": "The timeline",
+			"where": "Where",
+			"ageCommunity": "Age, community, education",
+			"faithDiet": "Faith and diet",
+			"values": "What matters most"
+		},
+		"draftingNote": "{name} will confirm this with the page.",
+		"timelineRequired": "Choose a timeline to continue; it shapes every folio.",
+		"notSaved": "Not saved.",
+		"tryAgain": "Try again",
+		"back": "Back",
+		"continue": "Continue",
+		"finish": "Finish",
+		"done": {
+			"title": "Now write your page.",
+			"body": "Your first folio arrives the evening after you publish it. Everything you just chose can be changed on the Looking for page.",
+			"bodyDrafting": "Next, draft {name}'s page. Nothing is visible to anyone until {name} confirms it.",
+			"writePage": "Now write your page",
+			"draftPage": "Draft the page"
+		}
+	},
+	"readers": {
+		"title": "Readers",
+		"private": "Only the candidate sees who read the page.",
+		"incognito": "Read pages privately: {state}",
+		"on": "On",
+		"off": "Off",
+		"incognitoNote": "When this is on, the people whose pages you read aren't told. It's free, as a safety feature.",
+		"notSaved": "That didn't save. Try again.",
+		"error": "Readers didn't load.",
+		"tryAgain": "Try again",
+		"empty": "Nobody has read your page this week. Pages go out in folios each evening.",
+		"line": "{name} read your page",
+		"earlier": "Earlier readers"
+	},
+	"errors": {
+		"generic": "Something didn't go through. Check your connection and try again.",
+		"NOT_A_MEMBER": "You're not a member of this household.",
+		"ROLE_NOT_ALLOWED": "Your role in the household doesn't allow this.",
+		"CANDIDATE_ONLY": "Only the person whose page it is can do this.",
+		"PAGE_NOT_FOUND": "This page isn't here.",
+		"PAGE_UNAVAILABLE": "This page has been closed by its family.",
+		"PAGE_NOT_ACTIVE": "Publish your page first.",
+		"PAGE_CLOSED": "This search is closed.",
+		"PAGE_AWAITING_CLAIM": "The page is waiting to be confirmed.",
+		"PAGE_EDIT_NOT_ALLOWED": "You can read this page but not edit it.",
+		"PAGE_INCOMPLETE": "A few things are still needed before the page can be published.",
+		"UNDER_18": "A page can only be published for someone who is 18 or older.",
+		"EMAIL_NOT_VERIFIED": "Verify your email address first; we sent you a link.",
+		"LOOKING_FOR_INCOMPLETE": "Finish what you're looking for first.",
+		"VISIBILITY_NOT_ALLOWED": "That visibility isn't available for this field.",
+		"PHOTO_LIMIT": "Five photos is the most a page holds.",
+		"CLAIM_NOT_FOR_YOU": "This invitation isn't for this account, or it has closed.",
+		"ALREADY_CLAIMED": "This page has already been confirmed.",
+		"LETTER_NOT_FOUND": "This letter isn't here.",
+		"LETTER_EXISTS": "You've already exchanged letters.",
+		"ALREADY_WROTE": "You've already written to them.",
+		"ALREADY_WROTE_TO_YOU": "They've already written to you. Read their letter.",
+		"LETTER_NOT_PENDING": "This letter has already been answered.",
+		"LETTER_WITHDRAWN": "The note was taken back before you answered.",
+		"LETTER_CLOSED": "This letter has closed.",
+		"SUGGESTION_UNEDITED": "Make the line your own before sealing.",
+		"CONTACT_IN_NOTE": "Contact details open when you both say yes. Remove them to seal.",
+		"NOT_A_FIT": "Their page has a non-negotiable your page doesn't meet.",
+		"DAILY_LIMIT": "You've sealed today's notes.",
+		"NOT_ENOUGH_CREDITS": "You have no credits.",
+		"MATCH_CLOSED": "This introduction has closed.",
+		"PROPOSAL_NOT_OPEN": "These times have changed.",
+		"INVALID_SLOTS": "Choose three different half-hours in the next three weeks.",
+		"NO_PHONE_ON_PAGE": "Add a phone number to your page first.",
+		"NO_FAMILY_CONTACT": "Add a family contact to your page first.",
+		"FAMILY_LINKS_NOT_ALLOWED": "This family prefers their page isn't shared by link.",
+		"FAMILY_LINK_LIMIT": "You have the most family links open that your plan allows.",
+		"FAMILY_LINK_CLOSED": "This link has closed.",
+		"RATE_LIMITED": "That's a lot at once. Try again in a minute."
+	},
+	"settingsNav": {
+		"label": "Settings",
+		"account": "Your account",
+		"general": "General",
+		"security": "Security",
+		"notifications": "Notifications",
+		"household": "Household",
+		"householdSettings": "Settings",
+		"members": "Members",
+		"billing": "Credits & plan",
+		"moderation": "Moderation",
+		"reports": "Reports",
+		"users": "Users",
+		"households": "Households"
+	},
+	"claim": {
+		"metaTitle": "Your page",
+		"title": "{drafter} has written a page for you.",
+		"titleNoDrafter": "Your family has written a page for you.",
+		"lead": "Nothing about you is visible to anyone until you confirm it. Read it as it stands; you can change anything before you publish.",
+		"confirm": "This is me: confirm my page",
+		"confirmAndEdit": "Confirm, then edit it",
+		"afterConfirm": "Confirming makes the page yours: only you can seal notes, say yes or close. {drafter} stays in the household as a guardian.",
+		"yourFamily": "Your family",
+		"notForMe": "This isn't something I want",
+		"declineTitle": "Decline the page",
+		"declineDescription": "The draft is deleted and {drafter} gets a kind note. No reason is needed.",
+		"declineNote": "A few words for them (optional)",
+		"declinePlaceholder": "Thank you for thinking of me. I'm not ready for this.",
+		"declineSubmit": "Delete the draft",
+		"keepThinking": "Keep thinking",
+		"declineFailed": "That didn't go through. Try again.",
+		"states": {
+			"verify": "Verify your email address first, then open this page again. We've sent you a link.",
+			"claimed": "This page has already been confirmed.",
+			"notYou": "This invitation isn't for this account, or it has closed. If it was meant for you, sign in with the email it was sent to, or ask your family to send it again.",
+			"expired": "This invitation has closed. Ask your family to send it again.",
+			"back": "Back to the household"
+		}
+	},
+	"close": {
+		"title": "Close my search",
+		"lead": "However it ends, Rishta closes kindly: nobody is left waiting and nobody is left guessing.",
+		"why": "Why are you closing?",
+		"reasons": {
+			"engaged": "We're engaged",
+			"break": "Taking a break",
+			"other": "Something else"
+		},
+		"next": {
+			"title": "What happens next",
+			"hidden": "Your page is hidden from every folio today.",
+			"breakLetters": "Your letters and introductions stay open. You can resume in one tap.",
+			"waiting": "{count, plural, one {# letter waiting for you gets a kind answer.} other {# letters waiting for you get a kind answer.}}",
+			"sealed": "{count, plural, one {Your # sealed note is taken back.} other {Your # sealed notes are taken back.}}",
+			"introductions": "{count, plural, one {Your # introduction receives your closing note.} other {Your # introductions receive your closing note.}}",
+			"links": "Your family links close."
+		},
+		"closingNote": "Your closing note",
+		"closingNoteShort": "A closing note is at least a short sentence.",
+		"submit": "Close my search",
+		"submitBreak": "Pause my page",
+		"deleteInstead": "Delete everything instead",
+		"candidateOnly": "Only {name} can close this search.",
+		"alreadyClosed": "This search is already closed.",
+		"confirm": {
+			"title": "Close your search?",
+			"body": "Your page leaves every folio, open letters are answered kindly and your introductions receive your note. This can't be undone.",
+			"breakTitle": "Pause your page?",
+			"breakBody": "Nobody new sees your page and no folios arrive. Your letters and introductions stay open.",
+			"cancel": "Not yet"
+		},
+		"delete": {
+			"title": "Delete everything?",
+			"body": "Your page, photos, letters, messages, readers and family links are deleted for good. After this you can also delete your account in Settings.",
+			"cancel": "Keep everything",
+			"confirm": "Delete everything"
+		},
+		"done": {
+			"engaged": {
+				"title": "Congratulations.",
+				"body": "We've closed your page kindly and let your open conversations know."
+			},
+			"break": {
+				"title": "Your page is paused.",
+				"body": "Take the time you need. Your letters and introductions are still here.",
+				"openPage": "Open My Biodata"
+			},
+			"other": {
+				"title": "Your search is closed.",
+				"body": "We've closed your page kindly and let your open conversations know. Thank you for the care you took."
+			}
+		},
+		"story": {
+			"question": "Would you share how you met?",
+			"hint": "Optional. It stays private unless you tell us otherwise.",
+			"save": "Share it",
+			"thanks": "Thank you."
+		},
+		"referral": "Know someone who's searching? Send them to rishta to begin a page."
+	},
+	"credits": {
+		"title": "Credits & plan",
+		"lead": "Reading your folio and sealing three notes a day is free.",
+		"familyNote": "Credits and the plan are looked after by {name} and the household's guardians.",
+		"checkoutFailed": "Checkout didn't open. Try again in a moment.",
+		"plan": {
+			"title": "Your plan",
+			"free": "Free: 5 pages each evening, 3 notes a day.",
+			"premium": "Premium: 7 pages each evening, 10 notes a day.",
+			"portalNote": "Change or cancel your plan online at any time."
+		},
+		"wallet": {
+			"title": "Credits",
+			"description": "A credit is an extra note on a busy day, or a priority note, which is labelled for them and sits at the top of their letters for two days.",
+			"count": "{count, plural, one {# credit} other {# credits}}",
+			"buy": "Buy 5 credits · $5",
+			"error": "Credits didn't load."
+		},
+		"ledger": {
+			"welcome": "Welcome credits",
+			"purchase": "5 credits bought",
+			"monthly_grant": "Premium's monthly credits",
+			"extra_note": "An extra note",
+			"priority_note": "A priority note",
+			"refund": "A refund",
+			"adjustment": "An adjustment"
+		},
+		"compare": {
+			"title": "Free and Premium",
+			"freePrice": "Free, for as long as you're searching.",
+			"monthly": "$29 a month",
+			"yearly": "$290 a year",
+			"interval": "Billing",
+			"month": "Monthly",
+			"year": "Yearly",
+			"start": "Start Premium",
+			"trial": "Seven days free, then billed to the household. Safety features are always free.",
+			"whatCreditsDo": "The same service and prices for everyone."
+		}
+	},
+	"single": {
+		"title": "A page",
+		"missing": "This page isn't here. It may have been closed by its family.",
+		"private": "{name} keeps the folio and its pages private for now.",
+		"error": "The page didn't open. Check your connection and try again.",
+		"tryAgain": "Try again"
+	},
+	"footer": {
+		"safety": "Rishta does not conduct criminal background checks on its members. The same service and prices apply to everyone.",
+		"safetyLink": "Safety",
+		"privacy": "Privacy",
+		"terms": "Terms"
 	}
 }

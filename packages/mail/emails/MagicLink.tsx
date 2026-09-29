@@ -1,9 +1,9 @@
-import { Link, Text } from "@react-email/components";
 import React from "react";
 import { createTranslator } from "use-intl/core";
 
+import LinkFallback from "../components/LinkFallback";
 import PrimaryButton from "../components/PrimaryButton";
-import Wrapper from "../components/Wrapper";
+import Wrapper, { MailHeading, MailText } from "../components/Wrapper";
 import { defaultLocale, defaultTranslations } from "../lib/translations";
 import type { BaseMailProps } from "../types";
 
@@ -20,17 +20,14 @@ export function MagicLink({
 	});
 
 	return (
-		<Wrapper>
-			<Text>{t("body")}</Text>
+		<Wrapper lang={locale} preview={t("body")} footer={t("common.footer")}>
+			<MailHeading>{t("headline")}</MailHeading>
+			<MailText>{t("body")}</MailText>
 
-			<Text>{t("common.useLink")}</Text>
+			<PrimaryButton href={url}>{t("login")}</PrimaryButton>
 
-			<PrimaryButton href={url}>{t("login")} &rarr;</PrimaryButton>
-
-			<Text className="text-sm text-muted-foreground">
-				{t("common.openLinkInBrowser")}
-				<Link href={url}>{url}</Link>
-			</Text>
+			<MailText muted>{t("common.notYou")}</MailText>
+			<LinkFallback label={t("common.openLinkInBrowser")} href={url} />
 		</Wrapper>
 	);
 }

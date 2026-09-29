@@ -77,7 +77,11 @@ const FormLabel = ({ className, ...props }: React.ComponentProps<typeof LabelPri
 
 	return (
 		<Label
-			className={cn("font-medium block", error && "text-destructive", className)}
+			className={cn(
+				"block label-caps text-muted-foreground",
+				error && "text-destructive",
+				className,
+			)}
 			htmlFor={formItemId}
 			{...props}
 		/>
@@ -105,7 +109,7 @@ const FormDescription = ({ className, ...props }: React.HTMLAttributes<HTMLParag
 	return (
 		<p
 			id={formDescriptionId}
-			className={cn("text-sm text-foreground/60", className)}
+			className={cn("text-meta text-muted-foreground", className)}
 			{...props}
 		/>
 	);
@@ -124,11 +128,7 @@ const FormMessage = ({
 	}
 
 	return (
-		<p
-			id={formMessageId}
-			className={cn("font-normal text-sm text-destructive", className)}
-			{...props}
-		>
+		<p id={formMessageId} className={cn("text-meta text-destructive", className)} {...props}>
 			{body}
 		</p>
 	);

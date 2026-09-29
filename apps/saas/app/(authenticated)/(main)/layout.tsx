@@ -7,6 +7,10 @@ import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import type { PropsWithChildren } from "react";
 
+/**
+ * The first gate (design.md §3.5): no name yet, or no household yet → onboarding ("Who is this
+ * page for?"). The household's own gate (claim, the first page, publish) runs on the Folio.
+ */
 export default async function MainLayout({ children }: PropsWithChildren) {
 	const session = await getSession();
 
@@ -20,20 +24,12 @@ export default async function MainLayout({ children }: PropsWithChildren) {
 
 	const organizations = await getOrganizationList();
 
-	if (authConfig.organizations.enable && authConfig.organizations.requireOrganization) {
-		const organization =
-			organizations.find((org) => org.id === session?.session.activeOrganizationId) ||
-			organizations[0];
-
-		if (!organization) {
-			redirect("/new-organization");
-		}
+	if (organizations.length === 0 && session.user.role !== "admin") {
+		redirect("/onboarding?step=2");
 	}
 
 	if (paymentsConfig.requireActiveSubscription) {
-		const organizationId = authConfig.organizations.enable
-			? session?.session.activeOrganizationId || organizations?.at(0)?.id
-			: undefined;
+		const organizationId = session?.session.activeOrganizationId || organizations?.at(0)?.id;
 
 		const purchases = await listPurchases.callable({
 			context: { headers: await headers() },

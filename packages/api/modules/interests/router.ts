@@ -1,13 +1,21 @@
-import { getProfileStats } from "./procedures/get-profile-stats";
-import { listInterests } from "./procedures/list-interests";
-import { listMatches } from "./procedures/list-matches";
-import { respondInterest } from "./procedures/respond-interest";
-import { sendInterest } from "./procedures/send-interest";
+import { listMatchesAlias } from "../matches/procedures/list-introductions";
+import { countLetters } from "./procedures/count-letters";
+import { getLetter } from "./procedures/get-letter";
+import { listLetters } from "./procedures/list-letters";
+import { respondLetter } from "./procedures/respond-letter";
+import { sendLetter } from "./procedures/send-letter";
+import { withdrawLetter } from "./procedures/withdraw-letter";
 
+/**
+ * Letters. `profileStats` (a privacy leak and bid mechanics) is removed; `matches` is an alias
+ * of `matches.list` during the migration.
+ */
 export const interestsRouter = {
-	send: sendInterest,
-	respond: respondInterest,
-	list: listInterests,
-	profileStats: getProfileStats,
-	matches: listMatches,
+	send: sendLetter,
+	withdraw: withdrawLetter,
+	respond: respondLetter,
+	list: listLetters,
+	get: getLetter,
+	counts: countLetters,
+	matches: listMatchesAlias,
 };

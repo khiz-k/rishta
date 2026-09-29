@@ -12,13 +12,6 @@ import { toastError, toastSuccess } from "@repo/ui/components/toast";
 import { PasswordInput } from "@shared/components/PasswordInput";
 import { SettingsItem } from "@shared/components/SettingsItem";
 import { useMutation } from "@tanstack/react-query";
-import {
-	ArrowRightIcon,
-	CheckIcon,
-	ShieldCheckIcon,
-	TabletSmartphoneIcon,
-	XIcon,
-} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useMemo, useState } from "react";
 import QRCode from "react-qr-code";
@@ -145,21 +138,16 @@ export function TwoFactorBlock() {
 		>
 			{user?.twoFactorEnabled ? (
 				<div className="gap-4 flex flex-col items-start">
-					<div className="gap-1.5 flex items-center">
-						<ShieldCheckIcon className="size-6 text-green-500" />
-						<p className="text-sm text-foreground">
-							{t("settings.account.security.twoFactor.enabled")}
-						</p>
-					</div>
+					<p className="text-body text-foreground">
+						{t("settings.account.security.twoFactor.enabled")}
+					</p>
 					<Button variant="secondary" onClick={verifyPassword}>
-						<XIcon className="mr-1.5 size-4" />
 						{t("settings.account.security.twoFactor.disable")}
 					</Button>
 				</div>
 			) : (
 				<div className="flex justify-start">
 					<Button variant="secondary" onClick={verifyPassword}>
-						<TabletSmartphoneIcon className="mr-1.5 size-4" />
 						{t("settings.account.security.twoFactor.enable")}
 					</Button>
 				</div>
@@ -178,7 +166,7 @@ export function TwoFactorBlock() {
 					{dialogView === "password" ? (
 						<form onSubmit={handleSubmit}>
 							<div className="gap-4 grid grid-cols-1">
-								<p className="text-sm text-foreground/60">
+								<p className="text-body text-muted-foreground">
 									{t(
 										"settings.account.security.twoFactor.dialog.password.description",
 									)}
@@ -207,14 +195,13 @@ export function TwoFactorBlock() {
 									}
 								>
 									{t("common.actions.continue")}
-									<ArrowRightIcon className="ml-1.5 size-4" />
 								</Button>
 							</div>
 						</form>
 					) : (
 						<form onSubmit={handleSubmit}>
 							<div className="gap-4 grid grid-cols-1">
-								<p className="text-sm text-foreground/60">
+								<p className="text-body text-muted-foreground">
 									{t(
 										"settings.account.security.twoFactor.dialog.totpUrl.description",
 									)}
@@ -223,7 +210,7 @@ export function TwoFactorBlock() {
 									<QRCode title={totpURI} value={totpURI} />
 
 									{totpURISecret && (
-										<p className="text-xs text-center text-muted-foreground">
+										<p className="text-center text-meta break-all text-muted-foreground tabular">
 											{totpURISecret}
 										</p>
 									)}
@@ -252,7 +239,6 @@ export function TwoFactorBlock() {
 									className="w-full"
 									loading={verifyTwoFactorMutation.isPending}
 								>
-									<CheckIcon className="mr-1.5 size-4" />
 									{t("common.actions.verify")}
 								</Button>
 							</div>

@@ -4,7 +4,7 @@ import { cn } from "../lib";
 
 const Table = ({ className, ...props }: React.HTMLAttributes<HTMLTableElement>) => (
 	<div className="w-full overflow-auto">
-		<table className={cn("text-sm w-full caption-bottom", className)} {...props} />
+		<table className={cn("w-full caption-bottom text-ui", className)} {...props} />
 	</div>
 );
 
@@ -17,13 +17,13 @@ const TableBody = ({ className, ...props }: React.HTMLAttributes<HTMLTableSectio
 );
 
 const TableFooter = ({ className, ...props }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-	<tfoot className={cn("font-medium bg-primary text-primary-foreground", className)} {...props} />
+	<tfoot className={cn("border-t border-border", className)} {...props} />
 );
 
 const TableRow = ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElement>) => (
 	<tr
 		className={cn(
-			"border-b transition-colors hover:bg-muted/50 data-[state=selected]:bg-muted",
+			"border-b border-border transition-colors hover:bg-accent/60 data-[state=selected]:bg-accent",
 			className,
 		)}
 		{...props}
@@ -33,7 +33,7 @@ const TableRow = ({ className, ...props }: React.HTMLAttributes<HTMLTableRowElem
 const TableHead = ({ className, ...props }: React.ThHTMLAttributes<HTMLTableCellElement>) => (
 	<th
 		className={cn(
-			"h-12 px-4 font-medium [&:has([role=checkbox])]:pr-0 text-left align-middle text-foreground/60",
+			"h-11 px-3 [&:has([role=checkbox])]:pr-0 text-left align-middle label-caps text-muted-foreground",
 			className,
 		)}
 		{...props}
@@ -41,11 +41,14 @@ const TableHead = ({ className, ...props }: React.ThHTMLAttributes<HTMLTableCell
 );
 
 const TableCell = ({ className, ...props }: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-	<td className={cn("p-4 [&:has([role=checkbox])]:pr-0 align-middle", className)} {...props} />
+	<td
+		className={cn("px-3 py-3 [&:has([role=checkbox])]:pr-0 align-middle", className)}
+		{...props}
+	/>
 );
 
 const TableCaption = ({ className, ...props }: React.HTMLAttributes<HTMLTableCaptionElement>) => (
-	<caption className={cn("mt-4 text-sm text-foreground/60", className)} {...props} />
+	<caption className={cn("mt-4 text-meta text-muted-foreground", className)} {...props} />
 );
 
 export { Table, TableBody, TableCaption, TableCell, TableFooter, TableHead, TableHeader, TableRow };

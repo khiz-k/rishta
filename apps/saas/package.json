@@ -34,7 +34,6 @@
 		"@repo/storage": "workspace:*",
 		"@repo/ui": "workspace:*",
 		"@repo/utils": "workspace:*",
-		"drizzle-orm": "catalog:",
 		"@sindresorhus/slugify": "catalog:",
 		"@tanstack/react-query": "^5.96.2",
 		"@tanstack/react-table": "^8.21.3",

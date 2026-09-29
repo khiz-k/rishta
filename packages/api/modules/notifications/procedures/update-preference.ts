@@ -1,10 +1,10 @@
-import { NotificationTarget, NotificationType } from "@repo/database";
+import { NOTIFICATION_TYPE_VALUES, NotificationTarget, NotificationType } from "@repo/database";
 import { setNotificationDisabled } from "@repo/notifications";
 import { z } from "zod";
 
 import { protectedProcedure } from "../../../orpc/procedures";
 
-const notificationTypeSchema = z.enum(["WELCOME", "APP_UPDATE"]);
+const notificationTypeSchema = z.enum(NOTIFICATION_TYPE_VALUES);
 const notificationTargetSchema = z.enum(["IN_APP", "EMAIL"]);
 
 export const updatePreference = protectedProcedure

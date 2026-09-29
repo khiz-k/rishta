@@ -4,9 +4,11 @@ import {
 	getPurchaseBySubscriptionId,
 	updatePurchase,
 } from "@repo/database";
+import { CREDITS_PER_PACK, grantPurchasedCredits } from "@repo/database";
 import { logger } from "@repo/logs";
 import Stripe from "stripe";
 
+import { CREDIT_PACK_PLAN_ID } from "../../config";
 import { setCustomerIdToEntity } from "../../lib/customer";
 import { getPlanIdByProviderPriceId } from "../../lib/provider-price-ids";
 import type {
@@ -169,13 +171,28 @@ export const webhookHandler: WebhookHandler = async (req) => {
 					});
 				}
 
-				await createPurchase({
+				const oneTimePurchase = await createPurchase({
 					organizationId: metadata?.organization_id || null,
 					userId: metadata?.user_id || null,
 					customerId: customer as string,
 					type: "ONE_TIME",
 					priceId,
 				});
+
+				// A credit pack grants credits to the household wallet, idempotently per purchase.
+				if (
+					planId === CREDIT_PACK_PLAN_ID &&
+					oneTimePurchase &&
+					metadata?.organization_id
+				) {
+					const quantity = checkoutSession.line_items?.data[0]?.quantity ?? 1;
+					await grantPurchasedCredits({
+						organizationId: metadata.organization_id,
+						purchaseId: oneTimePurchase.id,
+						credits: CREDITS_PER_PACK * quantity,
+						userId: metadata?.user_id || null,
+					});
+				}
 
 				await setCustomerIdToEntity(customer as string, {
 					organizationId: metadata?.organization_id,

@@ -2,11 +2,12 @@ import * as React from "react";
 
 import { cn } from "../lib";
 
+/** A square writing surface with a 1px --input boundary. Letters use it in Tiro. */
 const Textarea = ({ className, ...props }: React.ComponentProps<"textarea">) => {
 	return (
 		<textarea
 			className={cn(
-				"shadow-xs px-3 py-2 text-base md:text-sm flex min-h-[80px] w-full rounded-md border border-input bg-card placeholder:text-muted-foreground focus-visible:ring-1 focus-visible:ring-ring focus-visible:outline-hidden disabled:cursor-not-allowed disabled:opacity-50",
+				"px-3 py-2 flex min-h-[88px] w-full border border-input bg-card text-body text-foreground placeholder:text-pencil placeholder:italic focus-visible:border-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive",
 				className,
 			)}
 			{...props}

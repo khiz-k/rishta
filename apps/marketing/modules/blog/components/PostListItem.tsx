@@ -1,73 +1,38 @@
-"use client";
-
 import type { Post } from "@blog/types";
 import { LocaleLink } from "@i18n/routing";
-import { useLocale } from "next-intl";
-import Image from "next/image";
+import { getFormatter, getTranslations } from "next-intl/server";
 
-export function PostListItem({ post }: { post: Post }) {
-	const locale = useLocale();
-	const { title, excerpt, authorName, image, date, path, authorImage, tags } = post;
+/** One Note in the list: its date, its title in Tiro and the first lines. No image, no card. */
+export async function PostListItem({ post }: { post: Post }) {
+	const format = await getFormatter();
+	const t = await getTranslations("blog");
+	const { title, excerpt, date, path, authorName } = post;
 
 	return (
-		<div className="p-6 rounded-4xl border bg-card">
-			{image && (
-				<div className="mb-4 aspect-video -mx-2 -mt-2 relative overflow-hidden rounded-2xl">
-					<Image
-						src={image}
-						alt={title}
-						fill
-						sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-						className="object-cover object-center"
-					/>
-					<LocaleLink href={`/blog/${path}`} className="inset-0 absolute" />
-				</div>
+		<li className="py-8 border-b border-border">
+			<p className="label-caps text-muted-foreground tabular">
+				<time dateTime={date}>
+					{format.dateTime(new Date(date), { dateStyle: "long" })}
+				</time>
+				{authorName && <span> · {t("from", { name: authorName })}</span>}
+			</p>
+			<h2 className="mt-2 font-display text-title-sm text-foreground">
+				<LocaleLink href={`/blog/${path}`} className="underline-offset-4 hover:underline">
+					{title}
+				</LocaleLink>
+			</h2>
+			{excerpt && (
+				<p className="mt-2 font-display text-letter text-muted-foreground">{excerpt}</p>
 			)}
-
-			{tags && (
-				<div className="mb-2 gap-2 flex flex-wrap">
-					{tags.map((tag) => (
-						<span
-							key={tag}
-							className="font-semibold text-xs tracking-wider text-primary uppercase"
-						>
-							#{tag}
-						</span>
-					))}
-				</div>
-			)}
-
-			<LocaleLink href={`/blog/${path}`} className="font-semibold text-xl">
-				{title}
-			</LocaleLink>
-			{excerpt && <p className="opacity-50">{excerpt}</p>}
-
-			<div className="mt-4 flex items-center justify-between">
-				{authorName && (
-					<div className="flex items-center">
-						{authorImage && (
-							<div className="mr-2 size-8 relative overflow-hidden rounded-full">
-								<Image
-									src={authorImage}
-									alt={authorName}
-									fill
-									sizes="96px"
-									className="object-cover object-center"
-								/>
-							</div>
-						)}
-						<div>
-							<p className="font-semibold text-sm opacity-50">{authorName}</p>
-						</div>
-					</div>
-				)}
-
-				<div className="mr-0 ml-auto">
-					<p className="text-sm opacity-30">
-						{Intl.DateTimeFormat(locale).format(new Date(date))}
-					</p>
-				</div>
-			</div>
-		</div>
+			<p className="mt-3">
+				<LocaleLink
+					href={`/blog/${path}`}
+					className="text-ui ui-semi text-seal-ink underline underline-offset-4"
+					aria-label={t("readTitle", { title })}
+				>
+					{t("read")}
+				</LocaleLink>
+			</p>
+		</li>
 	);
 }

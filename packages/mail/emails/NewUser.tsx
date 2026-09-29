@@ -1,9 +1,11 @@
-import { Link, Text } from "@react-email/components";
+import { Text } from "@react-email/components";
 import React from "react";
 import { createTranslator } from "use-intl/core";
 
+import LinkFallback from "../components/LinkFallback";
+import { fonts, paper } from "../components/paper";
 import PrimaryButton from "../components/PrimaryButton";
-import Wrapper from "../components/Wrapper";
+import Wrapper, { MailHeading, MailText } from "../components/Wrapper";
 import { defaultLocale, defaultTranslations } from "../lib/translations";
 import type { BaseMailProps } from "../types";
 
@@ -23,23 +25,44 @@ export function NewUser({
 	});
 
 	return (
-		<Wrapper>
-			<Text>{t("body")}</Text>
+		<Wrapper lang={locale} preview={t("body")} footer={t("common.footer")}>
+			<MailHeading>{t("headline")}</MailHeading>
+			<MailText>{t("body")}</MailText>
 
-			<Text>
-				{t("common.otp")}
+			<Text
+				className="my-5 px-4 py-3"
+				style={{ backgroundColor: paper.sealed, border: `1px dashed ${paper.border}` }}
+			>
+				<span
+					style={{
+						fontSize: 12,
+						letterSpacing: "0.08em",
+						textTransform: "uppercase",
+						color: paper.muted,
+					}}
+				>
+					{t("common.otp")}
+				</span>
 				<br />
-				<strong className="font-bold text-2xl">{otp}</strong>
+				<span
+					style={{
+						fontFamily: fonts.sans,
+						fontSize: 28,
+						fontWeight: 600,
+						lineHeight: "40px",
+						letterSpacing: "0.16em",
+						fontVariantNumeric: "tabular-nums",
+						color: paper.ink,
+					}}
+				>
+					{otp}
+				</span>
 			</Text>
 
-			<Text>{t("common.useLink")}</Text>
+			<MailText>{t("common.useLink")}</MailText>
+			<PrimaryButton href={url}>{t("confirmEmail")}</PrimaryButton>
 
-			<PrimaryButton href={url}>{t("confirmEmail")} &rarr;</PrimaryButton>
-
-			<Text className="text-sm text-muted-foreground">
-				{t("common.openLinkInBrowser")}
-				<Link href={url}>{url}</Link>
-			</Text>
+			<LinkFallback label={t("common.openLinkInBrowser")} href={url} />
 		</Wrapper>
 	);
 }
@@ -48,7 +71,7 @@ NewUser.PreviewProps = {
 	locale: defaultLocale,
 	translations: defaultTranslations,
 	url: "#",
-	name: "John Doe",
+	name: "Priya",
 	otp: "123456",
 };
 

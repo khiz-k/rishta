@@ -3,7 +3,7 @@
 import { useAuthErrorMessages } from "@auth/hooks/errors-messages";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { authClient } from "@repo/auth/client";
-import { Alert, AlertDescription, AlertTitle } from "@repo/ui/components/alert";
+import { Alert, AlertTitle } from "@repo/ui/components/alert";
 import { Button } from "@repo/ui/components/button";
 import {
 	Form,
@@ -14,11 +14,14 @@ import {
 	FormMessage,
 } from "@repo/ui/components/form";
 import { Input } from "@repo/ui/components/input";
-import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+
+import { AuthHeading } from "./AuthHeading";
+import { AuthMarginNote } from "./AuthMarginNote";
+import { AuthSentSlip } from "./AuthSentSlip";
 
 const formSchema = z.object({
 	email: z.email(),
@@ -58,23 +61,22 @@ export function ForgotPasswordForm() {
 
 	return (
 		<>
-			<h1 className="font-bold text-xl md:text-2xl">{t("auth.forgotPassword.title")}</h1>
-			<p className="mt-1 mb-6 text-foreground/60">{t("auth.forgotPassword.message")} </p>
+			<AuthHeading
+				overline={t("auth.forgotPassword.overline")}
+				title={t("auth.forgotPassword.title")}
+				lead={t("auth.forgotPassword.message")}
+			/>
 
 			{form.formState.isSubmitSuccessful ? (
-				<Alert variant="success">
-					<MailboxIcon />
-					<AlertTitle>{t("auth.forgotPassword.hints.linkSent.title")}</AlertTitle>
-					<AlertDescription>
-						{t("auth.forgotPassword.hints.linkSent.message")}
-					</AlertDescription>
-				</Alert>
+				<AuthSentSlip
+					title={t("auth.forgotPassword.hints.linkSent.title")}
+					message={t("auth.forgotPassword.hints.linkSent.message")}
+				/>
 			) : (
 				<Form {...form}>
-					<form className="gap-4 flex flex-col items-stretch" onSubmit={onSubmit}>
+					<form className="gap-5 flex flex-col items-stretch" onSubmit={onSubmit}>
 						{form.formState.errors.root && (
 							<Alert variant="error">
-								<AlertTriangleIcon />
 								<AlertTitle>{form.formState.errors.root.message}</AlertTitle>
 							</Alert>
 						)}
@@ -86,26 +88,31 @@ export function ForgotPasswordForm() {
 								<FormItem>
 									<FormLabel>{t("auth.forgotPassword.email")}</FormLabel>
 									<FormControl>
-										<Input {...field} autoComplete="email" />
+										<Input {...field} type="email" autoComplete="email" />
 									</FormControl>
 									<FormMessage />
 								</FormItem>
 							)}
 						/>
 
-						<Button loading={form.formState.isSubmitting}>
+						<Button
+							variant="primary"
+							className="w-full"
+							loading={form.formState.isSubmitting}
+						>
 							{t("auth.forgotPassword.submit")}
 						</Button>
 					</form>
 				</Form>
 			)}
 
-			<div className="mt-6 text-sm text-center">
-				<Link href="/login">
-					<ArrowLeftIcon className="mr-1 size-4 inline align-middle" />
-					{t("auth.forgotPassword.backToSignin")}
+			<p className="mt-8 text-center text-body">
+				<Link href="/login" className="text-seal-ink underline underline-offset-4">
+					← {t("auth.forgotPassword.backToSignin")}
 				</Link>
-			</div>
+			</p>
+
+			<AuthMarginNote>{t("auth.forgotPassword.marginNote")}</AuthMarginNote>
 		</>
 	);
 }

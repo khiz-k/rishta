@@ -32,6 +32,15 @@ export async function getTemplate<T extends TemplateId>({
 		}
 	}
 
+	// A claim invitation has its own subject. Like every Rishta subject, it names nobody.
+	if (templateId === "organizationInvitation") {
+		const ctx = context as { kind?: "member" | "claim" };
+		const claimSubject = translations.organizationInvitation.claimSubject;
+		if (ctx.kind === "claim" && claimSubject) {
+			subject = claimSubject;
+		}
+	}
+
 	const html = await render(email);
 	const text = await render(email, { plainText: true });
 	return { html, text, subject };

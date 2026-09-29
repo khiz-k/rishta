@@ -18,12 +18,14 @@ import {
 import { passwordSchema } from "@repo/utils";
 import { PasswordInput } from "@shared/components/PasswordInput";
 import { useRouter } from "@shared/hooks/router";
-import { AlertTriangleIcon, ArrowLeftIcon, MailboxIcon } from "lucide-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
+
+import { AuthHeading } from "./AuthHeading";
+import { AuthSentSlip } from "./AuthSentSlip";
 
 const formSchema = z.object({
 	password: passwordSchema,
@@ -69,20 +71,19 @@ export function ResetPasswordForm() {
 
 	return (
 		<>
-			<h1 className="font-bold text-xl md:text-2xl">{t("auth.resetPassword.title")}</h1>
-			<p className="mt-1 mb-6 text-foreground/60">{t("auth.resetPassword.message")} </p>
+			<AuthHeading
+				overline={t("auth.resetPassword.overline")}
+				title={t("auth.resetPassword.title")}
+				lead={t("auth.resetPassword.message")}
+			/>
 
 			{form.formState.isSubmitSuccessful ? (
-				<Alert variant="success">
-					<MailboxIcon />
-					<AlertTitle>{t("auth.resetPassword.hints.success")}</AlertTitle>
-				</Alert>
+				<AuthSentSlip title={t("auth.resetPassword.hints.success")} />
 			) : (
 				<Form {...form}>
-					<form className="gap-4 flex flex-col items-stretch" onSubmit={onSubmit}>
+					<form className="gap-5 flex flex-col items-stretch" onSubmit={onSubmit}>
 						{form.formState.errors.root && (
 							<Alert variant="error">
-								<AlertTriangleIcon />
 								<AlertTitle>{form.formState.errors.root.message}</AlertTitle>
 							</Alert>
 						)}
@@ -106,19 +107,22 @@ export function ResetPasswordForm() {
 							)}
 						/>
 
-						<Button loading={form.formState.isSubmitting}>
+						<Button
+							variant="primary"
+							className="w-full"
+							loading={form.formState.isSubmitting}
+						>
 							{t("auth.resetPassword.submit")}
 						</Button>
 					</form>
 				</Form>
 			)}
 
-			<div className="mt-6 text-sm text-center">
-				<Link href="/login">
-					<ArrowLeftIcon className="mr-1 size-4 inline align-middle" />
-					{t("auth.resetPassword.backToSignin")}
+			<p className="mt-8 text-center text-body">
+				<Link href="/login" className="text-seal-ink underline underline-offset-4">
+					← {t("auth.resetPassword.backToSignin")}
 				</Link>
-			</div>
+			</p>
 		</>
 	);
 }

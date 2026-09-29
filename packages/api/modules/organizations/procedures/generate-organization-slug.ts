@@ -1,4 +1,5 @@
 import { ORPCError } from "@orpc/client";
+import { config as authConfig } from "@repo/auth/config";
 import { getOrganizationBySlug } from "@repo/database";
 import slugify from "@sindresorhus/slugify";
 import { nanoid } from "nanoid";
@@ -24,7 +25,9 @@ export const generateOrganizationSlug = publicProcedure
 			lowercase: true,
 		});
 
-		let slug = baseSlug;
+		// A route word ("letters", "b", …) is never a household's address.
+		const forbidden: readonly string[] = authConfig.organizations.forbiddenOrganizationSlugs;
+		let slug = forbidden.includes(baseSlug) ? `${baseSlug}-${nanoid(5)}` : baseSlug;
 		let hasAvailableSlug = false;
 
 		for (let i = 0; i < 3; i++) {

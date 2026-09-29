@@ -6,8 +6,8 @@ import type { PropsWithChildren } from "react";
 export function ClientProviders({ children }: PropsWithChildren) {
 	return (
 		<ProgressProvider
-			height="4px"
-			color="var(--color-primary)"
+			height="2px"
+			color="var(--color-foreground)"
 			options={{ showSpinner: false }}
 			shallowRouting
 			delay={250}

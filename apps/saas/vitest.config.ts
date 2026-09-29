@@ -20,6 +20,11 @@ export default defineConfig({
 			"@ai": path.resolve(import.meta.dirname, "./modules/ai"),
 			"@onboarding": path.resolve(import.meta.dirname, "./modules/onboarding"),
 			"@settings": path.resolve(import.meta.dirname, "./modules/settings"),
+			"@biodata": path.resolve(import.meta.dirname, "./modules/biodata"),
+			"@folio": path.resolve(import.meta.dirname, "./modules/folio"),
+			"@letters": path.resolve(import.meta.dirname, "./modules/letters"),
+			"@household": path.resolve(import.meta.dirname, "./modules/household"),
+			"@family": path.resolve(import.meta.dirname, "./modules/family"),
 		},
 	},
 });
